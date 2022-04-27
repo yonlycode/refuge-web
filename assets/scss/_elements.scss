@@ -7,38 +7,6 @@
 	margin-bottom: 30px;
 }
 
-.sample-text-area{
-	padding: 100px 0px;
-	.title_color{
-		margin-bottom: 30px;
-	}
-	p{
-		line-height: 26px;
-		b{
-			font-weight: bold;
-			color: $baseColor;
-		}
-		i{
-			color: $baseColor;
-			font-style: italic;
-		}
-		sup{
-			color: $baseColor;
-			font-style: italic;
-		}
-		sub{
-			color: $baseColor;
-			font-style: italic;
-		}
-		del{
-			color: $baseColor;
-		}
-		u{
-			color: $baseColor;
-		}
-	}
-}
-
 /*============== End Elements Area css ================*/
 
 /*==============Elements Button Area css ================*/
@@ -278,15 +246,6 @@
 }
 
 /*---------- End Elements Page -------------*/
-
-
-.sample-text-area {
-  padding: 100px 0 70px 0;
-}
-
-.sample-text {
-  margin-bottom: 0;
-}
 
 .text-heading {
   margin-bottom: 30px;
