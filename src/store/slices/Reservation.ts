@@ -1,39 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
-interface EateryReservation {
-    firstName: string,
-    lastName: string,
-    email: string,
-    message: string,
-    date: string,
-    phone: string,
-    customerCount: number
-}
-
-interface RoomReservation {
-    firstName: string;
-    lastName: string;
-    email: string;
-    message: string;
-    childrenCount: number;
-    adultCount: number;
-    phone: string;
-    startDate: string;
-    endDate: string;
-}
+import { IEateryReservation } from '../../core/Models/EateryReservation';
+import { IRoomReservation } from '../../core/Models/RoomReservation';
 
 interface CounterState {
-    eatery: EateryReservation,
-    room: RoomReservation
+    eatery: IEateryReservation,
+    room: IRoomReservation
 }
 
 interface MutateEateryPayload {
-    name: keyof EateryReservation,
+    name: keyof IEateryReservation,
     value: any
 }
 
 interface MutateRoomPayload {
-    name: keyof RoomReservation,
+    name: keyof IRoomReservation,
     value: any
 }
 
