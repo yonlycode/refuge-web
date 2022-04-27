@@ -28,7 +28,7 @@ export default function ReservationFormManager() {
           {LeftSideNavigationLinks.map(({
             url, label, content,
           }) => (
-            <li className={`nav-item ${route.includes(url) ? 'active' : ''}`}>
+            <li key={`reservation-links-${label}`} className={`nav-item ${route.includes(url) ? 'active' : ''}`}>
               <div
                 data-bs-toggle="tooltip"
                 data-bs-placement="right"
@@ -40,7 +40,6 @@ export default function ReservationFormManager() {
             </li>
           ))}
         </ul>
-
         <div id="formContainer row">
           <EateryReservationForm />
         </div>

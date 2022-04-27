@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from '../store';
-import { removeToast, Toast } from '../store/slices/Layout';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { removeToast, Toast } from '../../store/slices/Layout';
 
 export default function AppToastFactory() {
   const { toasts } = useAppSelector((state) => state.layout);
@@ -13,6 +13,7 @@ export default function AppToastFactory() {
     <div id="toast-container" className="toast-container position-fixed bottom-0 end-0 p-3">
       { toasts.map((el) => (
         <div
+          key={`toast-item-${el.message}`}
           className="toast toast-show align-items-center"
           role="alert"
           data-bs-autohide="false"

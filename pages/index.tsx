@@ -1,9 +1,9 @@
 import Head from 'next/head';
 import AboutUs from '../src/components/AboutUs';
-import AppBanner from '../src/components/AppBanner';
+import AppBanner from '../src/components/Common/AppBanner';
 import RestaurantQuickCard from '../src/components/RestaurantQuickCard';
 import RoomQuickCard from '../src/components/RoomQuickCard';
-import StartReservationForm from '../src/components/StartReservationForm';
+import StartReservationForm from '../src/components/Forms/StartReservationForm';
 
 export default function Home() {
   return (

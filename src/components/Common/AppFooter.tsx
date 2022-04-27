@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import FooterLinks from '../constants/FooterLinks';
+import FooterLinks from '../../constants/FooterLinks';
 
 export default function AppFooter() {
   const firstRow = FooterLinks.slice(0, FooterLinks.length / 2);
@@ -23,7 +23,7 @@ export default function AppFooter() {
               <div className="row" id="footer-links">
                 <ul className="col footer-nav">
                   { firstRow.map((el) => (
-                    <li key={el.name}>
+                    <li key={`footer-link-${el.name}`}>
                       <Link href={el.url}>
                         <a className="nav-link">
                           {el.name}
@@ -35,7 +35,7 @@ export default function AppFooter() {
                 </ul>
                 <ul className="col footer-nav">
                   {secondRow.map((el) => (
-                    <li key={el.name}>
+                    <li key={`footer-link-${el.name}`}>
                       <Link href={el.url}>
                         <a className="nav-link">
                           {el.name}

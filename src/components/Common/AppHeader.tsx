@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import HeaderLinks from '../constants/HeaderLinks';
+import HeaderLinks from '../../constants/HeaderLinks';
 
 export default function AppHeader() {
   const { route } = useRouter();
@@ -49,7 +49,7 @@ export default function AppHeader() {
                       return (
                         <li
                           className={`nav-item submenu dropdown ${isSubLinkActive(el.url) ? 'active' : ''}`}
-                          key={el.name}
+                          key={`header-link-${el.name}`}
                         >
                           <Link href={el.url}>
                             <a
@@ -64,7 +64,7 @@ export default function AppHeader() {
                           </Link>
                           <ul className="dropdown-menu">
                             { el.subs.map((sub) => (
-                              <li className="nav-item" key={sub.name}>
+                              <li className="nav-item" key={`header-sub-link-${sub.url}`}>
                                 <Link href={sub.url}>
                                   <a className="nav-link">
                                     {sub.name}
@@ -79,7 +79,7 @@ export default function AppHeader() {
                     return (
                       <li
                         className={`nav-item ${isLinkActive(el.url) ? 'active' : ''}`}
-                        key={el.name}
+                        key={`header-link-${el.name}`}
                       >
                         <Link href={el.url}>
                           <a className="nav-link">{el.name}</a>

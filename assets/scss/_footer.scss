@@ -11,59 +11,6 @@
   }
 }
 
-.copy-right-text {
-  i,
-  a {
-    color: $baseColor;
-  }
-}
-
-.instafeed {
-  margin: 0px -24px;
-  padding: 0 15px;
-  @media (max-width: 767px) {
-    margin: -16px;
-  }
-  @media (max-width: 575px) {
-    margin: 0px;
-    padding: 0;
-  }
-  li {
-    overflow: hidden;
-    width: 25%;
-    img {
-      margin: 5px;
-    }
-  }
-}
-
-.footer-social {
-  @media (max-width: 575px) {
-    margin-top: 15px;
-  }
-  a {
-    padding-left: 25px;
-    @media (max-width: 575px) {
-      &:first-child {
-        padding-left: 0;
-      }
-    }
-    @include transition();
-    &:hover {
-      i {
-        color: $baseColor;
-      }
-    }
-  }
-  i {
-    color: #cccccc;
-    @include transition();
-  }
-  @media (max-width: 991px) {
-    text-align: left;
-  }
-}
-
 .single-footer-widget {
   .footer-nav {
     li {

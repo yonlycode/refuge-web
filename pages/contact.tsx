@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import AppBanner from '../src/components/AppBanner';
-import ContactForm from '../src/components/ContactForm';
+import AppBanner from '../src/components/Common/AppBanner';
+import ContactForm from '../src/components/Forms/ContactForm';
 
 export default function Contact() {
   return (

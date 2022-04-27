@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import AppBanner from '../src/components/AppBanner';
-import ReservationFormManager from '../src/components/ReservationFormManager';
+import AppBanner from '../src/components/Common/AppBanner';
+import ReservationFormManager from '../src/components/Forms/ReservationFormManager';
 
 export default function ReservationLanding() {
   return (

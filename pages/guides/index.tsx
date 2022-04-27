@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import AppBanner from '../../src/components/AppBanner';
+import AppBanner from '../../src/components/Common/AppBanner';
 
 export default function GuideLanding() {
   return (

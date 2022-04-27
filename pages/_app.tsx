@@ -8,9 +8,9 @@ import Head from 'next/head';
 
 import { store } from '../src/store';
 
-import AppFooter from '../src/components/AppFooter';
-import AppHeader from '../src/components/AppHeader';
-import AppToastFactory from '../src/components/AppToastFactory';
+import AppFooter from '../src/components/Common/AppFooter';
+import AppHeader from '../src/components/Common/AppHeader';
+import AppToastFactory from '../src/components/Common/AppToastFactory';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -18,11 +18,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <div className="container-fluid" />
       <AppHeader />
-      <main>
-        <Component {...pageProps} />
-      </main>
+      <div className="container-fluid">
+        <main>
+          <Component {...pageProps} />
+        </main>
+      </div>
       <AppFooter />
       <AppToastFactory />
     </Provider>

@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import AppBanner from '../src/components/AppBanner';
+import AppBanner from '../src/components/Common/AppBanner';
 import AppGallery from '../src/components/AppGallery';
 
 export default function Gallery() {

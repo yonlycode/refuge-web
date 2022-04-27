@@ -20,7 +20,7 @@ export default function AppBanner({
               <h1 className="text-white top-text">{ title }</h1>
               <div className="page_link">
                 { breadcrumbs.map(({ url, label }) => (
-                  <Link href={url}>
+                  <Link href={url} key={`breadcrumb-link-${label}`}>
                     <a>{label}</a>
                   </Link>
                 ))}
@@ -41,7 +41,7 @@ export default function AppBanner({
             <h1 className="top-text text-white">{ title }</h1>
             <div className="page_link">
               {breadcrumbs.map(({ url, label }) => (
-                <Link href={url}>
+                <Link href={url} key={`breadcrumb-link-${label}`}>
                   <a className="text-white">{label}</a>
                 </Link>
               ))}

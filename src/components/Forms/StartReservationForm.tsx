@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { useAppDispatch, useAppSelector } from '../store';
-import { mutateRoomReservation } from '../store/slices/Reservation';
+import { useAppDispatch, useAppSelector } from '../../store';
+import { mutateRoomReservation } from '../../store/slices/Reservation';
 
 export default function StartReservationForm() {
   const {

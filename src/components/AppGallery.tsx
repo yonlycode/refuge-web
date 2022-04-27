@@ -26,7 +26,7 @@ export default function AppGallery() {
         <div className="filters-content">
           <div className="row gallery-grid">
             {gallery.map(({ name, url }) => (
-              <div className="col-lg-4 col-md-6 all">
+              <div className="col-lg-4 col-md-6 all" key={`gallery-item-${name}`}>
                 <div className="single-gallery">
                   <div className="overlay" />
                   <img className="img-fluid w-100" src={url} alt={name} />
