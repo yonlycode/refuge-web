@@ -24,7 +24,6 @@ export default function RestaurantQuickCard() {
         </div>
         <div className="row align-items-center">
           <div className="col-lg-6">
-
             <div>
               <div className="room_right">
                 <h1 className="type">

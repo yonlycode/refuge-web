@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function AboutUs() {
   return (
-    <section className="about_area section_gap">
+    <section className="about_area section_gap_top">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -58,7 +58,7 @@ export default function AboutUs() {
                 </p>
               </div>
               <Link href="/reserver">
-                <a className="btn btn-primary mt-45">RÉSERVER</a>
+                <a className="btn btn-primary mt-45">En savoir plus</a>
               </Link>
             </div>
           </div>

@@ -7,7 +7,7 @@ export function monthMapper(index: number): string {
     'Mai',
     'Juin',
     'Juil',
-    'Aout',
+    'Août',
     'Sept',
     'Oct',
     'Nov',
