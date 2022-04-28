@@ -7,12 +7,12 @@ interface CounterState {
     room: IRoomReservation
 }
 
-interface MutateEateryPayload {
+export interface MutateEateryPayload {
     name: keyof IEateryReservation,
     value: any
 }
 
-interface MutateRoomPayload {
+export interface MutateRoomPayload {
     name: keyof IRoomReservation,
     value: any
 }
