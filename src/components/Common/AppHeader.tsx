@@ -31,9 +31,15 @@ export default function AppHeader() {
       <div className="main_menu">
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container">
-            <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span className="navbar-toggler-icon" />
-              <span className="navbar-toggler-icon" />
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
               <span className="navbar-toggler-icon" />
             </button>
             <Link href="/">
@@ -66,7 +72,9 @@ export default function AppHeader() {
                             { el.subs.map((sub) => (
                               <li className="nav-item" key={`header-sub-link-${sub.url}`}>
                                 <Link href={sub.url}>
-                                  <a className="nav-link">
+                                  <a
+                                    className="nav-link"
+                                  >
                                     {sub.name}
                                   </a>
                                 </Link>
@@ -82,7 +90,12 @@ export default function AppHeader() {
                         key={`header-link-${el.name}`}
                       >
                         <Link href={el.url}>
-                          <a className="nav-link">{el.name}</a>
+                          <a
+                            className="nav-link"
+                          >
+                            {el.name}
+
+                          </a>
                         </Link>
                       </li>
                     );

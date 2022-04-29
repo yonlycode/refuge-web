@@ -25,7 +25,7 @@ export default function RoomQuickCard() {
         <div className="row align-items-center">
           <div className="col-lg-6">
             <div className="room_left">
-              <img className="img-fluid" src="/assets/images/gites/emeraude/chambre.jpg" alt="" />
+              <img className="img-fluid" loading="lazy" src="/assets/images/gites/emeraude/chambre.jpg" alt="" />
             </div>
           </div>
           <div className="col-lg-6">

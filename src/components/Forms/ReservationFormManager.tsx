@@ -22,7 +22,7 @@ export default function ReservationFormManager() {
   const { route } = useRouter();
 
   return (
-    <section className="container mt-50 row">
+    <section className="container mt-50 row section_gap_top">
       <div className="d-flex">
         <ul id="form-navigation" className="nav">
           {LeftSideNavigationLinks.map(({

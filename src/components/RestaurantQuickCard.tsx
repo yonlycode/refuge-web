@@ -57,7 +57,7 @@ export default function RestaurantQuickCard() {
           </div>
           <div className="col-lg-6">
             <div className="room_left">
-              <img className="img-fluid" src="/assets/images/katimini/katimini4.jpeg" alt="" />
+              <img className="img-fluid" loading="lazy" src="/assets/images/katimini/katimini4.jpeg" alt="" />
             </div>
           </div>
         </div>

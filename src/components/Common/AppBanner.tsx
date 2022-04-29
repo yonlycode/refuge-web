@@ -14,7 +14,7 @@ export default function AppBanner({
     return (
       <section className="banner_area">
         <div className="banner_inner d-flex align-items-center">
-          <div className="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background="" />
+          <div className="overlay bg-parallax" />
           <div className="container">
             <div className="banner_content text-center">
               <h1 className="text-white top-text">{ title }</h1>

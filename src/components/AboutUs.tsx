@@ -8,12 +8,10 @@ export default function AboutUs() {
           <div className="col-lg-12">
             <div className="main_title">
               <div className="top-part">
-                <p>Georges et Fortuna vous accueillent au REFUGE Hulman </p>
+                <h1>Georges et Fortuna vous accueillent au REFUGE Hulman </h1>
               </div>
               <h2>
-                Georges et Fortuna vous accueillent au
-                <br />
-                REFUGE Hulman
+                Bienvenue dans un cadre de rêve entre ruralité et modernité.
               </h2>
               <div className="bottom_part">
                 <p>
@@ -57,7 +55,7 @@ export default function AboutUs() {
                   de la mer et plumets argentés de cannes à sucre.
                 </p>
               </div>
-              <Link href="/reserver">
+              <Link href="/about">
                 <a className="btn btn-primary mt-45">En savoir plus</a>
               </Link>
             </div>

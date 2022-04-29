@@ -13,7 +13,7 @@ export default function ReservationLanding() {
       </Head>
 
       <AppBanner
-        size="L"
+        size="S"
         title="N'attendez plus..."
         subTitle="Réservez votre séjour de rêve au refuge HULMAN, nous vous attendons"
         breadcrumbs={[
