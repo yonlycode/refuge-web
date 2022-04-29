@@ -4,12 +4,12 @@
 .home_banner_area {
   position: relative;
   z-index: 1;
-  min-height: 780px;
+  min-height: 680px;
   .banner_inner {
     position: relative;
     overflow: hidden;
     width: 100%;
-    min-height: 780px;
+    min-height: 680px;
     .bg-parallax {
       background: linear-gradient(
           0deg,
@@ -34,7 +34,7 @@
       .top-text {
         color: white;
         text-align: right;
-        max-width: 760px;
+        max-width: 660px;
         margin: auto;
         font-size: 26px;
         text-transform: uppercase;
@@ -50,6 +50,25 @@
           margin-bottom: 10px;
         }
       }
+
+      .page_link {
+        ul {
+          list-style: none;
+          list-style-type: none;
+          padding-left: 0px;
+          display: flex;
+          justify-content: center;
+      
+          li {
+            margin-right: 8px;
+      
+            a {
+              color: white;
+            }
+          }
+        }
+      }
+
       .text {
         max-width: 620px;
         margin: auto;
@@ -105,6 +124,7 @@
         font-weight: bold;
       }
       .page_link {
+        
         a {
           font-size: 14px;
           color: #fff;

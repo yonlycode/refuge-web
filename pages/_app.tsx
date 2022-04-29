@@ -20,11 +20,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <Provider store={store}>
         <AppHeader />
-        <div className="container-fluid">
-          <main>
-            <Component {...pageProps} />
-          </main>
-        </div>
+        <main>
+          <Component {...pageProps} />
+        </main>
         <AppFooter />
         <AppToastFactory />
       </Provider>

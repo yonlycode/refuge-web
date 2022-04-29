@@ -14,7 +14,7 @@ export default function AppToastFactory() {
       { toasts.map((el) => (
         <div
           key={`toast-item-${el.message}`}
-          className="toast toast-show align-items-center"
+          className="toast show align-items-center"
           role="alert"
           data-bs-autohide="false"
           aria-live="assertive"

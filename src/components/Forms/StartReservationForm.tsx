@@ -27,14 +27,13 @@ export default function StartReservationForm() {
   };
 
   const totalPersonsCount: number = adultCount + childrenCount;
-  const isValid: boolean = totalPersonsCount > 0 && startDate !== '' && endDate !== '';
 
   return (
     <section className="container">
       <div className="booking_area">
         <form>
           <div className="row">
-            <div className="col-lg-3 col-sm-6 col-6" id="start-reservation-from-container">
+            <div className="col-lg-3 col-sm-6 col-6">
               <label
                 className="booking_item"
                 htmlFor="fromInput"
@@ -48,8 +47,12 @@ export default function StartReservationForm() {
                     onChange={handleSetDate}
                     min={Date.now()}
                   />
-                  <span className="day">{startDate === '' ? ' --' : startDate.split('-')[2]}</span>
-                  <span className="month">{startDate === '' ? ' --' : getMonth(startDate)}</span>
+                  <span className="day">
+                    {startDate === '' ? ' --' : startDate.split('-')[2]}
+                  </span>
+                  <span className="month">
+                    {startDate === '' ? ' --' : getMonth(startDate)}
+                  </span>
                 </div>
               </label>
             </div>
@@ -64,8 +67,12 @@ export default function StartReservationForm() {
                     onChange={handleSetDate}
                     min={startDate}
                   />
-                  <span className="day">{endDate === '' ? ' --' : endDate.split('-')[2]}</span>
-                  <span className="month">{endDate === '' ? ' --' : getMonth(endDate)}</span>
+                  <span className="day">
+                    {endDate === '' ? ' --' : endDate.split('-')[2]}
+                  </span>
+                  <span className="month">
+                    {endDate === '' ? ' --' : getMonth(endDate)}
+                  </span>
                 </div>
               </label>
             </div>
@@ -73,7 +80,7 @@ export default function StartReservationForm() {
               <div className="booking_item">
                 <p>Nombre d&apos;invités</p>
                 <span className="day">
-                  {totalPersonsCount }
+                  { totalPersonsCount }
                 </span>
                 <span className="month">person</span>
               </div>
@@ -102,8 +109,6 @@ export default function StartReservationForm() {
                 <button
                   type="button"
                   className="btn btn-primary text-uppercase"
-                  disabled={!isValid}
-                  id="start-reservation-button"
                   onClick={() => { push('/reserver'); }}
                 >
                   Je Réserve

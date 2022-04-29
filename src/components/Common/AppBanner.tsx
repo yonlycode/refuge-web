@@ -17,13 +17,17 @@ export default function AppBanner({
           <div className="overlay bg-parallax" />
           <div className="container">
             <div className="banner_content text-center">
-              <h1 className="text-white top-text">{ title }</h1>
-              <div className="page_link">
-                { breadcrumbs.map(({ url, label }) => (
-                  <Link href={url} key={`breadcrumb-link-${label}`}>
-                    <a>{label}</a>
-                  </Link>
-                ))}
+              <h1 className="top-text text-white">
+                { title }
+              </h1>
+              <div className="page_link text-white">
+                <ul>
+                  { breadcrumbs.map(({ url, label }) => (
+                    <li key={`breadcrumb-link-${label}`}>
+                      <Link href={url}><a>{label}</a></Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </div>
@@ -34,17 +38,22 @@ export default function AppBanner({
   return (
     <section className="home_banner_area">
       <div className="banner_inner d-flex align-items-center">
-        <div className="overlay bg-parallax" data-stellar-ratio="2" data-stellar-vertical-offset="0" data-background="" />
+        <div className="overlay bg-parallax" />
         <div className="overlay overlay-bg" />
         <div className="container">
           <div className="banner_content text-center">
-            <h1 className="top-text text-white">{ title }</h1>
-            <div className="page_link">
-              {breadcrumbs.map(({ url, label }) => (
-                <Link href={url} key={`breadcrumb-link-${label}`}>
-                  <a className="text-white">{label}</a>
-                </Link>
-              ))}
+            <h1 className="top-text text-white">
+              { title }
+            </h1>
+            <br />
+            <div className="page_link text-white">
+              <ul>
+                {breadcrumbs.map(({ url, label }) => (
+                  <li key={`breadcrumb-link-${label}`}>
+                    <Link href={url}><a>{label}</a></Link>
+                  </li>
+                ))}
+              </ul>
             </div>
             <p className="text">
               <em>

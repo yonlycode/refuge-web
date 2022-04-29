@@ -72,11 +72,7 @@ export default function AppHeader() {
                             { el.subs.map((sub) => (
                               <li className="nav-item" key={`header-sub-link-${sub.url}`}>
                                 <Link href={sub.url}>
-                                  <a
-                                    className="nav-link"
-                                  >
-                                    {sub.name}
-                                  </a>
+                                  <a className="nav-link">{sub.name}</a>
                                 </Link>
                               </li>
                             ))}
@@ -90,12 +86,7 @@ export default function AppHeader() {
                         key={`header-link-${el.name}`}
                       >
                         <Link href={el.url}>
-                          <a
-                            className="nav-link"
-                          >
-                            {el.name}
-
-                          </a>
+                          <a className="nav-link">{el.name}</a>
                         </Link>
                       </li>
                     );
