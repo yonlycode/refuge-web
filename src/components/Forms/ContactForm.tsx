@@ -10,6 +10,7 @@ import {
   sendContactRequest,
 } from '../../store/slices/Contact';
 import { IContactRequest } from '../../core/Models/ContactRequest';
+import AppLoadingBackdrop from '../Common/AppLoadingBackdrop';
 
 export default function ContactForm() {
   const {
@@ -47,112 +48,115 @@ export default function ContactForm() {
   );
 
   return (
-    <section className="contact_area section_gap">
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-3">
-            <div className="contact_info">
-              <div className="info_item">
-                <i className="lnr lnr-home" />
-                <h6>Saint-Louis, Marie-Galante</h6>
-                <p>Guadeloupe, French West Indies</p>
-              </div>
-              <div className="info_item">
-                <i className="lnr lnr-phone-handset" />
-                <h6>
-                  <a href="#">(590) 0590 970 502</a>
-                </h6>
-                <p>Mardi au Samedi 9am à 6pm</p>
-              </div>
-              <div className="info_item">
-                <i className="lnr lnr-envelope" />
-                <h6>
-                  <a href="#">refugehulman[at]gmail.com</a>
-                </h6>
-                <p>Envoyez nous une demande n&apos;importe quand!</p>
+    <>
+      { isRequestSending && <AppLoadingBackdrop />}
+      <section className="contact_area section_gap">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-4">
+              <div className="contact_info">
+                <div className="info_item">
+                  <i className="lnr lnr-home" />
+                  <h6>Saint-Louis, Marie-Galante</h6>
+                  <p>Guadeloupe, French West Indies</p>
+                </div>
+                <div className="info_item">
+                  <i className="lnr lnr-phone-handset" />
+                  <h6>
+                    <a href="#">(590) 0590 970 502</a>
+                  </h6>
+                  <p>Mardi au Samedi 9am à 6pm</p>
+                </div>
+                <div className="info_item">
+                  <i className="lnr lnr-envelope" />
+                  <h6>
+                    <a href="#">refugehulman[at]gmail.com</a>
+                  </h6>
+                  <p>Envoyez nous une demande n&apos;importe quand!</p>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="col-lg-9">
-            <form className="row contact_form">
-              <div className="col-md-6">
-                <div className="form-group">
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="name"
-                    name="name"
-                    placeholder="Nom"
-                    value={name}
-                    onChange={handleChangeContactForm}
-                  />
+            <div className="col-lg-8">
+              <form className="row contact_form">
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="name"
+                      name="name"
+                      placeholder="Nom"
+                      value={name}
+                      onChange={handleChangeContactForm}
+                    />
+                  </div>
+                  <div className="form-group">
+                    {/* TODO - Error message and validation */}
+                    <input
+                      type="email"
+                      className="form-control"
+                      id="email"
+                      name="email"
+                      value={email}
+                      placeholder="Adresse email"
+                      onChange={handleChangeContactForm}
+                    />
+                  </div>
+                  <div className="form-group">
+                    {/* TODO - Error message and validation */}
+                    <input
+                      type="email"
+                      className="form-control"
+                      id="phone"
+                      name="phone"
+                      value={phone}
+                      placeholder="Téléphone"
+                      onChange={handleChangeContactForm}
+                    />
+                  </div>
+                  <div className="form-group">
+                    {/* TODO - Error message and validation */}
+                    <input
+                      type="text"
+                      className="form-control"
+                      id="subject"
+                      name="subject"
+                      value={subject}
+                      placeholder="Sujet"
+                      onChange={handleChangeContactForm}
+                    />
+                  </div>
                 </div>
-                <div className="form-group">
-                  {/* TODO - Error message and validation */}
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    name="email"
-                    value={email}
-                    placeholder="Adresse email"
-                    onChange={handleChangeContactForm}
-                  />
+                <div className="col-md-6">
+                  <div className="form-group">
+                    {/* TODO - Error message and validation */}
+                    <textarea
+                      className="form-control"
+                      name="message"
+                      id="message"
+                      rows={6}
+                      value={message}
+                      placeholder="Message"
+                      onChange={handleChangeContactForm}
+                    />
+                  </div>
                 </div>
-                <div className="form-group">
-                  {/* TODO - Error message and validation */}
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="phone"
-                    name="phone"
-                    value={phone}
-                    placeholder="Téléphone"
-                    onChange={handleChangeContactForm}
-                  />
+                <div className="col-md-12 text-right d-flex justify-content-end">
+                  <button
+                    type="button"
+                    value="submit"
+                    className="mt-5 btn btn-primary ps-5 pe-5"
+                    onClick={handleSubmitContactRequest}
+                    disabled={!isContactFormValid || isRequestSending}
+                  >
+                    {isRequestSending ? 'Envoi en cours...' : 'Envoyer'}
+                  </button>
                 </div>
-                <div className="form-group">
-                  {/* TODO - Error message and validation */}
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="subject"
-                    name="subject"
-                    value={subject}
-                    placeholder="Sujet"
-                    onChange={handleChangeContactForm}
-                  />
-                </div>
-              </div>
-              <div className="col-md-6">
-                <div className="form-group">
-                  {/* TODO - Error message and validation */}
-                  <textarea
-                    className="form-control"
-                    name="message"
-                    id="message"
-                    rows={6}
-                    value={message}
-                    placeholder="Message"
-                    onChange={handleChangeContactForm}
-                  />
-                </div>
-              </div>
-              <div className="col-md-12 text-right d-flex justify-content-end">
-                <button
-                  type="button"
-                  value="submit"
-                  className="mt-5 btn btn-primary ps-5 pe-5"
-                  onClick={handleSubmitContactRequest}
-                  disabled={!isContactFormValid || isRequestSending}
-                >
-                  {isRequestSending ? 'Envoi en cours...' : 'Envoyer'}
-                </button>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }
