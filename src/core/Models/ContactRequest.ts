@@ -3,13 +3,11 @@ import { ContactClient } from '../DbClient';
 import { FilterKeys, MetaKeys } from './meta';
 
 export type IContactRequest = {
-    firstName: string,
-    lastName: string,
     email: string,
     message: string,
-    date: string,
+    name: string,
     phone: string,
-    customerCount: number
+    subject: string,
 };
 
 export type ContactRequestRecord = FilterKeys & MetaKeys & IContactRequest;
@@ -33,13 +31,13 @@ export default class ContactRequest {
     if (!this.request) {
       return '';
     }
-    if (this.request.firstName.length < 3) {
+    if (this.request.name.length < 3) {
       return '';
     }
-    if (this.request.lastName.length < 3) {
+    if (this.request.subject.length < 3) {
       return '';
     }
-    if (this.request.customerCount < 1) {
+    if (this.request.phone.length !== 10) {
       return '';
     }
     return null;
