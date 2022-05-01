@@ -62,7 +62,7 @@ export default function RoomQuickCard() {
                   </div>
                 </div>
                 <Link href="/services/gite">
-                  <a className="btn btn-outline-primary">Voir plus</a>
+                  <a className="btn btn-outline-primary mt-5">Voir plus</a>
                 </Link>
               </div>
             </div>

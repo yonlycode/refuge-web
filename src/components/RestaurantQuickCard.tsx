@@ -50,7 +50,7 @@ export default function RestaurantQuickCard() {
                   </div>
                 </div>
                 <Link href="/services/restaurant">
-                  <a className="btn btn-outline-secondary">Voir plus</a>
+                  <a className="btn btn-outline-secondary mt-5">Voir plus</a>
                 </Link>
               </div>
             </div>
