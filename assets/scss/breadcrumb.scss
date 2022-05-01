@@ -50,25 +50,6 @@
           margin-bottom: 10px;
         }
       }
-
-      .page_link {
-        ul {
-          list-style: none;
-          list-style-type: none;
-          padding-left: 0px;
-          display: flex;
-          justify-content: center;
-      
-          li {
-            margin-right: 8px;
-      
-            a {
-              color: white;
-            }
-          }
-        }
-      }
-
       .text {
         max-width: 620px;
         margin: auto;
@@ -86,6 +67,44 @@
 .banner_box {
   max-width: 1620px;
   margin: auto;
+}
+
+.page_link {
+
+  ul {
+    list-style: none;
+    list-style-type: none;
+    padding-left: 0px;
+    display: flex;
+    justify-content: center;
+    li {
+      margin-right: 8px;
+        a {
+          font-size: 14px;
+          color: #fff;
+          font-family: $rob;
+          margin-right: 32px;
+          position: relative;
+          &:before {
+            content: "\e87a";
+            font-family: "Linearicons-Free";
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            @include transform(translateY(-50%));
+          }
+          &:last-child {
+            margin-right: 0px;
+            &:before {
+              display: none;
+            }
+          }
+          &:hover {
+            color: $baseColor;
+          }
+        }
+    }
+  }
 }
 
 .banner_area {
@@ -123,33 +142,7 @@
         margin-bottom: 0px;
         font-weight: bold;
       }
-      .page_link {
-        
-        a {
-          font-size: 14px;
-          color: #fff;
-          font-family: $rob;
-          margin-right: 32px;
-          position: relative;
-          &:before {
-            content: "\e87a";
-            font-family: "Linearicons-Free";
-            position: absolute;
-            right: -25px;
-            top: 50%;
-            @include transform(translateY(-50%));
-          }
-          &:last-child {
-            margin-right: 0px;
-            &:before {
-              display: none;
-            }
-          }
-          &:hover {
-            color: $baseColor;
-          }
-        }
-      }
+
     }
   }
 }

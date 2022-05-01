@@ -12,7 +12,7 @@ export default function AppBanner({
 }: AppBannerProps) {
   if (size === 'S') {
     return (
-      <section className="banner_area">
+      <section className="banner_area mt-20">
         <div className="banner_inner d-flex align-items-center">
           <div className="overlay bg-parallax" />
           <div className="container">
@@ -20,7 +20,7 @@ export default function AppBanner({
               <h1 className="top-text text-white">
                 { title }
               </h1>
-              <div className="page_link text-white">
+              <div className="page_link">
                 <ul>
                   { breadcrumbs.map(({ url, label }) => (
                     <li key={`breadcrumb-link-${label}`}>
@@ -46,7 +46,7 @@ export default function AppBanner({
               { title }
             </h1>
             <br />
-            <div className="page_link text-white">
+            <div className="page_link">
               <ul>
                 {breadcrumbs.map(({ url, label }) => (
                   <li key={`breadcrumb-link-${label}`}>
