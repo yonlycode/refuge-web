@@ -9,14 +9,19 @@ import {
   mutateContactRequest,
   sendContactRequest,
 } from '../../store/slices/Contact';
+import { InputValidators } from '../../utils/InputUtils';
+
 import { IContactRequest } from '../../core/Models/ContactRequest';
 import AppLoadingBackdrop from '../Common/AppLoadingBackdrop';
+import AppInput from '../Common/AppInput';
+import AppTextarea from '../Common/AppTextarea';
 
 export default function ContactForm() {
   const {
     request,
     isRequestSending,
   } = useAppSelector((state: RootState) => state.contact);
+
   const {
     name,
     email,
@@ -24,7 +29,16 @@ export default function ContactForm() {
     phone,
     subject,
   } = request;
+
   const dispatch = useAppDispatch();
+
+  const isContactFormValid = (
+    !InputValidators.lastName(name)
+    && !InputValidators.email(email)
+    && !InputValidators.message(message)
+    && !InputValidators.phone(phone)
+    && !InputValidators.subject(subject)
+  );
 
   const handleChangeContactForm = ({
     currentTarget,
@@ -34,18 +48,12 @@ export default function ContactForm() {
       value: currentTarget.value,
     }));
   };
-  const handleSubmitContactRequest = async () => {
-    await dispatch(sendContactRequest({}));
-  };
 
-  const isContactFormValid = (
-    // TODO - implement this
-    name !== ''
-    && email !== ''
-    && message !== ''
-    && phone !== ''
-    && subject !== ''
-  );
+  const handleSubmitContactRequest = async () => {
+    if (isContactFormValid) {
+      await dispatch(sendContactRequest({}));
+    }
+  };
 
   return (
     <>
@@ -80,7 +88,7 @@ export default function ContactForm() {
               <form className="row contact_form">
                 <div className="col-md-6">
                   <div className="form-group">
-                    <input
+                    <AppInput
                       type="text"
                       className="form-control"
                       id="name"
@@ -88,11 +96,13 @@ export default function ContactForm() {
                       placeholder="Nom"
                       value={name}
                       onChange={handleChangeContactForm}
+                      errorMessage={
+                        name !== '' ? InputValidators.lastName(name) : null
+                      }
                     />
                   </div>
                   <div className="form-group">
-                    {/* TODO - Error message and validation */}
-                    <input
+                    <AppInput
                       type="email"
                       className="form-control"
                       id="email"
@@ -100,11 +110,14 @@ export default function ContactForm() {
                       value={email}
                       placeholder="Adresse email"
                       onChange={handleChangeContactForm}
+                      errorMessage={
+                        email !== '' ? InputValidators.email(email) : null
+                      }
                     />
                   </div>
                   <div className="form-group">
-                    {/* TODO - Error message and validation */}
-                    <input
+                    {/* TODO - Format on number phone */}
+                    <AppInput
                       type="email"
                       className="form-control"
                       id="phone"
@@ -112,11 +125,13 @@ export default function ContactForm() {
                       value={phone}
                       placeholder="Téléphone"
                       onChange={handleChangeContactForm}
+                      errorMessage={
+                        phone !== '' ? InputValidators.phone(phone) : null
+                      }
                     />
                   </div>
                   <div className="form-group">
-                    {/* TODO - Error message and validation */}
-                    <input
+                    <AppInput
                       type="text"
                       className="form-control"
                       id="subject"
@@ -124,19 +139,24 @@ export default function ContactForm() {
                       value={subject}
                       placeholder="Sujet"
                       onChange={handleChangeContactForm}
+                      errorMessage={
+                        subject !== '' ? InputValidators.subject(subject) : null
+                      }
                     />
                   </div>
                 </div>
                 <div className="col-md-6">
                   <div className="form-group">
-                    {/* TODO - Error message and validation */}
-                    <textarea
-                      className="form-control"
+                    <AppTextarea
                       name="message"
+                      className="form-control"
                       id="message"
                       rows={6}
                       value={message}
                       placeholder="Message"
+                      errorMessage={
+                        message !== '' ? InputValidators.message(message) : null
+                      }
                       onChange={handleChangeContactForm}
                     />
                   </div>
