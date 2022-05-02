@@ -64,19 +64,19 @@ export default function ContactForm() {
             <div className="col-lg-4">
               <div className="contact_info">
                 <div className="info_item">
-                  <i className="lnr lnr-home" />
+                  <i className="fa fa-house" />
                   <h6>Saint-Louis, Marie-Galante</h6>
                   <p>Guadeloupe, French West Indies</p>
                 </div>
                 <div className="info_item">
-                  <i className="lnr lnr-phone-handset" />
+                  <i className="fa fa-phone" />
                   <h6>
                     <a href="#">(590) 0590 970 502</a>
                   </h6>
                   <p>Mardi au Samedi 9am à 6pm</p>
                 </div>
                 <div className="info_item">
-                  <i className="lnr lnr-envelope" />
+                  <i className="fa fa-envelope" />
                   <h6>
                     <a href="#">refugehulman[at]gmail.com</a>
                   </h6>

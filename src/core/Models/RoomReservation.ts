@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-import { ReservationsClient } from '../DbClient';
-import { FilterKeys, ReservationMeta } from './meta';
+import DbClient from '../DbClient';
+import { FilterKeys, TypeMeta } from './meta';
 
-export type IRoomReservation = FilterKeys & ReservationMeta & {
+export type IRoomReservation = FilterKeys & TypeMeta & {
     firstName: string;
     lastName: string;
     email: string;
@@ -17,7 +17,7 @@ export type IRoomReservation = FilterKeys & ReservationMeta & {
 export default class RoomReservation {
   private reservation :IRoomReservation|null;
 
-  private dbClient = ReservationsClient;
+  private dbClient = new DbClient();
 
   constructor(reservation?: IRoomReservation) {
     this.reservation = !reservation ? null : {

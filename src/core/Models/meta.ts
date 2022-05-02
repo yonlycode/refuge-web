@@ -1,4 +1,4 @@
-export type ReservationType = 'EATERY' | 'ROOM';
+export type RecordType = 'EATERY' | 'ROOM' | 'CONTACT';
 
 export type FilterKeys = {
     partition_key?: string,
@@ -10,6 +10,6 @@ export type MetaKeys = {
     updatedAt?: string,
 }
 
-export type ReservationMeta = MetaKeys & {
-    type?: ReservationType,
+export type TypeMeta = MetaKeys & {
+    type?: RecordType,
 }

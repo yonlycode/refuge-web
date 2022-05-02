@@ -29,6 +29,9 @@ export const contactSlice = createSlice({
   name: 'reservation',
   initialState,
   reducers: {
+    resetContactRequest(): ContactState {
+      return initialState;
+    },
     mutateContactRequest(state, { payload }: PayloadAction<MutateContactPayload>): ContactState {
       return {
         ...state,
@@ -57,17 +60,24 @@ export const contactSlice = createSlice({
 export const {
   mutateContactRequest,
   mutateContactRequestSendingState,
+  resetContactRequest,
 } = contactSlice.actions;
 
 export const sendContactRequest = createAsyncThunk(
   'sendContactRequest',
   // eslint-disable-next-line consistent-return
-  async (_: unknown, { dispatch, getState }) => {
+  async (_: {}, { dispatch, getState }) => {
     try {
       dispatch(mutateContactRequestSendingState(true));
       const { request } = (getState() as any).contact;
       const response = await axios.post('/api/contact', request);
+      dispatch(createToast({
+        message: 'Demande envoyer avec succès',
+        type: 'success',
+      }));
+
       dispatch(mutateContactRequestSendingState(false));
+      dispatch(resetContactRequest());
 
       return response.data;
     } catch (e) {

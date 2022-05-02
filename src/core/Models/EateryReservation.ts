@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import { ReservationsClient } from '../DbClient';
-import { FilterKeys, ReservationMeta } from './meta';
+import DbClient from '../DbClient';
+import { FilterKeys, TypeMeta } from './meta';
 
 export type IEateryReservation = {
   firstName: string,
@@ -12,12 +12,12 @@ export type IEateryReservation = {
   customerCount: number
 };
 
-export type EateryReservationRecord = FilterKeys & ReservationMeta & IEateryReservation;
+export type EateryReservationRecord = FilterKeys & TypeMeta & IEateryReservation;
 
 export default class EateryReservation {
   private reservation: EateryReservationRecord|null;
 
-  private dbClient = ReservationsClient;
+  private dbClient = new DbClient();
 
   constructor(reservation: IEateryReservation) {
     this.reservation = {
