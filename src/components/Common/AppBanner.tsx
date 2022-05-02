@@ -12,7 +12,7 @@ export default function AppBanner({
 }: AppBannerProps) {
   if (size === 'S') {
     return (
-      <section className="banner_area mt-20">
+      <section className="banner_area mt-50">
         <div className="banner_inner d-flex align-items-center">
           <div className="overlay bg-parallax" />
           <div className="container">

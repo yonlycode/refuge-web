@@ -56,7 +56,7 @@ export default function AboutUs() {
                 </p>
               </div>
               <Link href="/about">
-                <a className="btn btn-primary mt-45">En savoir plus</a>
+                <a className="btn btn-primary mt-45 ps-5 pe-5">En savoir plus</a>
               </Link>
             </div>
           </div>
