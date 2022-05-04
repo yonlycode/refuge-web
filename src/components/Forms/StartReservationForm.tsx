@@ -12,7 +12,7 @@ export default function StartReservationForm() {
     childrenCount,
     startDate,
     endDate,
-  } = useAppSelector((state) => state.reservation.room);
+  } = useAppSelector((state) => state.reservation.room.reservation);
   const dispatch = useAppDispatch();
   const { push } = useRouter();
 
@@ -109,7 +109,7 @@ export default function StartReservationForm() {
                 <button
                   type="button"
                   className="btn btn-primary text-uppercase"
-                  onClick={() => { push('/reserver'); }}
+                  onClick={() => { push('/reserver/gites'); }}
                 >
                   Je Réserve
                 </button>

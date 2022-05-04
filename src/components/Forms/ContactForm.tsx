@@ -21,6 +21,7 @@ export default function ContactForm() {
     request,
     isRequestSending,
   } = useAppSelector((state: RootState) => state.contact);
+  const dispatch = useAppDispatch();
 
   const {
     name,
@@ -30,7 +31,6 @@ export default function ContactForm() {
     subject,
   } = request;
 
-  const dispatch = useAppDispatch();
 
   const isContactFormValid = (
     !InputValidators.lastName(name)
@@ -64,7 +64,7 @@ export default function ContactForm() {
             <div className="col-lg-4">
               <div className="contact_info">
                 <div className="info_item">
-                  <i className="fa fa-house" />
+                  <i className="fa fa-home" />
                   <h6>Saint-Louis, Marie-Galante</h6>
                   <p>Guadeloupe, French West Indies</p>
                 </div>

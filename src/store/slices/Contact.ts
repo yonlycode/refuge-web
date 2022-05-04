@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
 import { IContactRequest } from '../../core/Models/ContactRequest';
 import { createToast } from './Layout';
@@ -13,7 +13,6 @@ export interface MutateContactPayload {
     value: any
 }
 
-// Define the initial state using that type
 const initialState: ContactState = {
   request: {
     name: '',
@@ -82,11 +81,12 @@ export const sendContactRequest = createAsyncThunk(
       return response.data;
     } catch (e) {
       dispatch(createToast({
-        message: (e as Error).toString(),
+        message: (e as AxiosError).response?.data as string,
         type: 'error',
       }));
       dispatch(mutateContactRequestSendingState(false));
     }
   },
 );
+
 export default contactSlice.reducer;

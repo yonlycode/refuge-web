@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import DbClient from '../DbClient';
 import { FilterKeys, TypeMeta } from './meta';
 
-export type IRoomReservation = FilterKeys & TypeMeta & {
+export type IRoomReservation = {
     firstName: string;
     lastName: string;
     email: string;
@@ -12,10 +12,12 @@ export type IRoomReservation = FilterKeys & TypeMeta & {
     phone: string;
     startDate: string;
     endDate: string;
-}
+};
+
+export type RoomReservationRecord = IRoomReservation & FilterKeys & TypeMeta;
 
 export default class RoomReservation {
-  private reservation :IRoomReservation|null;
+  private reservation: RoomReservationRecord|null;
 
   private dbClient = new DbClient();
 

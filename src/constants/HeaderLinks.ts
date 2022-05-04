@@ -27,11 +27,11 @@ const HeaderLinks = [
         name: 'Restaurant',
         url: '/services/restaurant',
       },
-      {
-        name: 'Réserver',
-        url: '/reserver',
-      },
     ],
+  },
+  {
+    name: 'Réserver',
+    url: '/reserver',
   },
   {
     name: 'Contact',

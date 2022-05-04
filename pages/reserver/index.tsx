@@ -1,8 +1,10 @@
 import Head from 'next/head';
-import AppBanner from '../src/components/Common/AppBanner';
-import ReservationFormManager from '../src/components/Forms/ReservationFormManager';
 
-export default function ReservationLanding() {
+import AppBanner from '../../src/components/Common/AppBanner';
+import IndexReservationForm from '../../src/components/Forms/IndexReservationForm';
+import ReservationFormManager from '../../src/components/Forms/ReservationFormManager';
+
+export default function Reserver() {
   return (
     <div>
       <Head>
@@ -27,7 +29,11 @@ export default function ReservationLanding() {
           },
         ]}
       />
-      <ReservationFormManager />
+      <div className="container">
+        <ReservationFormManager>
+          <IndexReservationForm />
+        </ReservationFormManager>
+      </div>
     </div>
   );
 }

@@ -29,7 +29,7 @@ export default function AppHeader() {
   return (
     <header className="header_area" ref={headerRef}>
       <div className="main_menu">
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-light bg-light pe-10">
           <div className="container">
             <button
               className="navbar-toggler"

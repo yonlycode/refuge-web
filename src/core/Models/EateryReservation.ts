@@ -31,6 +31,7 @@ export default class EateryReservation {
 
   // TODO - finishs this validation rule
   public isValid() :string | null {
+    // TODO - finish this validation rule
     if (!this.reservation) {
       return '';
     }
