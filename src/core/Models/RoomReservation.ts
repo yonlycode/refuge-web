@@ -1,5 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
+
 import DbClient from '../DbClient';
+import InputErrorMessages from '../../constants/InputErrorMessages';
+import { InputValidators } from '../../utils/InputUtils';
 import { FilterKeys, TypeMeta } from './meta';
 
 export type IRoomReservation = {
@@ -17,56 +20,72 @@ export type IRoomReservation = {
 export type RoomReservationRecord = IRoomReservation & FilterKeys & TypeMeta;
 
 export default class RoomReservation {
-  private reservation: RoomReservationRecord|null;
+  private reservationRecord: RoomReservationRecord|null;
+
+  private reservation: IRoomReservation | null;
 
   private dbClient = new DbClient();
 
   constructor(reservation?: IRoomReservation) {
-    this.reservation = !reservation ? null : {
+    this.reservationRecord = !reservation ? null : {
       type: 'ROOM',
       partition_key: uuidv4(),
       filter_key: uuidv4(),
       createdAt: Date.now().toLocaleString('Fr'),
       ...reservation,
     };
+
+    this.reservation = !reservation ? null : { ...reservation };
   }
 
-  public isValid(): string | null {
-    // TODO - finish this validation rule
+  public isValid(){
     if (!this.reservation) {
-      throw new Error('No payload');
+      return 'no payload';
     }
-    if (this.reservation.firstName.length < 3) {
-      return '';
-    }
-    if (this.reservation.lastName.length < 3) {
-      return '';
-    }
-    if (this.reservation.adultCount < 1) {
-      return '';
-    }
-    return null;
+
+    let errors: Partial<Record<keyof IRoomReservation, InputErrorMessages>> = {}
+
+    Object.keys(this.reservation).forEach((el) => {
+      const attrName = el as keyof IRoomReservation;
+      const attrValue = this.reservation![attrName];
+      const error = InputValidators[attrName](attrValue)
+
+      if (error) {
+        errors = {
+          ...errors,
+          [attrName]: error
+        };
+      }
+    })
   }
 
+  // WARNING - Not tested yet
   public async get(config: FilterKeys) {
-    if (!config.filter_key || !config.partition_key) {
+    if (!config.filter_key && !config.partition_key) {
       throw new Error('Bad Payload');
     }
+
     return this.dbClient.read(config);
   }
 
+  // WARNING - Not tested yet
   public mutate(reservation: IRoomReservation) {
-    this.reservation = {
-      ...this.reservation,
+    this.reservationRecord = {
+      ...this.reservationRecord,
       ...reservation,
       updatedAt: Date.now().toLocaleString('Fr'),
     };
+    this.reservation = {
+      ...this.reservation,
+      ...reservation,
+    };
   }
 
+  // WARNING - Not tested yet
   public async save() {
-    if (!this.reservation) {
+    if (!this.reservationRecord) {
       throw new Error('No payload');
     }
-    return this.dbClient.write(this.reservation);
+    return this.dbClient.write(this.reservationRecord);
   }
 }

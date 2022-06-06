@@ -11,9 +11,9 @@ export default function Gallery() {
       </Head>
 
       <AppBanner
-        size="L"
-        title=""
-        subTitle=""
+        size="S"
+        title="Découvrez l'album photo du Refuge"
+        subTitle="Vous"
         breadcrumbs={[
           {
             label: 'Accueil',

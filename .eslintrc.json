@@ -19,7 +19,8 @@
         ],
         "controlComponents": [
           "AppInput",
-          "AppTextarea"
+          "AppTextarea",
+          "AppIncrementCounter"
         ],
         "depth": 3,
       }

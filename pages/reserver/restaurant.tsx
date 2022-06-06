@@ -15,20 +15,17 @@ export default function Restaurant() {
       </Head>
 
       <AppBanner
-        size="S"
-        title="N'attendez plus..."
-        subTitle="Réservez votre séjour de rêve au refuge HULMAN, nous vous attendons"
+        size="L"
+        title="Une envie de vous découvrir nos spécialités? N'attendez plus!"
+        subTitle="Réservez une table au refuge HULMAN en Katimini, dans un cadre magnifique sur la plage du bourg de Saint-Louis."
         breadcrumbs={[
           {
             label: 'Accueil',
             url: '/',
           },
+
           {
             label: 'Réserver',
-            url: '/reserver',
-          },
-          {
-            label: 'Restaurant',
             url: '/reserver/restaurant',
           },
         ]}

@@ -9,6 +9,7 @@ export default function AppToastFactory() {
     dispatch(removeToast(el));
   };
 
+  //TODO - Fix design on different king of toast and probably timeout and click
   return (
     <div id="toast-container" className="toast-container position-fixed bottom-0 end-0 p-3">
       { toasts.map((el) => (
@@ -16,7 +17,7 @@ export default function AppToastFactory() {
           key={`toast-item-${el.message}`}
           className="toast show align-items-center"
           role="alert"
-          data-bs-autohide="false"
+          data-bs-autohide="true"
           aria-live="assertive"
           aria-atomic="true"
         >

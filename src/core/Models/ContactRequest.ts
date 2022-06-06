@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
-import { InputValidators } from '../../utils/InputUtils';
+
 import DbClient from '../DbClient';
+import InputErrorMessages from '../../constants/InputErrorMessages';
+import { InputValidators } from '../../utils/InputUtils';
 import {
   FilterKeys,
   MetaKeys,
@@ -18,67 +20,69 @@ export type IContactRequest = {
 export type ContactRequestRecord = FilterKeys & MetaKeys & IContactRequest & TypeMeta;
 
 export default class ContactRequest {
-  private request: ContactRequestRecord | null;
+  private requestRecord: ContactRequestRecord | null;
+
+  private request: IContactRequest | null;
 
   private dbClient = new DbClient();
 
+  //TODO - handle no request constructor
   constructor(request: IContactRequest) {
-    this.request = {
+    this.requestRecord = {
       partition_key: uuidv4(),
       filter_key: uuidv4(),
       createdAt: Date.now().toLocaleString('Fr'),
       type: 'CONTACT',
       ...request,
     };
+    this.request= { ...request };
   }
 
-  // TODO - finishs this validation rule
-  public isValid(): string | null {
+  public isValid() {
     if (!this.request) {
       return 'no payload';
     }
 
-    const {
-      name,
-      email,
-      message,
-      phone,
-      subject,
-    } = this.request;
+    let errors: Partial<Record<keyof IContactRequest, InputErrorMessages>> = {} 
 
-    if (InputValidators.lastName(name)) {
-      return InputValidators.lastName(name);
-    }
-    if (InputValidators.email(email)) {
-      return InputValidators.email(email);
-    }
-    if (InputValidators.message(message)) {
-      return InputValidators.message(message);
-    }
-    if (InputValidators.phone(phone)) {
-      return InputValidators.phone(phone);
-    }
-    if (InputValidators.subject(subject)) {
-      return InputValidators.subject(subject);
-    }
-    return null;
+    Object.keys(this.request).forEach((el) => {
+      const attrName = el as keyof IContactRequest;
+      const attrValue = this.request![attrName];
+      const error = InputValidators[attrName](attrValue)
+
+      if (error) {
+        errors = {
+          ...errors,
+          [attrName]: error
+        };
+      }
+    })
+
+    return Object.keys(errors).length === 0 ? null : errors;
   }
 
+  // WARNING - Not tested yet
   public mutate(request: IContactRequest) {
-    this.request = {
-      ...this.request,
+    this.requestRecord = {
+      ...this.requestRecord,
       ...request,
       updatedAt: Date.now().toLocaleString('Fr'),
     };
+    this.request = {
+      ...this.request,
+      ...request,
+    };
   }
 
+  // WARNING - Not tested yet
   public async save() {
-    if (!this.request) {
+    if (!this.requestRecord) {
       throw new Error('request empty');
     }
-    return this.dbClient.write(this.request);
+    return this.dbClient.write(this.requestRecord);
   }
 
+  // WARNING - Not tested yet
   public async get(config: FilterKeys) {
     if (!config.filter_key || !config.partition_key) {
       throw new Error('Bad Payload');

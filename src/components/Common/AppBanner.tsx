@@ -8,8 +8,12 @@ interface AppBannerProps {
 }
 
 export default function AppBanner({
-  size, breadcrumbs = [], title = '', subTitle = '',
+  size,
+  breadcrumbs = [],
+  title = '',
+  subTitle = ''
 }: AppBannerProps) {
+
   if (size === 'S') {
     return (
       <section className="banner_area mt-50">
@@ -17,14 +21,17 @@ export default function AppBanner({
           <div className="overlay bg-parallax" />
           <div className="container">
             <div className="banner_content text-center">
-              <h1 className="top-text text-white">
+              <h1 className="top-text text-white mt-25">
                 { title }
               </h1>
-              <div className="page_link">
+              <div className="page_link mt-25">
                 <ul>
-                  { breadcrumbs.map(({ url, label }) => (
+                  { breadcrumbs.map(({ url, label }, index) => (
                     <li key={`breadcrumb-link-${label}`}>
-                      <Link href={url}><a>{label}</a></Link>
+                      {index !== 0 && <span className='text-white'>|&nbsp;</span>}
+                      <Link href={url}>
+                        <a>{label}</a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -35,6 +42,7 @@ export default function AppBanner({
       </section>
     );
   }
+  
   return (
     <section className="home_banner_area">
       <div className="banner_inner d-flex align-items-center">
@@ -46,20 +54,21 @@ export default function AppBanner({
               { title }
             </h1>
             <br />
-            <div className="page_link">
-              <ul>
-                {breadcrumbs.map(({ url, label }) => (
-                  <li key={`breadcrumb-link-${label}`}>
-                    <Link href={url}><a>{label}</a></Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
             <p className="text">
               <em>
                 { subTitle }
               </em>
             </p>
+            <div className="page_link mt-25">
+              <ul>
+                {breadcrumbs.map(({ url, label }, index) => (
+                  <li key={`breadcrumb-link-${label}`}>
+                    {index !== 0 && <span className='text-white'>|&nbsp;</span>}
+                    <Link href={url}><a>{label}</a></Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>

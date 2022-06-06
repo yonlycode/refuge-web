@@ -15,8 +15,8 @@ export default function Gites() {
       </Head>
 
       <AppBanner
-        size="S"
-        title="N'attendez plus..."
+        size="L"
+        title="Une envie de vous dépayser? N'attendez plus!"
         subTitle="Réservez votre séjour de rêve au refuge HULMAN, nous vous attendons"
         breadcrumbs={[
           {
@@ -25,10 +25,6 @@ export default function Gites() {
           },
           {
             label: 'Réserver',
-            url: '/reserver',
-          },
-          {
-            label: 'Gîtes',
             url: '/reserver/gites',
           },
         ]}

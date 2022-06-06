@@ -3,11 +3,12 @@ import { ChangeEvent, FormEvent } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../../store';
 import { mutateEateryReservation, sendEateryReservation } from '../../store/slices/Reservation';
 import { IEateryReservation } from '../../core/Models/EateryReservation';
-import { InputValidators } from '../../utils/InputUtils';
+import { InputFormatters, InputValidators } from '../../utils/InputUtils';
 
 import AppInput from '../Common/AppInput';
 import AppTextarea from '../Common/AppTextarea';
 import AppLoadingBackdrop from '../Common/AppLoadingBackdrop';
+import AppIncrementCounter from '../Common/AppIncrementCounter';
 
 export default function EateryReservationForm() {
   const {
@@ -27,19 +28,35 @@ export default function EateryReservationForm() {
   } = reservation;
 
   const isEateryReservationFormValid = (
+    !InputValidators.customerCount(customerCount) &&
+    !InputValidators.date(date) &&
+    !InputValidators.email(email) &&
     !InputValidators.firstName(firstName) &&
     !InputValidators.lastName(lastName) &&
-    !InputValidators.email(email) &&
-    !InputValidators.phone(phone) &&
-    !InputValidators.message(message)
+    !InputValidators.message(message) &&
+    !InputValidators.phone(phone) 
   )
 
   const handleEateryReservationChange = (
     { currentTarget }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
+    if (currentTarget.name as keyof IEateryReservation === 'phone') {
+      dispatch(mutateEateryReservation({
+        name: currentTarget.name as keyof IEateryReservation,
+        value: InputFormatters.phone.format(currentTarget.value)
+      }))
+      
+      return;
+    }
     dispatch(mutateEateryReservation({
       name: currentTarget.name as keyof IEateryReservation,
       value: currentTarget.value
+    }))
+  }
+  const handleChangeCustomerCount = (value :number) => {
+    dispatch(mutateEateryReservation({
+      name: 'customerCount',
+      value: value
     }))
   }
   const handleEateryReservationSending = async () => {
@@ -64,8 +81,7 @@ export default function EateryReservationForm() {
                 Prénom
                 <AppInput
                   type="text"
-                  className="form-control"
-                  id="firstName"
+                  className="form-control mt-2"
                   name="firstName"
                   value={firstName}
                   onChange={handleEateryReservationChange}
@@ -78,8 +94,7 @@ export default function EateryReservationForm() {
                 Nom
                 <AppInput
                   type="text"
-                  className="form-control"
-                  id="lastName"
+                  className="form-control mt-2"
                   name="lastName"
                   value={lastName}
                   onChange={handleEateryReservationChange}
@@ -92,8 +107,7 @@ export default function EateryReservationForm() {
                 Email
                 <AppInput
                   type="email"
-                  className="form-control"
-                  id="email"
+                  className="form-control mt-2"
                   name="email"
                   placeholder="you@example.com"
                   value={email}
@@ -107,8 +121,7 @@ export default function EateryReservationForm() {
                 Telephone
                 <AppInput
                   type="telephone"
-                  className="form-control"
-                  id="phone"
+                  className="form-control mt-2"
                   name="phone"
                   placeholder="06XXXXXXXX"
                   value={phone}
@@ -119,32 +132,27 @@ export default function EateryReservationForm() {
             </div>
             <div className="col-md-6">
               <label htmlFor="customerCount" className="form-label d-block">
-                Nombre d&apos;adultes
-                <select
-                  className="form-select"
-                  id="customerCount"
+                Nombre de couverts
+                <AppIncrementCounter 
+                  className="form-control"
                   name="customerCount"
-                >
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                </select>
+                  value={customerCount}
+                  onIncrement={handleChangeCustomerCount}
+                  onDecrement={handleChangeCustomerCount}
+                  errorMessage={customerCount !== 0 ? InputValidators.customerCount(customerCount) : null}
+                />
               </label>
-              <div className="invalid-feedback">
-                Un nombre d&apos;adulte est requis.
-              </div>
             </div>
             <div className="col-6">
               <label htmlFor="date" className="form-label d-block">
                 Arrivée
                 <AppInput
                   type="date"
-                  className="form-control"
-                  id="date"
+                  className="form-control mt-2"
                   name="date"
                   value={date}
                   onChange={handleEateryReservationChange}
+                  errorMessage={date !== '' ? InputValidators.date(date) : null}
                 />
               </label>
             </div>
@@ -155,8 +163,7 @@ export default function EateryReservationForm() {
               >
                 Informations complémentaires
                 <AppTextarea
-                  className="form-control d-block"
-                  id="message"
+                  className="form-control mt-2 d-block"
                   name="message"
                   rows={3}
                   value={message}

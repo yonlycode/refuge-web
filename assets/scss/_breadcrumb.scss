@@ -70,7 +70,6 @@
 }
 
 .page_link {
-
   ul {
     list-style: none;
     list-style-type: none;
@@ -80,7 +79,7 @@
     li {
       margin-right: 8px;
         a {
-          font-size: 14px;
+          font-size: 16px;
           color: #fff;
           font-family: $rob;
           margin-right: 32px;
@@ -110,12 +109,12 @@
 .banner_area {
   position: relative;
   z-index: 1;
-  min-height: 300px;
+  min-height: 220px;
   .banner_inner {
     position: relative;
     overflow: hidden;
     width: 100%;
-    min-height: 300px;
+    min-height: 220px;
     background: #000000;
     z-index: 1;
     .overlay {
@@ -142,7 +141,6 @@
         margin-bottom: 0px;
         font-weight: bold;
       }
-
     }
   }
 }

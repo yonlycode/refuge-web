@@ -1,4 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
+import InputErrorMessages from '../../constants/InputErrorMessages';
+import { InputValidators } from '../../utils/InputUtils';
 import DbClient from '../DbClient';
 import { FilterKeys, TypeMeta } from './meta';
 
@@ -15,53 +17,70 @@ export type IEateryReservation = {
 export type EateryReservationRecord = FilterKeys & TypeMeta & IEateryReservation;
 
 export default class EateryReservation {
-  private reservation: EateryReservationRecord|null;
+  private reservationRecord: EateryReservationRecord|null;
+
+  private reservation: IEateryReservation | null;
 
   private dbClient = new DbClient();
 
+  //TODO - handle no reservation constructor
   constructor(reservation: IEateryReservation) {
-    this.reservation = {
+    this.reservationRecord = {
       type: 'EATERY',
       partition_key: uuidv4(),
       filter_key: uuidv4(),
       createdAt: Date.now().toLocaleString('Fr'),
       ...reservation,
     };
+
+    this.reservation = { ...reservation }
   }
 
-  // TODO - finishs this validation rule
-  public isValid() :string | null {
-    // TODO - finish this validation rule
+  public isValid() {
     if (!this.reservation) {
-      return '';
+      return 'no payload';
     }
-    if (this.reservation.firstName.length < 3) {
-      return '';
-    }
-    if (this.reservation.lastName.length < 3) {
-      return '';
-    }
-    if (this.reservation.customerCount < 1) {
-      return '';
-    }
-    return null;
+
+    let errors: Partial<Record<keyof IEateryReservation, InputErrorMessages>> = {} 
+
+    Object.keys(this.reservation).forEach((el) => {
+      const attrName = el as keyof IEateryReservation;
+      const attrValue = this.reservation![attrName];
+      const error = InputValidators[attrName](attrValue)
+
+      if ( error ) {
+        errors = {
+          ...errors,
+          [attrName]: error
+        };
+      }
+    })
+
+    return Object.keys(errors).length === 0 ? null : errors;
   }
 
+  // WARNING - Not tested yet
   public mutate(reservation :IEateryReservation) {
     this.reservation = {
       ...this.reservation,
       ...reservation,
-      updatedAt: Date.now().toLocaleString('Fr'),
     };
+    this.reservationRecord ={
+      ...this.reservationRecord,
+      ...reservation,
+      updatedAt: Date.now().toLocaleString('Fr'),
+    }
   }
 
+  // WARNING - Not tested yet
   public async save() {
-    if (!this.reservation) {
+    if (!this.reservationRecord) {
       throw new Error('reservation empty');
     }
-    return this.dbClient.write(this.reservation);
+    return this.dbClient.write(this.reservationRecord);
   }
 
+  // WARNING - Not tested yet
   public async get(config: FilterKeys) {
     if (!config.filter_key || !config.partition_key) {
       throw new Error('Bad Payload');

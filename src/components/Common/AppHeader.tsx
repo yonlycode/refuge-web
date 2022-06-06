@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-import HeaderLinks from '../../constants/HeaderLinks';
+import { HeaderLinks } from '../../constants/AppLinks';
 
 export default function AppHeader() {
   const { route } = useRouter();

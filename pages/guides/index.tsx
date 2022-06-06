@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import ComingSoon from '../../src/components/ComingSoon';
 import AppBanner from '../../src/components/Common/AppBanner';
 
 export default function GuideLanding() {
@@ -14,7 +15,7 @@ export default function GuideLanding() {
         <meta name="title" content="Refuge HULMAN - Découvrez nos différents guide pour faciliter votre arrivée et votre séjour à Marie-Galante!" />
       </Head>
       <AppBanner
-        size="L"
+        size="S"
         breadcrumbs={[
           {
             label: 'Accueil',
@@ -26,6 +27,8 @@ export default function GuideLanding() {
           },
         ]}
       />
+
+      <ComingSoon/>
     </div>
   );
 }

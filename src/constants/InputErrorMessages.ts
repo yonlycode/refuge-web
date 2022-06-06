@@ -18,8 +18,24 @@ enum InputErrorMessages {
     'emailInvalid' = 'Votre email n\'est pas valide.',
     'emailEmpty' = 'Votre devez renseigner un email.',
 
-    'phoneInvalid' = 'Votre numéro de téléphone est trop court.',
+    'phoneInvalid' = 'Votre numéro de téléphone est invalide.',
     'phoneEmpty' = 'Votre devez renseigner un numéro de téléphone.',
+
+    'startDateInvalid' = 'Date de début de séjour invalide.',
+    'startDateEmpty' = 'Date de début de séjour non renseignée.',
+
+    'dateInvalid' = 'Date de réservation invalide.',
+    'dateEmpty' = 'Date de réservation non renseignée.',
+
+    'endDateInvalid' = 'Date de fin de séjour invalide.',
+    'endDateEmpty' = 'Date de fin de séjour non renseignée.',
+
+    'noAdultCount' = 'Il faut minimum un adulte par reservation.',
+    'noCustomerCount' = 'Il faut minimum un adulte par reservation.',
+
+    'tooMuchAdultCount' = 'Il y a trop d\'enfant par rapport au nombre d\'adulte.',
+    'tooMuchChildrenCount' = 'Il y a trop d\'enfant par rapport au nombre d\'adulte.',
+    'tooMuchCustomerCount' = 'Nous ne pouvons prendre en charge autant de personnes.',
 }
 
 export default InputErrorMessages;

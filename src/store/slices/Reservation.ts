@@ -163,7 +163,7 @@ export const sendEateryReservation = createAsyncThunk(
 export const sendRoomReservation = createAsyncThunk(
   'sendRoomReservation',
   // eslint-disable-next-line consistent-return
-  async (_: {}, { dispatch, getState }) => {
+  async (_: undefined, { dispatch, getState }) => {
     try {
       dispatch(mutateRoomReservationSendingState(true));
       const { reservation } = (getState() as any).reservation.gite;

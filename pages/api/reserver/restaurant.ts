@@ -8,13 +8,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   const request: EateryReservation = new EateryReservation(req.body as IEateryReservation);
-  if (request.isValid() === null) {
-    try {
-      await request.save();
-      return res.status(204).end();
-    } catch (e) {
-      return res.status(400).send(e);
-    }
+
+  const errors = request.isValid()
+  if (errors) {
+    return res.status(400).send(errors);
   }
-  return res.status(400).send('Bad Payload');
+
+  try {
+    await request.save();
+    return res.status(204).end();
+  } catch (e) {
+    return res.status(400).send(e);
+  }
 };

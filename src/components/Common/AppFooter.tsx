@@ -1,10 +1,12 @@
 import Link from 'next/link';
 
-import FooterLinks from '../../constants/FooterLinks';
+import { FooterLinks } from '../../constants/AppLinks';
 
 export default function AppFooter() {
+
   const firstRow = FooterLinks.slice(0, FooterLinks.length / 2);
   const secondRow = FooterLinks.slice(FooterLinks.length / 2);
+
   return (
     <footer className="footer-area section_gap mt-50 text-white">
       <div className="container">
@@ -29,7 +31,6 @@ export default function AppFooter() {
                           {el.name}
                         </a>
                       </Link>
-
                     </li>
                   ))}
                 </ul>
@@ -50,10 +51,8 @@ export default function AppFooter() {
         </div>
         <div className="footer-bottom d-flex justify-content-between align-items-center flex-wrap">
           <div>
-
             <p className="footer-text m-0">
-              Copyright &copy; Le Refuge Sarl
-              {` ${new Date().getFullYear()}`}
+              Copyright &copy; Le Refuge SARL {`${new Date().getFullYear()}`}
             </p>
           </div>
         </div>

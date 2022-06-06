@@ -1,11 +1,5 @@
 export default [
   {
-    name: 'index',
-    label: 'Réservation',
-    url: '/reserver',
-    content: 'fa fa-home',
-  },
-  {
     name: 'room',
     label: 'Réserver un gîte',
     url: '/reserver/gites',
