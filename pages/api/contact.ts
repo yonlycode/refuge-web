@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import ContactRequest, { IContactRequest } from '../../src/core/Models/ContactRequest';
+import ContactRequest, { IContactRequest } from '../../src/core/ContactRequest/ContactRequest';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {

@@ -9,7 +9,7 @@ export default function AppToastFactory() {
     dispatch(removeToast(el));
   };
 
-  //TODO - Fix design on different king of toast and probably timeout and click
+  // TODO - Fix design on different king of toast and probably timeout and click
   return (
     <div id="toast-container" className="toast-container position-fixed bottom-0 end-0 p-3">
       { toasts.map((el) => (

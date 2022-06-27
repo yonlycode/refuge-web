@@ -7,7 +7,7 @@ import {
   FilterKeys,
   MetaKeys,
   TypeMeta,
-} from './meta';
+} from '../meta';
 
 export type IContactRequest = {
     email: string,
@@ -26,7 +26,7 @@ export default class ContactRequest {
 
   private dbClient = new DbClient();
 
-  //TODO - handle no request constructor
+  // TODO - handle no request constructor
   constructor(request: IContactRequest) {
     this.requestRecord = {
       partition_key: uuidv4(),
@@ -35,7 +35,7 @@ export default class ContactRequest {
       type: 'CONTACT',
       ...request,
     };
-    this.request= { ...request };
+    this.request = { ...request };
   }
 
   public isValid() {
@@ -43,20 +43,20 @@ export default class ContactRequest {
       return 'no payload';
     }
 
-    let errors: Partial<Record<keyof IContactRequest, InputErrorMessages>> = {} 
+    let errors: Partial<Record<keyof IContactRequest, InputErrorMessages>> = {};
 
     Object.keys(this.request).forEach((el) => {
       const attrName = el as keyof IContactRequest;
       const attrValue = this.request![attrName];
-      const error = InputValidators[attrName](attrValue)
+      const error = InputValidators[attrName](attrValue);
 
       if (error) {
         errors = {
           ...errors,
-          [attrName]: error
+          [attrName]: error,
         };
       }
-    })
+    });
 
     return Object.keys(errors).length === 0 ? null : errors;
   }

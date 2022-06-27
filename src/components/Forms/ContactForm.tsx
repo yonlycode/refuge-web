@@ -9,9 +9,10 @@ import {
   mutateContactRequest,
   sendContactRequest,
 } from '../../store/slices/Contact';
+
 import { InputValidators } from '../../utils/InputUtils';
 
-import { IContactRequest } from '../../core/Models/ContactRequest';
+import { IContactRequest } from '../../core/ContactRequest/ContactRequest';
 import AppLoadingBackdrop from '../Common/AppLoadingBackdrop';
 import AppInput from '../Common/AppInput';
 import AppTextarea from '../Common/AppTextarea';
@@ -31,7 +32,6 @@ export default function ContactForm() {
     subject,
   } = request;
 
-
   const isContactFormValid = (
     !InputValidators.lastName(name)
     && !InputValidators.email(email)
@@ -42,7 +42,7 @@ export default function ContactForm() {
 
   const handleChangeContactForm = ({
     currentTarget,
-  }: ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
+  }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     dispatch(mutateContactRequest({
       name: currentTarget.name as keyof IContactRequest,
       value: currentTarget.value,
@@ -50,14 +50,12 @@ export default function ContactForm() {
   };
 
   const handleSubmitContactRequest = async () => {
-    if (isContactFormValid) {
-      await dispatch(sendContactRequest({}));
-    }
+    if (isContactFormValid) { await dispatch(sendContactRequest()); }
   };
 
   return (
     <>
-      { isRequestSending && <AppLoadingBackdrop />}
+      {isRequestSending && <AppLoadingBackdrop />}
       <section className="contact_area section_gap">
         <div className="container">
           <div className="row">

@@ -13,7 +13,6 @@ export default function Restaurant() {
         </title>
         <meta name="title" content="Refuge HULMAN – Réserver son séjour de rêve à Marie-Galante" />
       </Head>
-
       <AppBanner
         size="L"
         title="Une envie de vous découvrir nos spécialités? N'attendez plus!"

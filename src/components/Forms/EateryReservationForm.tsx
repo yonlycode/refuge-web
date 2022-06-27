@@ -1,14 +1,16 @@
 import { ChangeEvent, FormEvent } from 'react';
 
+import { IEateryReservation } from '../../core/ReservationRequest/EateryReservation';
+
 import { RootState, useAppDispatch, useAppSelector } from '../../store';
 import { mutateEateryReservation, sendEateryReservation } from '../../store/slices/Reservation';
-import { IEateryReservation } from '../../core/Models/EateryReservation';
-import { InputFormatters, InputValidators } from '../../utils/InputUtils';
 
 import AppInput from '../Common/AppInput';
 import AppTextarea from '../Common/AppTextarea';
 import AppLoadingBackdrop from '../Common/AppLoadingBackdrop';
 import AppIncrementCounter from '../Common/AppIncrementCounter';
+
+import { InputFormatters, InputValidators } from '../../utils/InputUtils';
 
 export default function EateryReservationForm() {
   const {
@@ -24,49 +26,49 @@ export default function EateryReservationForm() {
     firstName,
     lastName,
     message,
-    phone
+    phone,
   } = reservation;
 
   const isEateryReservationFormValid = (
-    !InputValidators.customerCount(customerCount) &&
-    !InputValidators.date(date) &&
-    !InputValidators.email(email) &&
-    !InputValidators.firstName(firstName) &&
-    !InputValidators.lastName(lastName) &&
-    !InputValidators.message(message) &&
-    !InputValidators.phone(phone) 
-  )
+    !InputValidators.customerCount(customerCount)
+    && !InputValidators.date(date)
+    && !InputValidators.email(email)
+    && !InputValidators.firstName(firstName)
+    && !InputValidators.lastName(lastName)
+    && !InputValidators.message(message)
+    && !InputValidators.phone(phone)
+  );
 
   const handleEateryReservationChange = (
-    { currentTarget }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    { currentTarget }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     if (currentTarget.name as keyof IEateryReservation === 'phone') {
       dispatch(mutateEateryReservation({
         name: currentTarget.name as keyof IEateryReservation,
-        value: InputFormatters.phone.format(currentTarget.value)
-      }))
-      
+        value: InputFormatters.phone.format(currentTarget.value),
+      }));
+
       return;
     }
     dispatch(mutateEateryReservation({
       name: currentTarget.name as keyof IEateryReservation,
-      value: currentTarget.value
-    }))
-  }
+      value: currentTarget.value,
+    }));
+  };
   const handleChangeCustomerCount = (value :number) => {
     dispatch(mutateEateryReservation({
       name: 'customerCount',
-      value: value
-    }))
-  }
+      value,
+    }));
+  };
   const handleEateryReservationSending = async () => {
     if (isEateryReservationFormValid) {
-      await dispatch(sendEateryReservation())
+      await dispatch(sendEateryReservation());
     }
-  }
+  };
   const handleEateryReservationSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-  }
+  };
 
   return (
     <>
@@ -133,13 +135,15 @@ export default function EateryReservationForm() {
             <div className="col-md-6">
               <label htmlFor="customerCount" className="form-label d-block">
                 Nombre de couverts
-                <AppIncrementCounter 
+                <AppIncrementCounter
                   className="form-control"
                   name="customerCount"
                   value={customerCount}
                   onIncrement={handleChangeCustomerCount}
                   onDecrement={handleChangeCustomerCount}
-                  errorMessage={customerCount !== 0 ? InputValidators.customerCount(customerCount) : null}
+                  errorMessage={customerCount !== 0
+                    ? InputValidators.customerCount(customerCount)
+                    : null}
                 />
               </label>
             </div>

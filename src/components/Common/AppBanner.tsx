@@ -11,9 +11,8 @@ export default function AppBanner({
   size,
   breadcrumbs = [],
   title = '',
-  subTitle = ''
+  subTitle = '',
 }: AppBannerProps) {
-
   if (size === 'S') {
     return (
       <section className="banner_area mt-50">
@@ -28,7 +27,7 @@ export default function AppBanner({
                 <ul>
                   { breadcrumbs.map(({ url, label }, index) => (
                     <li key={`breadcrumb-link-${label}`}>
-                      {index !== 0 && <span className='text-white'>|&nbsp;</span>}
+                      {index !== 0 && <span className="text-white">|&nbsp;</span>}
                       <Link href={url}>
                         <a>{label}</a>
                       </Link>
@@ -42,7 +41,7 @@ export default function AppBanner({
       </section>
     );
   }
-  
+
   return (
     <section className="home_banner_area">
       <div className="banner_inner d-flex align-items-center">
@@ -63,7 +62,7 @@ export default function AppBanner({
               <ul>
                 {breadcrumbs.map(({ url, label }, index) => (
                   <li key={`breadcrumb-link-${label}`}>
-                    {index !== 0 && <span className='text-white'>|&nbsp;</span>}
+                    {index !== 0 && <span className="text-white">|&nbsp;</span>}
                     <Link href={url}><a>{label}</a></Link>
                   </li>
                 ))}

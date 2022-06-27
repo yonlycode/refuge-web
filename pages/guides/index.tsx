@@ -1,6 +1,7 @@
 import Head from 'next/head';
-import ComingSoon from '../../src/components/ComingSoon';
+
 import AppBanner from '../../src/components/Common/AppBanner';
+import ComingSoon from '../../src/components/ComingSoon';
 
 export default function GuideLanding() {
   return (
@@ -16,6 +17,7 @@ export default function GuideLanding() {
       </Head>
       <AppBanner
         size="S"
+        title=""
         breadcrumbs={[
           {
             label: 'Accueil',
@@ -27,8 +29,7 @@ export default function GuideLanding() {
           },
         ]}
       />
-
-      <ComingSoon/>
+      <ComingSoon />
     </div>
   );
 }

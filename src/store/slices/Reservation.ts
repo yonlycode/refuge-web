@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 
-import { IEateryReservation } from '../../core/Models/EateryReservation';
-import { IRoomReservation } from '../../core/Models/RoomReservation';
+import { IEateryReservation } from '../../core/ReservationRequest/EateryReservation';
+import { IRoomReservation } from '../../core/ReservationRequest/RoomReservation';
 import { createToast } from './Layout';
 
 interface ReservationState {
@@ -39,7 +39,7 @@ const initialState: ReservationState = {
       message: '',
     },
     isSending: false,
-    
+
   },
   room: {
     reservation: {
@@ -61,7 +61,10 @@ export const reservationSlice = createSlice({
   name: 'reservation',
   initialState,
   reducers: {
-    mutateEateryReservation(state, { payload }: PayloadAction<MutateEateryPayload>): ReservationState {
+    mutateEateryReservation(
+      state,
+      { payload }: PayloadAction<MutateEateryPayload>,
+    ): ReservationState {
       return {
         ...state,
         eatery: {
@@ -69,16 +72,19 @@ export const reservationSlice = createSlice({
           reservation: {
             ...state.eatery.reservation,
             [payload.name]: payload.value,
-          }
+          },
         },
       };
     },
-    mutateEateryReservationSendingState(state, { payload }: PayloadAction<boolean>): ReservationState {
+    mutateEateryReservationSendingState(
+      state,
+      { payload }: PayloadAction<boolean>,
+    ): ReservationState {
       return {
         ...state,
         eatery: {
           ...state.eatery,
-          isSending: payload
+          isSending: payload,
         },
       };
     },
@@ -90,31 +96,34 @@ export const reservationSlice = createSlice({
           reservation: {
             ...state.room.reservation,
             [payload.name]: payload.value,
-          }
+          },
         },
       };
     },
-    mutateRoomReservationSendingState(state, { payload }: PayloadAction<boolean>): ReservationState {
+    mutateRoomReservationSendingState(
+      state,
+      { payload }: PayloadAction<boolean>,
+    ): ReservationState {
       return {
         ...state,
         room: {
           ...state.room,
-          isSending: payload
+          isSending: payload,
         },
       };
     },
     resetEateryReservation(state): ReservationState {
       return {
         ...state,
-        eatery: initialState.eatery
-      }
+        eatery: initialState.eatery,
+      };
     },
     resetRoomReservation(state): ReservationState {
       return {
         ...state,
-        room: initialState.room
-      }
-    }
+        room: initialState.room,
+      };
+    },
   },
   extraReducers: (builder) => {
     // eslint-disable-next-line no-use-before-define
@@ -124,13 +133,13 @@ export const reservationSlice = createSlice({
   },
 });
 
-export const { 
+export const {
   mutateEateryReservation,
   mutateRoomReservation,
   mutateEateryReservationSendingState,
   mutateRoomReservationSendingState,
   resetEateryReservation,
-  resetRoomReservation
+  resetRoomReservation,
 } = reservationSlice.actions;
 
 export const sendEateryReservation = createAsyncThunk(

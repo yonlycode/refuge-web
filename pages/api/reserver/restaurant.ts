@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import EateryReservation, { IEateryReservation } from '../../../src/core/Models/EateryReservation';
+import EateryReservation, { IEateryReservation } from '../../../src/core/ReservationRequest/EateryReservation';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
@@ -9,7 +9,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
   const request: EateryReservation = new EateryReservation(req.body as IEateryReservation);
 
-  const errors = request.isValid()
+  const errors = request.isValid();
   if (errors) {
     return res.status(400).send(errors);
   }

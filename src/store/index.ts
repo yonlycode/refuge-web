@@ -3,12 +3,14 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import Layout from './slices/Layout';
 import Reservation from './slices/Reservation';
 import Contact from './slices/Contact';
+import Gallery from './slices/Gallery';
 
 export const store = configureStore({
   reducer: {
-    reservation: Reservation,
-    layout: Layout,
     contact: Contact,
+    gallery: Gallery,
+    layout: Layout,
+    reservation: Reservation,
   },
 });
 

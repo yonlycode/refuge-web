@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import DbClient from '../DbClient';
 import InputErrorMessages from '../../constants/InputErrorMessages';
 import { InputValidators } from '../../utils/InputUtils';
-import { FilterKeys, TypeMeta } from './meta';
+import { FilterKeys, TypeMeta } from '../meta';
 
 export type IRoomReservation = {
     firstName: string;
@@ -38,25 +38,25 @@ export default class RoomReservation {
     this.reservation = !reservation ? null : { ...reservation };
   }
 
-  public isValid(){
+  public isValid() :void {
     if (!this.reservation) {
-      return 'no payload';
+      throw new Error('no payload');
     }
 
-    let errors: Partial<Record<keyof IRoomReservation, InputErrorMessages>> = {}
+    let errors: Partial<Record<keyof IRoomReservation, InputErrorMessages>> = {};
 
     Object.keys(this.reservation).forEach((el) => {
       const attrName = el as keyof IRoomReservation;
       const attrValue = this.reservation![attrName];
-      const error = InputValidators[attrName](attrValue)
+      const error = InputValidators[attrName](attrValue);
 
       if (error) {
         errors = {
           ...errors,
-          [attrName]: error
+          [attrName]: error,
         };
       }
-    })
+    });
   }
 
   // WARNING - Not tested yet

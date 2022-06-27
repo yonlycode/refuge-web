@@ -9,7 +9,6 @@ export default function Gallery() {
         <title> Refuge HULMAN – Visitez notre galerie photo </title>
         <meta name="title" content="Refuge HULMAN – Visitez notre galerie photo" />
       </Head>
-
       <AppBanner
         size="S"
         title="Découvrez l'album photo du Refuge"

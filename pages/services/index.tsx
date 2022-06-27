@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import ComingSoon from '../../src/components/ComingSoon';
 import AppBanner from '../../src/components/Common/AppBanner';
 
 export default function ServicesLanding() {
@@ -9,11 +10,11 @@ export default function ServicesLanding() {
           Refuge HULMAN,-
           Découvrez nos différents services pour vous faire passer le meilleur moment possible!
         </title>
-
         <meta name="title" content="Refuge HULMAN,- Découvrez nos différents services pour vous faire passer le meilleur moment possible!" />
       </Head>
       <AppBanner
-        size="L"
+        size="S"
+        title="Découvrez nos différent services."
         breadcrumbs={[
           {
             label: 'Accueil',
@@ -25,6 +26,7 @@ export default function ServicesLanding() {
           },
         ]}
       />
+      <ComingSoon />
     </div>
   );
 }

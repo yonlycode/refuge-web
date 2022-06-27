@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 
-import { IContactRequest } from '../../core/Models/ContactRequest';
+import { IContactRequest } from '../../core/ContactRequest/ContactRequest';
 import { createToast } from './Layout';
 
 export type ContactState = {
@@ -25,7 +25,7 @@ const initialState: ContactState = {
 };
 
 export const contactSlice = createSlice({
-  name: 'reservation',
+  name: 'contact',
   initialState,
   reducers: {
     resetContactRequest(): ContactState {
@@ -65,7 +65,7 @@ export const {
 export const sendContactRequest = createAsyncThunk(
   'sendContactRequest',
   // eslint-disable-next-line consistent-return
-  async (_: {}, { dispatch, getState }) => {
+  async (_, { dispatch, getState }) => {
     try {
       dispatch(mutateContactRequestSendingState(true));
       const { request } = (getState() as any).contact;

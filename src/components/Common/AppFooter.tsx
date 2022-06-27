@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { FooterLinks } from '../../constants/AppLinks';
 
 export default function AppFooter() {
-
   const firstRow = FooterLinks.slice(0, FooterLinks.length / 2);
   const secondRow = FooterLinks.slice(FooterLinks.length / 2);
 
@@ -52,7 +51,9 @@ export default function AppFooter() {
         <div className="footer-bottom d-flex justify-content-between align-items-center flex-wrap">
           <div>
             <p className="footer-text m-0">
-              Copyright &copy; Le Refuge SARL {`${new Date().getFullYear()}`}
+              Copyright &copy; Le Refuge SARL
+              {' '}
+              {`${new Date().getFullYear()}`}
             </p>
           </div>
         </div>

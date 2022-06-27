@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import InputErrorMessages from '../../constants/InputErrorMessages';
 import { InputValidators } from '../../utils/InputUtils';
 import DbClient from '../DbClient';
-import { FilterKeys, TypeMeta } from './meta';
+import { FilterKeys, TypeMeta } from '../meta';
 
 export type IEateryReservation = {
   firstName: string,
@@ -23,7 +23,7 @@ export default class EateryReservation {
 
   private dbClient = new DbClient();
 
-  //TODO - handle no reservation constructor
+  // TODO - handle no reservation constructor
   constructor(reservation: IEateryReservation) {
     this.reservationRecord = {
       type: 'EATERY',
@@ -33,7 +33,7 @@ export default class EateryReservation {
       ...reservation,
     };
 
-    this.reservation = { ...reservation }
+    this.reservation = { ...reservation };
   }
 
   public isValid() {
@@ -41,20 +41,20 @@ export default class EateryReservation {
       return 'no payload';
     }
 
-    let errors: Partial<Record<keyof IEateryReservation, InputErrorMessages>> = {} 
+    let errors: Partial<Record<keyof IEateryReservation, InputErrorMessages>> = {};
 
     Object.keys(this.reservation).forEach((el) => {
       const attrName = el as keyof IEateryReservation;
       const attrValue = this.reservation![attrName];
-      const error = InputValidators[attrName](attrValue)
+      const error = InputValidators[attrName](attrValue);
 
-      if ( error ) {
+      if (error) {
         errors = {
           ...errors,
-          [attrName]: error
+          [attrName]: error,
         };
       }
-    })
+    });
 
     return Object.keys(errors).length === 0 ? null : errors;
   }
@@ -65,11 +65,11 @@ export default class EateryReservation {
       ...this.reservation,
       ...reservation,
     };
-    this.reservationRecord ={
+    this.reservationRecord = {
       ...this.reservationRecord,
       ...reservation,
       updatedAt: Date.now().toLocaleString('Fr'),
-    }
+    };
   }
 
   // WARNING - Not tested yet

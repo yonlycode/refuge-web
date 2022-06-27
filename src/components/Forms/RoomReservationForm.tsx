@@ -1,12 +1,12 @@
-import { ChangeEvent, FormEvent } from "react";
-import { IRoomReservation } from "../../core/Models/RoomReservation";
-import { RootState, useAppDispatch, useAppSelector } from "../../store";
-import { mutateRoomReservation, sendRoomReservation } from "../../store/slices/Reservation";
-import { InputFormatters, InputValidators } from "../../utils/InputUtils";
-import AppIncrementCounter from "../Common/AppIncrementCounter";
-import AppInput from "../Common/AppInput";
-import AppLoadingBackdrop from "../Common/AppLoadingBackdrop";
-import AppTextarea from "../Common/AppTextarea";
+import { ChangeEvent, FormEvent } from 'react';
+import { IRoomReservation } from '../../core/ReservationRequest/RoomReservation';
+import { RootState, useAppDispatch, useAppSelector } from '../../store';
+import { mutateRoomReservation, sendRoomReservation } from '../../store/slices/Reservation';
+import { InputFormatters, InputValidators } from '../../utils/InputUtils';
+import AppIncrementCounter from '../Common/AppIncrementCounter';
+import AppInput from '../Common/AppInput';
+import AppLoadingBackdrop from '../Common/AppLoadingBackdrop';
+import AppTextarea from '../Common/AppTextarea';
 
 export default function RoomReservationForm() {
   const {
@@ -24,74 +24,74 @@ export default function RoomReservationForm() {
     firstName,
     lastName,
     message,
-    phone
+    phone,
   } = reservation;
 
   const isRoomReservationFormValid = (
-    !InputValidators.adultCount(adultCount) &&
-    !InputValidators.childrenCount(childrenCount) &&
-    !InputValidators.startDate(startDate) &&
-    !InputValidators.endDate(endDate) &&
-    !InputValidators.email(email) &&
-    !InputValidators.firstName(firstName) &&
-    !InputValidators.lastName(lastName) &&
-    !InputValidators.message(message) &&
-    !InputValidators.phone(phone)
-  )
+    !InputValidators.adultCount(adultCount)
+    && !InputValidators.childrenCount(childrenCount)
+    && !InputValidators.startDate(startDate)
+    && !InputValidators.endDate(endDate)
+    && !InputValidators.email(email)
+    && !InputValidators.firstName(firstName)
+    && !InputValidators.lastName(lastName)
+    && !InputValidators.message(message)
+    && !InputValidators.phone(phone)
+  );
 
   const handleRoomReservationChange = (
-    { currentTarget }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    { currentTarget }: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     if (currentTarget.name as keyof IRoomReservation === 'phone') {
       dispatch(mutateRoomReservation({
         name: currentTarget.name as keyof IRoomReservation,
-        value: InputFormatters.phone.format(currentTarget.value)
-      }))
+        value: InputFormatters.phone.format(currentTarget.value),
+      }));
 
       return;
     }
     dispatch(mutateRoomReservation({
       name: currentTarget.name as keyof IRoomReservation,
-      value: currentTarget.value
-    }))
-  }
+      value: currentTarget.value,
+    }));
+  };
   const handleChangeAdultCount = (value: number) => {
     dispatch(mutateRoomReservation({
       name: 'adultCount',
-      value: value
-    }))
-  }
+      value,
+    }));
+  };
   const handleChangeChildrenCount = (value: number) => {
     dispatch(mutateRoomReservation({
       name: 'childrenCount',
-      value: value
+      value,
     }));
-  }
+  };
   const handleRoomReservationSending = async () => {
     if (isRoomReservationFormValid) {
       await dispatch(sendRoomReservation());
     }
-  }
+  };
   const handleRoomReservationSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleRoomReservationSending();
-  }
+  };
 
   return (
     <>
       { isSending && <AppLoadingBackdrop />}
       <div className="container-fluid border rounded shadow-lg p-5 bg-body">
         <h2 className="mb-3 text-center m-1">
-          Réserver une chambre: 
+          Réserver une chambre:
         </h2>
-        <form 
+        <form
           className="needs-validation"
           onSubmit={handleRoomReservationSubmit}
         >
           <div className="row g-3">
             <div className="col-sm-6">
-              <label 
-                htmlFor="firstName" 
+              <label
+                htmlFor="firstName"
                 className="form-label d-block"
               >
                 Prénom
@@ -100,12 +100,13 @@ export default function RoomReservationForm() {
                   className="form-control"
                   name="firstName"
                   onChange={handleRoomReservationChange}
+                  value={firstName}
                 />
               </label>
             </div>
             <div className="col-sm-6">
-              <label 
-                htmlFor="lastName" 
+              <label
+                htmlFor="lastName"
                 className="form-label d-block"
               >
                 Nom
@@ -114,12 +115,13 @@ export default function RoomReservationForm() {
                   className="form-control"
                   name="lastName"
                   onChange={handleRoomReservationChange}
+                  value={lastName}
                 />
               </label>
             </div>
             <div className="col-6">
-              <label 
-                htmlFor="email" 
+              <label
+                htmlFor="email"
                 className="form-label d-block"
               >
                 Email
@@ -127,14 +129,15 @@ export default function RoomReservationForm() {
                   type="email"
                   className="form-control"
                   name="email"
+                  value={email}
                   placeholder="you@example.com"
                   onChange={handleRoomReservationChange}
                 />
               </label>
             </div>
             <div className="col-6">
-              <label 
-                htmlFor="phone" 
+              <label
+                htmlFor="phone"
                 className="form-label d-block"
               >
                 Telephone
@@ -142,14 +145,15 @@ export default function RoomReservationForm() {
                   type="telephone"
                   className="form-control"
                   name="phone"
+                  value={phone}
                   placeholder="06XXXXXXXX"
                   onChange={handleRoomReservationChange}
                 />
               </label>
             </div>
             <div className="col-md-6">
-              <label 
-                htmlFor="adultCount" 
+              <label
+                htmlFor="adultCount"
                 className="form-label d-block"
               >
                 Nombre d&apos;adultes
@@ -165,8 +169,8 @@ export default function RoomReservationForm() {
               </label>
             </div>
             <div className="col-md-6">
-              <label 
-                htmlFor="childrenCount" 
+              <label
+                htmlFor="childrenCount"
                 className="form-label d-block"
               >
                 Nombre d&apos;enfants
@@ -177,7 +181,8 @@ export default function RoomReservationForm() {
                   value={childrenCount}
                   onIncrement={handleChangeChildrenCount}
                   onDecrement={handleChangeChildrenCount}
-                  errorMessage={childrenCount !== 0 ? InputValidators.childrenCount(childrenCount) : null}
+                  errorMessage={childrenCount !== 0
+                    ? InputValidators.childrenCount(childrenCount) : null}
                 />
               </label>
             </div>
@@ -188,6 +193,8 @@ export default function RoomReservationForm() {
                   type="date"
                   className="form-control"
                   name="startDate"
+                  min={Date.now()}
+                  value={startDate}
                   onChange={handleRoomReservationChange}
                 />
               </label>
@@ -199,6 +206,8 @@ export default function RoomReservationForm() {
                   type="date"
                   className="form-control"
                   name="endDate"
+                  value={endDate}
+                  min={startDate}
                   onChange={handleRoomReservationChange}
                 />
               </label>
@@ -210,19 +219,20 @@ export default function RoomReservationForm() {
                   className="form-control"
                   id="message"
                   name="message"
+                  value={message}
                   rows={3}
                   onChange={handleRoomReservationChange}
                 />
               </label>
             </div>
           </div>
-          <button 
-            className="w-100 btn btn-primary btn-lg mt-25" 
+          <button
+            className="w-100 btn btn-primary btn-lg mt-25"
             type="submit"
             onClick={handleRoomReservationSending}
             disabled={isSending || !isRoomReservationFormValid}
           >
-            {isSending ? 'Envoie en cours...' :  'Envoyer'}
+            {isSending ? 'Envoie en cours...' : 'Envoyer'}
           </button>
         </form>
       </div>

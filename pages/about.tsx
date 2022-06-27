@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import ComingSoon from '../src/components/ComingSoon';
 import AppBanner from '../src/components/Common/AppBanner';
 
 export default function About() {
@@ -23,6 +24,7 @@ export default function About() {
           },
         ]}
       />
+      <ComingSoon />
     </div>
   );
 }
