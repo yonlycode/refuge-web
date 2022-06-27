@@ -13,6 +13,9 @@
     .row {
         margin: 0;
     }
+    label {
+        display: block;
+    }
     .col-lg-3 {
         padding: 30px 0;
         &:nth-child(3),
@@ -90,6 +93,35 @@
 /* End Booking Area css
 ============================================================================================ */
 
+/* Backdrop Area css
+============================================================================================ */
+
+#backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999999;
+    background-color: rgb(0, 0, 0, 0.2);
+
+    .text-center {
+        width: 100%;
+        position: relative;
+        height: 100%;
+    }
+    
+    .spinner-border {
+        display: block;
+        position: fixed;
+        top: calc(50% - (58px / 2));
+        right: calc(50% - (58px / 2));
+        color: primary;
+    }
+}
+/* End Backdrop Area css
+============================================================================================ */
+
 /* About Area css
 ============================================================================================ */
 
@@ -115,6 +147,42 @@
     }
 }
 /* End About Area css
+============================================================================================ */
+
+/* Increment counter Area css
+============================================================================================ */
+    .input-increment-counter {
+        display:flex;
+        width: 100%;
+
+        a.control {
+            width: 10%;
+            height: 34px;
+            background: #f2f2f2;
+            border-radius: 4px;
+            padding: 8px 5px 8px 5px;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            justify-content: center;
+            &:focus {
+                text-decoration: none;
+            }
+        }
+        
+        input {
+            height: 34px;
+            width: 80%;
+            text-align: center;
+            font-size: 26px;
+            border-radius: 4px;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
+
+/* End Increment counter css
 ============================================================================================ */
 
 /* Our Room Area css
@@ -166,12 +234,21 @@
 /* Gallery Area css
 ============================================================================================ */
 .gallery_area {
-    .gallery-filter {
-        display: none;
+
+    .filters-content {
+        > div > div {
+            background-color: rgb(0, 0, 0, 0.6);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     }
+    
     .single-gallery {
         margin-bottom: 30px;
         position: relative;
+        img
         .overlay {
             @include transition();
         }
@@ -192,6 +269,40 @@
             .icon {
                 top: 50%;
                 opacity: 1;
+            }
+        }
+    }
+
+    .filters {
+        text-align: center;
+        margin-top: 50px;
+        ul {
+            padding: 0;
+            li {
+                list-style: none;
+                display: inline-block;
+                padding: 20px 30px;
+                cursor: pointer;
+                position: relative;
+                a {
+                    text-decoration: none;
+                }
+                &:after {
+                    content: "";
+                    display: block;
+                    width: calc(0% - 60px);
+                    position: absolute;
+                    height: 2px;
+                    background: $primary;
+                    transition: width 350ms ease-out;
+                }
+                &:hover:after {
+                    width: calc(100% - 60px);
+                    transition: width 350ms ease-out;
+                }
+                &.active:after {
+                    width: calc(100% - 60px);
+                }
             }
         }
     }

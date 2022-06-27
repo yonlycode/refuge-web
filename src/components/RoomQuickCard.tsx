@@ -25,7 +25,7 @@ export default function RoomQuickCard() {
         <div className="row align-items-center">
           <div className="col-lg-6">
             <div className="room_left">
-              <img className="img-fluid" src="/assets/images/gites/emeraude/chambre.jpg" alt="" />
+              <img className="img-fluid" loading="lazy" src="/assets/images/gites/emeraude/chambre.jpg" alt="" />
             </div>
           </div>
           <div className="col-lg-6">
@@ -62,7 +62,7 @@ export default function RoomQuickCard() {
                   </div>
                 </div>
                 <Link href="/services/gite">
-                  <a className="btn btn-outline-primary">Voir plus</a>
+                  <a className="btn btn-outline-primary mt-5">Voir plus</a>
                 </Link>
               </div>
             </div>

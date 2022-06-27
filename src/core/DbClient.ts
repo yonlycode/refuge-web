@@ -32,11 +32,10 @@ const translateConfig = { marshallOptions, unmarshallOptions };
 export default class DbClient {
   private DbClient: DynamoDBDocumentClient;
 
-  private tableName: string;
+  private tableName = 'refugehulman';
 
-  constructor(tableName?: tableNames) {
+  constructor() {
     const dynamoClient = new DynamoDBClient({ region: ProjectConfig.REGION });
-    this.tableName = tableName ?? 'refugehulman';
     this.DbClient = DynamoDBDocumentClient.from(dynamoClient, translateConfig);
   }
 
@@ -68,7 +67,3 @@ export default class DbClient {
     }));
   }
 }
-
-export const ReservationsClient = new DbClient('refugehulman');
-
-export const ContactClient = new DbClient('refugehulman-contact');

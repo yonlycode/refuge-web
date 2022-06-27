@@ -20,8 +20,12 @@ deploy:
 	@scp -Ci $(CERT_KEY) ./package.json ./package-lock.json $(TARGET)
 	@scp -Ci $(CERT_KEY) ./.env $(TARGET)
 
-	@echo "===== Install Dependencies ====="
+	@echo "===== Install Remote Dependencies ====="
 	@ssh -i $(CERT_KEY)  -t $(USER)@$(HOST) 'cd $(ROOT_DIR) && npm ci --production'
 
-	@echo "===== Restart Service ====="
+	@echo "===== Restart Remote Service ====="
 	@ssh -i $(CERT_KEY) -t $(USER)@$(HOST) 'sudo systemctl restart refuge-web'
+
+clean: 
+	@echo "===== Clean Application ====="
+	@rm -rf node_modules .next

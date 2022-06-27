@@ -1,9 +1,5 @@
 /*============== contact_area css ================*/
-#map{
-    height: 400px;
-    width: 800px;
-    margin-bottom: 80px;
-}
+
 .contact_info{
     .info_item{
         position: relative;
@@ -42,7 +38,6 @@
             font-size: 13px;
             line-height: 26px;
             color: #999;
-            border: 1px solid #eeeeee;
             font-family: $rob;
             border-radius: 0px;
             padding-left: 20px;
@@ -60,9 +55,5 @@
                 height: 100%;
             }
         }
-    }
-    .submit_btn{
-        margin-top: 20px;
-        cursor: pointer;
     }
 }

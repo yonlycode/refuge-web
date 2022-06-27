@@ -2,18 +2,16 @@ import Link from 'next/link';
 
 export default function AboutUs() {
   return (
-    <section className="about_area section_gap">
+    <section className="about_area section_gap_top">
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
             <div className="main_title">
               <div className="top-part">
-                <p>Georges et Fortuna vous accueillent au REFUGE Hulman </p>
+                <h1>Georges et Fortuna vous accueillent au REFUGE Hulman </h1>
               </div>
               <h2>
-                Georges et Fortuna vous accueillent au
-                <br />
-                REFUGE Hulman
+                Bienvenue dans un cadre de rêve entre ruralité et modernité.
               </h2>
               <div className="bottom_part">
                 <p>
@@ -57,8 +55,8 @@ export default function AboutUs() {
                   de la mer et plumets argentés de cannes à sucre.
                 </p>
               </div>
-              <Link href="/reserver">
-                <a className="btn btn-primary mt-45">RÉSERVER</a>
+              <Link href="/about">
+                <a className="btn btn-primary mt-45 ps-5 pe-5">En savoir plus</a>
               </Link>
             </div>
           </div>

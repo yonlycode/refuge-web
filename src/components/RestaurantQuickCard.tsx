@@ -24,7 +24,6 @@ export default function RestaurantQuickCard() {
         </div>
         <div className="row align-items-center">
           <div className="col-lg-6">
-
             <div>
               <div className="room_right">
                 <h1 className="type">
@@ -51,14 +50,14 @@ export default function RestaurantQuickCard() {
                   </div>
                 </div>
                 <Link href="/services/restaurant">
-                  <a className="btn btn-outline-secondary">Voir plus</a>
+                  <a className="btn btn-outline-secondary mt-5">Voir plus</a>
                 </Link>
               </div>
             </div>
           </div>
           <div className="col-lg-6">
             <div className="room_left">
-              <img className="img-fluid" src="/assets/images/katimini/katimini4.jpeg" alt="" />
+              <img className="img-fluid" loading="lazy" src="/assets/images/katimini/katimini4.jpeg" alt="" />
             </div>
           </div>
         </div>
