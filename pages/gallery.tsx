@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import AppBanner from '../src/components/Common/AppBanner';
 import AppGallery from '../src/components/AppGallery';
+import GalleryLightBox from '../src/components/GalleryLightBox';
 
 export default function Gallery() {
   return (
@@ -25,6 +26,7 @@ export default function Gallery() {
         ]}
       />
       <AppGallery />
+      <GalleryLightBox />
     </div>
   );
 }

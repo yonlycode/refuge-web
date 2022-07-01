@@ -7,13 +7,20 @@ import { PaginatedData } from '../../core/Pagination/PaginatedData';
 import { createToast } from './Layout';
 
 export type GalleryStateOptions = {
-    page: number,
-    perPage: number,
-    tags: GalleryTags | null
+  page: number;
+  perPage: number;
+  tags: GalleryTags | null;
 }
+
+export type GalleryStateLightbox = {
+  isLightboxShown: boolean;
+  currentIndex: number;
+}
+
 export type GalleryState = PaginatedData<GalleryItem> & {
-    options: GalleryStateOptions,
-    isGalleryLoading: boolean
+  options: GalleryStateOptions;
+  isGalleryLoading: boolean;
+  lightbox: GalleryStateLightbox;
 }
 
 const initialState: GalleryState = {
@@ -25,6 +32,10 @@ const initialState: GalleryState = {
     tags: null,
   },
   pagination: null,
+  lightbox: {
+    isLightboxShown: false,
+    currentIndex: 0,
+  },
 };
 
 export const gallerySlice = createSlice({
@@ -59,6 +70,24 @@ export const gallerySlice = createSlice({
         pagination: payload.pagination,
       };
     },
+    mutateLightboxState(state, { payload }: PayloadAction<boolean>): GalleryState {
+      return {
+        ...state,
+        lightbox: {
+          ...state.lightbox,
+          isLightboxShown: payload,
+        },
+      };
+    },
+    mutateLightboxCurrentIndex(state, { payload }: PayloadAction<number>): GalleryState {
+      return {
+        ...state,
+        lightbox: {
+          ...state.lightbox,
+          currentIndex: payload,
+        },
+      };
+    },
     resetGallery(): GalleryState {
       return initialState;
     },
@@ -73,6 +102,8 @@ export const {
   mutateGallery,
   mutateGalleryLoadingState,
   mutateGalleryOptions,
+  mutateLightboxState,
+  mutateLightboxCurrentIndex,
   resetGallery,
 } = gallerySlice.actions;
 
