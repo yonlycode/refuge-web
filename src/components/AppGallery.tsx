@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 import { GalleryItem, GalleryTags } from '../core/Gallery/Gallery';
 
 import { useAppDispatch, useAppSelector } from '../store';
-import { FetchGallery, mutateGalleryOptions, resetGallery } from '../store/slices/Gallery';
+import {
+  FetchGallery, mutateGalleryOptions, mutateLightboxCurrentIndex, mutateLightboxState, resetGallery,
+} from '../store/slices/Gallery';
 import AppLoadingBackdrop from './Common/AppLoadingBackdrop';
 
 export default function AppGallery() {
@@ -40,8 +42,9 @@ export default function AppGallery() {
   };
 
   // TODO - implement this
-  const handleCarouselModal = () => {
-    //
+  const handleCarouselModal = (itemIndex: number) => {
+    dispatch(mutateLightboxCurrentIndex(itemIndex));
+    dispatch(mutateLightboxState(true));
   };
 
   return (
@@ -62,6 +65,7 @@ export default function AppGallery() {
               <li
                 className={options.tags === value ? 'active' : ''}
                 data-filter={value}
+                key={value}
               >
                 <a href="#" onClick={() => handleSelectTag(value)}>{value}</a>
               </li>
@@ -77,14 +81,28 @@ export default function AppGallery() {
             {data.map(({ name, url, alt }: GalleryItem, index: number) => (
               <div className="col-lg-4 col-md-6 all border" key={`gallery-item-${name}-${index + 1}`}>
                 <div className="single-gallery show">
-                  <div className="overlay" />
-                  <img className="img-fluid w-100" src={url} alt={alt} />
-                  <div className="icon">
-                    <a href="#" onClick={handleCarouselModal} className="img-pop-home">
-                      {/* TODO - make scope image working */}
-                      <img src="/img/zoom-icon.png" alt="" />
-                    </a>
-                  </div>
+                  <a
+                    href="#"
+                    onClick={() => handleCarouselModal(index)}
+                    className="img-pop-home"
+                  >
+                    <div className="overlay" />
+
+                    <img className="img-fluid w-100" src={url} alt={alt} />
+                  </a>
+                  {/*
+                    TODO - make the scope image working
+                    <div className="icon">
+                      <a
+                        href="#"
+                        onClick={() => handleCarouselModal(index)}
+                        className="img-pop-home"
+                      >
+
+                        <img src="/img/zoom-icon.png" alt="" />
+                      </a>
+                    </div>
+                  */}
                 </div>
               </div>
             ))}

@@ -64,7 +64,7 @@ const Gallery: Array<GalleryItem> = [
   },
   {
     tags: GalleryTags.EATERY,
-    name: 'Restaurant Le Reguge en Katimini ',
+    name: 'Restaurant Le Refuge en Katimini ',
     url: '/assets/images/katimini/katimini6.jpeg',
     alt: 'Aperçu du restaurant le refuge en Katimini au bourg de Saint-Louis de Marie-Galante.',
     meta: {
@@ -76,9 +76,9 @@ const Gallery: Array<GalleryItem> = [
   // Room photos
   {
     tags: GalleryTags.ROOM,
-    name: 'Chambre Emeraude',
+    name: 'Chambre Émeraude',
     url: '/assets/images/gites/emeraude/chambre.jpg',
-    alt: 'Chambre du gite Emeraude.',
+    alt: 'Chambre du gite Émeraude.',
     meta: {
       weight: 9,
       created: '2022-06-06',

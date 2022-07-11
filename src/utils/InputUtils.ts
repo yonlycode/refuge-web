@@ -74,55 +74,55 @@ export const InputValidators: Record<string, (value:any) => InputErrorMessages |
     return null;
   },
   customerCount: (count? :number) => {
-    if(!count || count < 1) {
-      return InputErrorMessages.noCustomerCount
+    if (!count || count < 1) {
+      return InputErrorMessages.noCustomerCount;
     }
 
-    return null
+    return null;
   },
   adultCount: (count? :number) => {
     if (!count || count < 1) {
-      return InputErrorMessages.noAdultCount
+      return InputErrorMessages.noAdultCount;
     }
 
-    return null
+    return null;
   },
   childrenCount: (childrenCount?: number) => {
     if (!childrenCount || childrenCount > 8) {
-      return InputErrorMessages.tooMuchChildrenCount
+      return InputErrorMessages.tooMuchChildrenCount;
     }
 
-    return null
+    return null;
   },
   startDate: (date?: string) => {
     if (!date || date === '') {
-      return InputErrorMessages.startDateEmpty
+      return InputErrorMessages.startDateEmpty;
     }
     if (!Date.parse(date)) {
-      return InputErrorMessages.startDateInvalid
+      return InputErrorMessages.startDateInvalid;
     }
 
-    return null
+    return null;
   },
   endDate: (date?: string) => {
     if (!date || date === '') {
-      return InputErrorMessages.endDateEmpty
+      return InputErrorMessages.endDateEmpty;
     }
     if (!Date.parse(date)) {
-      return InputErrorMessages.endDateInvalid
+      return InputErrorMessages.endDateInvalid;
     }
 
-    return null
+    return null;
   },
   date: (date?: string) => {
     if (!date || date === '') {
-      return InputErrorMessages.dateEmpty
+      return InputErrorMessages.dateEmpty;
     }
     if (!Date.parse(date)) {
-      return InputErrorMessages.dateInvalid
+      return InputErrorMessages.dateInvalid;
     }
 
-    return null
+    return null;
   },
 };
 
@@ -130,8 +130,8 @@ export const InputValidators: Record<string, (value:any) => InputErrorMessages |
 export const InputFormatters = {
   phone: {
     format: (phone: string): string => {
-      console.log(phone.replace(/(\d{4})(\d{3})(?=\d)/, '$1 $2'))
-      return phone.replace(/(\d{4})(\d{3})(?=\d)/g, '$1 $2')
+      console.log(phone.replace(/(\d{4})(\d{3})(?=\d)/, '$1 $2'));
+      return phone.replace(/(\d{4})(\d{3})(?=\d)/g, '$1 $2');
     },
     unformat: (/* phone: string */) :string => '',
   },
