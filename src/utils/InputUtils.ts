@@ -1,6 +1,31 @@
 import InputErrorMessages from '../constants/InputErrorMessages';
 
-const phoneValidator = /^(?:\+33\s|0)[1-9](?:\s\d{2}){4}$/;
+const phoneValidator = /^(?:(?:\+|00)33[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/;
+const emailValidator = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+export const InputFormatters = {
+  phone: {
+    format: (phone: string): string => {
+      const config = {
+        first: InputFormatters.phone.unformat(phone).slice(0, 4),
+        second: InputFormatters.phone.unformat(phone).slice(4, 7),
+        third: InputFormatters.phone.unformat(phone).slice(7, 10),
+      };
+
+      if (config.third) {
+        return `${config.first} ${config.second} ${config.third}`;
+      }
+
+      if (config.second) {
+        return `${config.first} ${config.second}`;
+      }
+
+      return `${config.first}`;
+    },
+    unformat: (phone: string): string => phone.split(' ').join(''),
+  },
+};
+
 export const InputValidators: Record<string, (value:any) => InputErrorMessages | null> = {
   firstName: (firstName?: string) => {
     if (!firstName || firstName.length === 0) {
@@ -66,8 +91,7 @@ export const InputValidators: Record<string, (value:any) => InputErrorMessages |
       return InputErrorMessages.emailEmpty;
     }
 
-    const validation = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (!validation.test(email)) {
+    if (!emailValidator.test(email)) {
       return InputErrorMessages.emailInvalid;
     }
 
@@ -123,16 +147,5 @@ export const InputValidators: Record<string, (value:any) => InputErrorMessages |
     }
 
     return null;
-  },
-};
-
-// TODO - implement this
-export const InputFormatters = {
-  phone: {
-    format: (phone: string): string => {
-      console.log(phone.replace(/(\d{4})(\d{3})(?=\d)/, '$1 $2'));
-      return phone.replace(/(\d{4})(\d{3})(?=\d)/g, '$1 $2');
-    },
-    unformat: (/* phone: string */) :string => '',
   },
 };

@@ -35,7 +35,6 @@ export default function EateryReservationForm() {
     && !InputValidators.email(email)
     && !InputValidators.firstName(firstName)
     && !InputValidators.lastName(lastName)
-    && !InputValidators.message(message)
     && !InputValidators.phone(phone)
   );
 
@@ -78,7 +77,7 @@ export default function EateryReservationForm() {
         <br />
         <form className="needs-validation" onSubmit={handleEateryReservationSubmit}>
           <div className="row g-3">
-            <div className="col-sm-6">
+            <div className="col-md-6">
               <label htmlFor="firstName" className="form-label d-block">
                 Prénom
                 <AppInput
@@ -91,7 +90,7 @@ export default function EateryReservationForm() {
                 />
               </label>
             </div>
-            <div className="col-sm-6">
+            <div className="col-md-6">
               <label htmlFor="lastName" className="form-label d-block">
                 Nom
                 <AppInput
@@ -104,7 +103,7 @@ export default function EateryReservationForm() {
                 />
               </label>
             </div>
-            <div className="col-6">
+            <div className="col-md-6">
               <label htmlFor="email" className="form-label d-block">
                 Email
                 <AppInput
@@ -118,14 +117,14 @@ export default function EateryReservationForm() {
                 />
               </label>
             </div>
-            <div className="col-6">
+            <div className="col-md-6">
               <label htmlFor="phone" className="form-label d-block">
                 Telephone
                 <AppInput
                   type="telephone"
                   className="form-control mt-2"
                   name="phone"
-                  placeholder="06XXXXXXXX"
+                  placeholder="06XX XXX XXX"
                   value={phone}
                   onChange={handleEateryReservationChange}
                   errorMessage={phone !== '' ? InputValidators.phone(phone) : null}
@@ -147,9 +146,9 @@ export default function EateryReservationForm() {
                 />
               </label>
             </div>
-            <div className="col-6">
+            <div className="col-md-6">
               <label htmlFor="date" className="form-label d-block">
-                Arrivée
+                Date de réservation
                 <AppInput
                   type="date"
                   className="form-control mt-2"

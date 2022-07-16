@@ -1,4 +1,4 @@
-export function monthMapper(index: number): string {
+export function monthMapper(index: number): string | null {
   return [
     'Jan',
     'Fev',
@@ -12,9 +12,9 @@ export function monthMapper(index: number): string {
     'Oct',
     'Nov',
     'Déc',
-  ][index - 1]!;
+  ][index - 1] ?? null;
 }
 
-export function getMonth(date: string): string {
+export function getMonth(date: string): string | null {
   return monthMapper(new Date(date).getMonth());
 }
