@@ -48,6 +48,8 @@ export default class EateryReservation {
       const attrValue = this.reservation![attrName];
       const error = InputValidators[attrName](attrValue);
 
+      if (attrName === 'message') return;
+
       if (error) {
         errors = {
           ...errors,

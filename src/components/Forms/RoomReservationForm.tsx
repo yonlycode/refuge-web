@@ -35,7 +35,6 @@ export default function RoomReservationForm() {
     && !InputValidators.email(email)
     && !InputValidators.firstName(firstName)
     && !InputValidators.lastName(lastName)
-    && !InputValidators.message(message)
     && !InputValidators.phone(phone)
   );
 
@@ -89,7 +88,7 @@ export default function RoomReservationForm() {
           onSubmit={handleRoomReservationSubmit}
         >
           <div className="row g-3">
-            <div className="col-sm-6">
+            <div className="col-md-6">
               <label
                 htmlFor="firstName"
                 className="form-label d-block"
@@ -101,10 +100,11 @@ export default function RoomReservationForm() {
                   name="firstName"
                   onChange={handleRoomReservationChange}
                   value={firstName}
+                  errorMessage={firstName !== '' ? InputValidators.firstName(firstName) : null}
                 />
               </label>
             </div>
-            <div className="col-sm-6">
+            <div className="col-md-6">
               <label
                 htmlFor="lastName"
                 className="form-label d-block"
@@ -116,10 +116,11 @@ export default function RoomReservationForm() {
                   name="lastName"
                   onChange={handleRoomReservationChange}
                   value={lastName}
+                  errorMessage={lastName !== '' ? InputValidators.lastName(lastName) : null}
                 />
               </label>
             </div>
-            <div className="col-6">
+            <div className="col-md-6">
               <label
                 htmlFor="email"
                 className="form-label d-block"
@@ -132,10 +133,11 @@ export default function RoomReservationForm() {
                   value={email}
                   placeholder="you@example.com"
                   onChange={handleRoomReservationChange}
+                  errorMessage={email !== '' ? InputValidators.email(email) : null}
                 />
               </label>
             </div>
-            <div className="col-6">
+            <div className="col-md-6">
               <label
                 htmlFor="phone"
                 className="form-label d-block"
@@ -146,8 +148,10 @@ export default function RoomReservationForm() {
                   className="form-control"
                   name="phone"
                   value={phone}
-                  placeholder="06XXXXXXXX"
+                  placeholder="06XX XXX XXX"
                   onChange={handleRoomReservationChange}
+                  errorMessage={phone !== '' ? InputValidators.phone(phone) : null}
+
                 />
               </label>
             </div>
@@ -186,7 +190,7 @@ export default function RoomReservationForm() {
                 />
               </label>
             </div>
-            <div className="col-6">
+            <div className="col-md-6">
               <label htmlFor="date" className="form-label d-block">
                 Début du séjour:
                 <AppInput
@@ -199,7 +203,7 @@ export default function RoomReservationForm() {
                 />
               </label>
             </div>
-            <div className="col-6">
+            <div className="col-md-6">
               <label htmlFor="date" className="form-label d-block">
                 Fin du séjour:
                 <AppInput
