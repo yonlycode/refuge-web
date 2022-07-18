@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import AppBanner from '../../src/components/Common/AppBanner';
+import { AppRoutesNames, AppRoutesRecord } from '../../src/constants/AppLinks';
 
 export default function Gites() {
   return (
@@ -13,18 +14,8 @@ export default function Gites() {
       <AppBanner
         size="L"
         breadcrumbs={[
-          {
-            label: 'Accueil',
-            url: '/',
-          },
-          {
-            label: 'Services',
-            url: '/services',
-          },
-          {
-            label: 'Gites',
-            url: '/services/gite',
-          },
+          AppRoutesRecord[AppRoutesNames.HOME],
+          AppRoutesRecord[AppRoutesNames.SERVICES_LANDING],
         ]}
       />
     </div>

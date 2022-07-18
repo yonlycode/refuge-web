@@ -1,5 +1,10 @@
 import Link from 'next/link';
 
+import {
+  AppRoutesNames,
+  AppRoutesRecord,
+} from '../constants/AppLinks';
+
 export default function AboutUs() {
   return (
     <section className="about_area section_gap_top">
@@ -55,7 +60,7 @@ export default function AboutUs() {
                   de la mer et plumets argentés de cannes à sucre.
                 </p>
               </div>
-              <Link href="/about">
+              <Link href={AppRoutesRecord[AppRoutesNames.SERVICES_LANDING].url}>
                 <a className="btn btn-primary mt-45 ps-5 pe-5">En savoir plus</a>
               </Link>
             </div>

@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import AppBanner from '../../src/components/Common/AppBanner';
+import { AppRoutesNames, AppRoutesRecord } from '../../src/constants/AppLinks';
 
 export default function Restaurant() {
   return (
@@ -14,18 +15,8 @@ export default function Restaurant() {
       <AppBanner
         size="L"
         breadcrumbs={[
-          {
-            label: 'Accueil',
-            url: '/',
-          },
-          {
-            label: 'Services',
-            url: '/services',
-          },
-          {
-            label: 'Restaurant',
-            url: '/services/restaurant',
-          },
+          AppRoutesRecord[AppRoutesNames.HOME],
+          AppRoutesRecord[AppRoutesNames.SERVICES_LANDING],
         ]}
       />
     </div>
