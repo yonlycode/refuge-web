@@ -18,7 +18,6 @@
       "error"
     ],
 
-
     "@next/next/no-img-element": "off",
     "import/extensions": "off",
     "jsx-a11y/anchor-is-valid": "off",
@@ -29,6 +28,7 @@
     "no-nested-ternary": "off",
     "consistent-return": "off",
     "react-hooks/exhaustive-deps": "off",
+    "max-len": ["warning", { "code": 120 }],
     "jsx-a11y/label-has-associated-control": [
       2,
       {
