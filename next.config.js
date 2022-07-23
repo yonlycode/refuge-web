@@ -1,3 +1,5 @@
+const { resolve } = require('path');
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -7,6 +9,11 @@ const nextConfig = {
       test: /\.(jpe?g|png|svg|gif|ico|eot|ttf|woff|woff2|mp4|pdf|webm|txt)$/,
       type: 'asset/resource',
     });
+
+    config.resolve.alias['@'] = resolve(
+      __dirname,
+      'src',
+    );
 
     return config;
   },
