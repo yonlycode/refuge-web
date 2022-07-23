@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { GalleryItem, GalleryTags } from '../core/Gallery/Gallery';
+import { GalleryItem, GalleryTags } from '@/core/Gallery/Gallery';
 
-import { useAppDispatch, useAppSelector } from '../store';
+import { useAppDispatch, useAppSelector } from '@/store';
 import {
   FetchGallery, mutateGalleryOptions, mutateLightboxCurrentIndex, mutateLightboxState, resetGallery,
-} from '../store/slices/Gallery';
+} from '@/store/slices/Gallery';
 import AppLoadingBackdrop from './Common/AppLoadingBackdrop';
 
 export default function AppGallery() {

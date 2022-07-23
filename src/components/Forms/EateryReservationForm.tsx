@@ -1,14 +1,14 @@
 import { ChangeEvent, FormEvent } from 'react';
 
-import { IEateryReservation } from '../../core/ReservationRequest/EateryReservation';
+import { IEateryReservation } from '@/core/ReservationRequest/EateryReservation';
 
-import { RootState, useAppDispatch, useAppSelector } from '../../store';
-import { mutateEateryReservation, sendEateryReservation } from '../../store/slices/Reservation';
+import { RootState, useAppDispatch, useAppSelector } from '@/store';
+import { mutateEateryReservation, sendEateryReservation } from '@/store/slices/Reservation';
 
-import AppInput from '../Common/AppInput';
-import AppTextarea from '../Common/AppTextarea';
-import AppLoadingBackdrop from '../Common/AppLoadingBackdrop';
-import AppIncrementCounter from '../Common/AppIncrementCounter';
+import AppInput from '@/components/Common/AppInput';
+import AppTextarea from '@/components/Common/AppTextarea';
+import AppLoadingBackdrop from '@/components/Common/AppLoadingBackdrop';
+import AppIncrementCounter from '@/components/Common/AppIncrementCounter';
 
 import { InputFormatters, InputValidators } from '../../utils/InputUtils';
 

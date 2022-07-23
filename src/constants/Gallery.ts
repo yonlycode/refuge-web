@@ -1,4 +1,4 @@
-import { GalleryItem, GalleryTags } from '../core/Gallery/Gallery';
+import { GalleryItem, GalleryTags } from '@/core/Gallery/Gallery';
 
 const Gallery: Array<GalleryItem> = [
   // Eatery photos

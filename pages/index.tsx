@@ -22,7 +22,7 @@ export default function Home() {
       />
       <StartReservationForm />
       <div className="container">
-        
+
         <section className="about_area section_gap_top">
           <div className="container">
             <div className="row">

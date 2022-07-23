@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import AppBanner from '../../src/components/Common/AppBanner';
+import AppBanner from '@/components/Common/AppBanner';
 
 function GuidesArticle() {
   const router = useRouter();

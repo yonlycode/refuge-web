@@ -6,11 +6,11 @@ import Head from 'next/head';
 import type { AppProps } from 'next/app';
 import { Provider } from 'react-redux';
 
-import { store } from '../src/store';
+import { store } from '@/store';
 
-import AppFooter from '../src/components/Common/AppFooter';
-import AppHeader from '../src/components/Common/AppHeader';
-import AppToastFactory from '../src/components/Common/AppToastFactory';
+import AppFooter from '@/components/Common/AppFooter';
+import AppHeader from '@/components/Common/AppHeader';
+import AppToastFactory from '@/components/Common/AppToastFactory';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

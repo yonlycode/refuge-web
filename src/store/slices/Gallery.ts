@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 
-import { GalleryItem, GalleryTags } from '../../core/Gallery/Gallery';
-import { PaginatedData } from '../../core/Pagination/PaginatedData';
+import { GalleryItem, GalleryTags } from '@/core/Gallery/Gallery';
+import { PaginatedData } from '@/core/Pagination/PaginatedData';
 
 import { createToast } from './Layout';
 

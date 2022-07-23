@@ -1,7 +1,7 @@
 import Head from 'next/head';
-import AppBanner from '../src/components/Common/AppBanner';
-import AppGallery from '../src/components/AppGallery';
-import GalleryLightBox from '../src/components/GalleryLightBox';
+import AppBanner from '@/components/Common/AppBanner';
+import AppGallery from '@/components/AppGallery';
+import GalleryLightBox from '@/components/GalleryLightBox';
 
 export default function Gallery() {
   return (

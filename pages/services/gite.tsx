@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import AppBanner from '../../src/components/Common/AppBanner';
-import { AppRoutesNames, AppRoutesRecord } from '../../src/constants/AppLinks';
+import AppBanner from '@/components/Common/AppBanner';
+import { AppRoutesNames, AppRoutesRecord } from '@/constants/AppLinks';
 
 export default function Gites() {
   return (
@@ -9,7 +9,10 @@ export default function Gites() {
         <title>
           Refuge HULMAN - Réserver votre séjour au bout du monde, calme et dépaysement assuré!
         </title>
-        <meta name="title" content="Refuge HULMAN - Réserver votre séjour au bout du monde, calme et dépaysement assuré!" />
+        <meta
+          name="title"
+          content="Refuge HULMAN - Réserver votre séjour au bout du monde, calme et dépaysement assuré!"
+        />
       </Head>
       <AppBanner
         size="L"
