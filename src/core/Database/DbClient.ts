@@ -13,9 +13,8 @@ import {
   QueryCommandInput,
   QueryCommandOutput,
 } from '@aws-sdk/lib-dynamodb';
-import ProjectConfig from '../utils/ProjectConfig';
 
-export type tableNames = 'refugehulman' | 'refugehulman-contact'
+import ProjectConfig from '@/utils/ProjectConfig';
 
 const marshallOptions = {
   convertEmptyValues: false,
@@ -30,39 +29,43 @@ const unmarshallOptions = {
 const translateConfig = { marshallOptions, unmarshallOptions };
 
 export default class DbClient {
-  private DbClient: DynamoDBDocumentClient;
+  private _DbClient: DynamoDBDocumentClient;
 
-  private tableName = 'refugehulman';
+  private _tableName = 'refugehulman';
 
   constructor() {
     const dynamoClient = new DynamoDBClient({ region: ProjectConfig.REGION });
-    this.DbClient = DynamoDBDocumentClient.from(dynamoClient, translateConfig);
+    this._DbClient = DynamoDBDocumentClient.from(dynamoClient, translateConfig);
+  }
+
+  get tableName() {
+    return this._tableName;
   }
 
   public async write(payload: PutCommandInput['Item']): Promise<PutCommandOutput> {
-    return this.DbClient.send(new PutCommand({
-      TableName: this.tableName,
+    return this._DbClient.send(new PutCommand({
+      TableName: this._tableName,
       Item: { ...payload },
     }));
   }
 
   public async read(payload: GetCommandInput['Key']): Promise<GetCommandOutput> {
-    return this.DbClient.send(new GetCommand({
-      TableName: this.tableName,
+    return this._DbClient.send(new GetCommand({
+      TableName: this._tableName,
       Key: { ...payload },
     }));
   }
 
   public async delete(payload: DeleteCommandInput['Key']): Promise<DeleteCommandOutput> {
-    return this.DbClient.send(new DeleteCommand({
-      TableName: this.tableName,
+    return this._DbClient.send(new DeleteCommand({
+      TableName: this._tableName,
       Key: { ...payload },
     }));
   }
 
   public async query(payload: Omit<QueryCommandInput, 'TableName'>): Promise<QueryCommandOutput> {
-    return this.DbClient.send(new QueryCommand({
-      TableName: this.tableName,
+    return this._DbClient.send(new QueryCommand({
+      TableName: this._tableName,
       ...payload,
     }));
   }

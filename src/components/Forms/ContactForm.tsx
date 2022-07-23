@@ -11,8 +11,7 @@ import {
 } from '@/store/slices/Contact';
 
 import { InputValidators } from '@/utils/InputUtils';
-
-import { IContactRequest } from '@/core/ContactRequest/ContactRequest';
+import { IContactRequest } from '@/core/ContactRequest/types/IContactRequest';
 
 import AppLoadingBackdrop from '@/components/Common/AppLoadingBackdrop';
 import AppInput from '@/components/Common/AppInput';

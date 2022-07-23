@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import ContactRequest, { IContactRequest } from '../../src/core/ContactRequest/ContactRequest';
+import ContactRequest from '@/core/ContactRequest/ContactRequest';
+import { IContactRequest } from '@/core/ContactRequest/types/IContactRequest';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {
@@ -12,7 +13,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const response = await request.save();
 
-      return res.status(204).send({ reservationId: response.Attributes });
+      return res.status(204).send({ reservationId: response });
     } catch (e) {
       return res.status(400).send(e);
     }

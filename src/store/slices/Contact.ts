@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 
-import { IContactRequest } from '@/core/ContactRequest/ContactRequest';
+import { IContactRequest } from '@/core/ContactRequest/types/IContactRequest';
 
 import { createToast } from './Layout';
 

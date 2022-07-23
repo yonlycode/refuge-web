@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import { GalleryTags } from '../../src/core/Gallery/Gallery';
-import Paginate from '../../src/core/Pagination/Paginate';
+import { GalleryTags } from '@/core/Gallery/Gallery';
+import Paginate from '@/core/Pagination/Paginate';
 
 interface GalleryRequest extends NextApiRequest {
     query: {
@@ -21,7 +21,7 @@ export default async function gallery(
 
   const { tags, page, perPage } = req.query;
 
-  const rawGallery = (await import('../../src/constants/Gallery')).default;
+  const rawGallery = (await import('@/constants/Gallery')).default;
 
   const filteredGallery = (req.query.tags
     ? rawGallery.filter((el) => tags === el.tags)

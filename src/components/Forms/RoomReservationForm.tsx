@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent } from 'react';
 
-import { IRoomReservation } from '@/core/ReservationRequest/RoomReservation';
 import { RootState, useAppDispatch, useAppSelector } from '@/store';
 import { mutateRoomReservation, sendRoomReservation } from '@/store/slices/Reservation';
 import { InputFormatters, InputValidators } from '@/utils/InputUtils';
+import { IRoomReservation } from '@/core/ReservationRequest/types/IRoomReservation';
 
 import AppIncrementCounter from '@/components/Common/AppIncrementCounter';
 import AppInput from '@/components/Common/AppInput';
