@@ -8,7 +8,16 @@ const nextConfig = {
       type: 'asset/resource',
     });
 
-    return config;
+    return {
+      ...config,
+      resolve: {
+        ...config.resolve,
+        alias: {
+          ...config.alias,
+          ...{ '@': './src/' },
+        },
+      },
+    };
   },
 };
 
