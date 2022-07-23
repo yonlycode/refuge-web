@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
-import RoomReservation, { IRoomReservation } from '../../../src/core/ReservationRequest/RoomReservation';
+import { IRoomReservation } from '@/core/ReservationRequest/types/IRoomReservation';
+import RoomReservation from '@/core/ReservationRequest/RoomReservation';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'POST') {

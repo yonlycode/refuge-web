@@ -1,54 +1,29 @@
-import { v4 as uuidv4 } from 'uuid';
+import InputErrorMessages from '@/constants/InputErrorMessages';
+import { InputValidators } from '@/utils/InputUtils';
 
-import DbClient from '../DbClient';
-import InputErrorMessages from '../../constants/InputErrorMessages';
-import { InputValidators } from '../../utils/InputUtils';
-import { FilterKeys, TypeMeta } from '../meta';
+import { MetaKeys } from '@/core/Database/types/meta';
+import DbItem from '@/core/Database/DbItem';
 
-export type IRoomReservation = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    message: string;
-    childrenCount: number;
-    adultCount: number;
-    phone: string;
-    startDate: string;
-    endDate: string;
-};
+import { IRoomReservation } from './types/IRoomReservation';
 
-export type RoomReservationRecord = IRoomReservation & FilterKeys & TypeMeta;
-
-export default class RoomReservation {
-  private reservationRecord: RoomReservationRecord|null;
-
-  private reservation: IRoomReservation | null;
-
-  private dbClient = new DbClient();
-
-  constructor(reservation?: IRoomReservation) {
-    this.reservationRecord = !reservation ? null : {
-      type: 'ROOM',
-      partition_key: uuidv4(),
-      filter_key: uuidv4(),
-      createdAt: Date.now().toLocaleString('Fr'),
-      ...reservation,
-    };
-
-    this.reservation = !reservation ? null : { ...reservation };
+export default class RoomReservation extends DbItem<IRoomReservation> {
+  constructor(reservation?: IRoomReservation, meta: MetaKeys = {
+    createdAt: Date.now().toLocaleString('Fr'),
+  }) {
+    super('ROOM', reservation, meta);
   }
 
-  public isValid() :void {
-    if (!this.reservation) {
+  public isValid(): null | Partial<Record<keyof IRoomReservation, InputErrorMessages>> {
+    if (!this.data) {
       throw new Error('no payload');
     }
 
     let errors: Partial<Record<keyof IRoomReservation, InputErrorMessages>> = {};
 
-    Object.keys(this.reservation).forEach((el) => {
+    Object.keys(this.data).forEach((el) => {
       const attrName = el as keyof IRoomReservation;
-      const attrValue = this.reservation![attrName];
-      const error = InputValidators[attrName](attrValue);
+      const attrValue = this.data![attrName];
+      const error = InputValidators[attrName] && InputValidators[attrName](attrValue);
 
       if (attrName === 'message') return;
 
@@ -59,35 +34,7 @@ export default class RoomReservation {
         };
       }
     });
-  }
 
-  // WARNING - Not tested yet
-  public async get(config: FilterKeys) {
-    if (!config.filter_key && !config.partition_key) {
-      throw new Error('Bad Payload');
-    }
-
-    return this.dbClient.read(config);
-  }
-
-  // WARNING - Not tested yet
-  public mutate(reservation: IRoomReservation) {
-    this.reservationRecord = {
-      ...this.reservationRecord,
-      ...reservation,
-      updatedAt: Date.now().toLocaleString('Fr'),
-    };
-    this.reservation = {
-      ...this.reservation,
-      ...reservation,
-    };
-  }
-
-  // WARNING - Not tested yet
-  public async save() {
-    if (!this.reservationRecord) {
-      throw new Error('No payload');
-    }
-    return this.dbClient.write(this.reservationRecord);
+    return Object.keys(errors).length === 0 ? null : errors;
   }
 }
