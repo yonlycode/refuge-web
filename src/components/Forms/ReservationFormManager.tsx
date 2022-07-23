@@ -1,9 +1,8 @@
-/* eslint-disable react/no-danger */
-
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ReactChild } from 'react';
-import LeftSideReservationFormLinks from '../../constants/LeftSideReservationFormLinks';
+
+import LeftSideReservationFormLinks from '@/constants/LeftSideReservationFormLinks';
 
 type ReservationFormManagerProps = {
   children: ReactChild

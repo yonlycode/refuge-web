@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-import { FooterLinks } from '../../constants/AppLinks';
+import { FooterLinks } from '@/constants/AppLinks';
 
 export default function AppFooter() {
   const firstRow = FooterLinks.slice(0, FooterLinks.length / 2);

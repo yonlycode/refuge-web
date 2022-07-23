@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import AppBanner from '../../src/components/Common/AppBanner';
-import { AppRoutesNames, AppRoutesRecord } from '../../src/constants/AppLinks';
+import AppBanner from '@/components/Common/AppBanner';
+import { AppRoutesNames, AppRoutesRecord } from '@/constants/AppLinks';
 
 export default function Restaurant() {
   return (
@@ -10,7 +10,10 @@ export default function Restaurant() {
           Refuge HULMAN -
           Découvrez les saveur locales de Marie-Galante dans notre restaurant Le Katimini!
         </title>
-        <meta name="title" content="Refuge HULMAN - Découvrez les saveur locales de Marie-Galante dans notre restaurant Le Katimini!" />
+        <meta
+          name="title"
+          content="Refuge HULMAN - Découvrez les saveur locales de Marie-Galante dans notre restaurant Le Katimini!"
+        />
       </Head>
       <AppBanner
         size="L"

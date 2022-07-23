@@ -1,8 +1,7 @@
 import Head from 'next/head';
 import Link from 'next/link';
-// import ComingSoon from '../../src/components/ComingSoon';
-import AppBanner from '../../src/components/Common/AppBanner';
-import { AppRoutesNames, AppRoutesRecord } from '../../src/constants/AppLinks';
+import AppBanner from '@/components/Common/AppBanner';
+import { AppRoutesNames, AppRoutesRecord } from '@/constants/AppLinks';
 
 export default function ServicesLanding() {
   return (
@@ -12,7 +11,10 @@ export default function ServicesLanding() {
           Refuge HULMAN,-
           Découvrez nos différents services pour vous faire passer le meilleur moment possible!
         </title>
-        <meta name="title" content="Refuge HULMAN,- Découvrez nos différents services pour vous faire passer le meilleur moment possible!" />
+        <meta
+          name="title"
+          content="Refuge HULMAN - Découvrez nos différents services pour passer le meilleur moment possible!"
+        />
       </Head>
       <AppBanner
         size="S"
@@ -29,8 +31,12 @@ export default function ServicesLanding() {
             Encore des questions sur les installations et les activités sur place?
           </h3>
           <div className="col-lg-10 mx-auto">
-            <p className="fs-5">Nous vous avons concocté une série de guides pratique afin de vous accompagner au mieux lors de votre séjour.</p>
-            <p className="fs-5">Vous y trouverez des informations utiles sur les lieux a visiter, les activités typiques ou plus traditionnelles ainsi qu&apos;une liste des &apos;choses à voir&apos;.</p>
+            <p className="fs-5">
+              Nous vous avons concocté une série de guides pratique afin de vous accompagner au mieux lors de votre séjour.
+            </p>
+            <p className="fs-5">
+              Vous y trouverez des informations utiles sur les lieux a visiter, les activités typiques ou plus traditionnelles ainsi qu&apos;une liste des &apos;choses à voir&apos;.
+            </p>
             <div className="d-grid gap-2 d-sm-flex justify-content-sm-center mt-5 mb-5">
               <Link href={AppRoutesRecord['Guide Landing'].url}>
                 <a

@@ -4,18 +4,19 @@ import {
   RootState,
   useAppDispatch,
   useAppSelector,
-} from '../../store';
+} from '@/store';
 import {
   mutateContactRequest,
   sendContactRequest,
-} from '../../store/slices/Contact';
+} from '@/store/slices/Contact';
 
-import { InputValidators } from '../../utils/InputUtils';
+import { InputValidators } from '@/utils/InputUtils';
 
-import { IContactRequest } from '../../core/ContactRequest/ContactRequest';
-import AppLoadingBackdrop from '../Common/AppLoadingBackdrop';
-import AppInput from '../Common/AppInput';
-import AppTextarea from '../Common/AppTextarea';
+import { IContactRequest } from '@/core/ContactRequest/ContactRequest';
+
+import AppLoadingBackdrop from '@/components/Common/AppLoadingBackdrop';
+import AppInput from '@/components/Common/AppInput';
+import AppTextarea from '@/components/Common/AppTextarea';
 
 export default function ContactForm() {
   const {

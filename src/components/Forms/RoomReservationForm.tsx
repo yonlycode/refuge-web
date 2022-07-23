@@ -1,12 +1,14 @@
 import { ChangeEvent, FormEvent } from 'react';
-import { IRoomReservation } from '../../core/ReservationRequest/RoomReservation';
-import { RootState, useAppDispatch, useAppSelector } from '../../store';
-import { mutateRoomReservation, sendRoomReservation } from '../../store/slices/Reservation';
-import { InputFormatters, InputValidators } from '../../utils/InputUtils';
-import AppIncrementCounter from '../Common/AppIncrementCounter';
-import AppInput from '../Common/AppInput';
-import AppLoadingBackdrop from '../Common/AppLoadingBackdrop';
-import AppTextarea from '../Common/AppTextarea';
+
+import { IRoomReservation } from '@/core/ReservationRequest/RoomReservation';
+import { RootState, useAppDispatch, useAppSelector } from '@/store';
+import { mutateRoomReservation, sendRoomReservation } from '@/store/slices/Reservation';
+import { InputFormatters, InputValidators } from '@/utils/InputUtils';
+
+import AppIncrementCounter from '@/components/Common/AppIncrementCounter';
+import AppInput from '@/components/Common/AppInput';
+import AppLoadingBackdrop from '@/components/Common/AppLoadingBackdrop';
+import AppTextarea from '@/components/Common/AppTextarea';
 
 export default function RoomReservationForm() {
   const {

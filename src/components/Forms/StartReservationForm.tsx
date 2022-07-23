@@ -2,9 +2,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { ChangeEvent } from 'react';
 
-import { useAppDispatch, useAppSelector } from '../../store';
-import { MutateRoomPayload, mutateRoomReservation } from '../../store/slices/Reservation';
-import { getMonth } from '../../utils/dateUtils';
+import { RootState, useAppDispatch, useAppSelector } from '@/store';
+import { MutateRoomPayload, mutateRoomReservation } from '@/store/slices/Reservation';
+import { getMonth } from '@/utils/dateUtils';
 
 export default function StartReservationForm() {
   const {
@@ -12,7 +12,7 @@ export default function StartReservationForm() {
     childrenCount,
     startDate,
     endDate,
-  } = useAppSelector((state) => state.reservation.room.reservation);
+  } = useAppSelector((state: RootState) => state.reservation.room.reservation);
   const dispatch = useAppDispatch();
   const { push } = useRouter();
 
@@ -23,7 +23,12 @@ export default function StartReservationForm() {
     dispatch(mutateRoomReservation({ name: 'adultCount', value: adultCount - 1 }));
   };
   const handleSetDate = ({ currentTarget }: ChangeEvent<HTMLInputElement>) => {
-    dispatch(mutateRoomReservation({ name: currentTarget.name as MutateRoomPayload['name'], value: currentTarget.value }));
+    dispatch(mutateRoomReservation(
+      {
+        name: currentTarget.name as MutateRoomPayload['name'],
+        value: currentTarget.value,
+      },
+    ));
   };
 
   const totalPersonsCount: number = adultCount + childrenCount;

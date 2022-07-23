@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import ComingSoon from '../src/components/ComingSoon';
-import AppBanner from '../src/components/Common/AppBanner';
+import ComingSoon from '@/components/ComingSoon';
+import AppBanner from '@/components/Common/AppBanner';
 
 export default function CGL() {
   return (

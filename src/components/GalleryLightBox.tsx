@@ -3,12 +3,12 @@ import React, { useCallback, useEffect, useRef } from 'react';
 import {
   useAppDispatch,
   useAppSelector,
-} from '../store';
+} from '@/store';
 import {
   FetchGallery,
   mutateLightboxCurrentIndex,
   mutateLightboxState,
-} from '../store/slices/Gallery';
+} from '@/store/slices/Gallery';
 
 export default function GalleryLightBox() {
   const gallery = useAppSelector((state) => state.gallery);

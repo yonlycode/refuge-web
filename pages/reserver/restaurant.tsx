@@ -1,8 +1,8 @@
 import Head from 'next/head';
 
-import AppBanner from '../../src/components/Common/AppBanner';
-import EateryReservationForm from '../../src/components/Forms/EateryReservationForm';
-import ReservationFormManager from '../../src/components/Forms/ReservationFormManager';
+import AppBanner from '@/components/Common/AppBanner';
+import EateryReservationForm from '@/components/Forms/EateryReservationForm';
+import ReservationFormManager from '@/components/Forms/ReservationFormManager';
 
 export default function Restaurant() {
   return (

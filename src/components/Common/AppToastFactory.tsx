@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from '../../store';
-import { removeToast, Toast } from '../../store/slices/Layout';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { removeToast, Toast } from '@/store/slices/Layout';
 
 export default function AppToastFactory() {
   const { toasts } = useAppSelector((state) => state.layout);

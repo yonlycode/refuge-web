@@ -1,8 +1,8 @@
 import Head from 'next/head';
 
-import AppBanner from '../../src/components/Common/AppBanner';
-import ReservationFormManager from '../../src/components/Forms/ReservationFormManager';
-import RoomReservationForm from '../../src/components/Forms/RoomReservationForm';
+import AppBanner from '@/components/Common/AppBanner';
+import ReservationFormManager from '@/components/Forms/ReservationFormManager';
+import RoomReservationForm from '@/components/Forms/RoomReservationForm';
 
 export default function Gites() {
   return (

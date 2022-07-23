@@ -3,21 +3,41 @@
   "plugins": [
     "@typescript-eslint"
   ],
+  "settings": {
+    "import/resolver": {
+      "alias": {
+        "extensions": [
+          "json",
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx"
+        ],
+        "map": [
+          [
+            "@",
+            "./src/"
+          ]
+        ]
+      }
+    }
+  },
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "next/core-web-vitals", 
+    "next/core-web-vitals",
     "airbnb"
   ],
   "rules": {
     // Enum fixs
     "no-shadow": "off",
-    "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/no-shadow": [
+      "error"
+    ],
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
       "error"
     ],
-
     "@next/next/no-img-element": "off",
     "import/extensions": "off",
     "jsx-a11y/anchor-is-valid": "off",
@@ -28,7 +48,13 @@
     "no-nested-ternary": "off",
     "consistent-return": "off",
     "react-hooks/exhaustive-deps": "off",
-    "max-len": ["warning", { "code": 120 }],
+    "max-len": [
+      1,
+      {
+        "code": 120
+      }
+    ],
+    "no-underscore-dangle": "off",
     "jsx-a11y/label-has-associated-control": [
       2,
       {

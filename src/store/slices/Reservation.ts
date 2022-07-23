@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios, { AxiosError } from 'axios';
 
-import { IEateryReservation } from '../../core/ReservationRequest/EateryReservation';
-import { IRoomReservation } from '../../core/ReservationRequest/RoomReservation';
+import { IEateryReservation } from '@/core/ReservationRequest/EateryReservation';
+import { IRoomReservation } from '@/core/ReservationRequest/RoomReservation';
+
 import { createToast } from './Layout';
 
 interface ReservationState {
