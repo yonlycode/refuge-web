@@ -14,7 +14,9 @@
     "module": "esnext",
     "moduleResolution": "node",
     "paths": {
-      "@/*":["./src/*"]
+      "@/*": [
+        "./src/*"
+      ]
     },
     "noEmit": true,
     "resolveJsonModule": true,
