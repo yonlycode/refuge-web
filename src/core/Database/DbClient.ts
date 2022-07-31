@@ -1,6 +1,12 @@
-import { DynamoDBClient, QueryCommand } from '@aws-sdk/client-dynamodb';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
-  DeleteCommand,
+  DeleteItemCommand,
+  DynamoDBClient,
+  QueryCommand,
+  ScanCommand,
+  UpdateItemCommandInput,
+} from '@aws-sdk/client-dynamodb';
+import {
   DeleteCommandInput,
   DeleteCommandOutput,
   DynamoDBDocumentClient,
@@ -10,16 +16,20 @@ import {
   PutCommand,
   PutCommandInput,
   PutCommandOutput,
-  QueryCommandInput,
   QueryCommandOutput,
+  ScanCommandOutput,
+  UpdateCommand,
 } from '@aws-sdk/lib-dynamodb';
 
 import ProjectConfig from '@/utils/ProjectConfig';
+import { unmarshall } from '@aws-sdk/util-dynamodb';
+import AwsError from '../ApiErrors/AwsError';
+import { DbItemFindCommand, DbItemPutCommand, DbItemScanCommand } from './types/DbClientCommand';
 
 const marshallOptions = {
   convertEmptyValues: false,
   removeUndefinedValues: true,
-  convertClassInstanceToMap: false,
+  convertClassInstanceToMap: true,
 };
 
 const unmarshallOptions = {
@@ -29,44 +39,102 @@ const unmarshallOptions = {
 const translateConfig = { marshallOptions, unmarshallOptions };
 
 export default class DbClient {
-  private _DbClient: DynamoDBDocumentClient;
+  readonly _dbClient: DynamoDBDocumentClient;
 
-  private _tableName = 'refugehulman';
+  readonly _tableName = 'refugehulman';
 
   constructor() {
     const dynamoClient = new DynamoDBClient({ region: ProjectConfig.REGION });
-    this._DbClient = DynamoDBDocumentClient.from(dynamoClient, translateConfig);
+    this._dbClient = DynamoDBDocumentClient.from(dynamoClient, translateConfig);
   }
 
-  get tableName() {
+  protected get dbClient(): DynamoDBDocumentClient {
+    return this._dbClient;
+  }
+
+  protected get tableName() {
     return this._tableName;
   }
 
-  public async write(payload: PutCommandInput['Item']): Promise<PutCommandOutput> {
-    return this._DbClient.send(new PutCommand({
-      TableName: this._tableName,
-      Item: { ...payload },
-    }));
+  public async write(payload: DbItemPutCommand): Promise<PutCommandOutput> {
+    try {
+      const commandInput :PutCommandInput = {
+        TableName: this.tableName,
+        ...payload,
+      };
+      // @ts-ignore
+      return await this.dbClient.send(new PutCommand(commandInput));
+    } catch (e) {
+      throw new AwsError(e as Error);
+    }
   }
 
-  public async read(payload: GetCommandInput['Key']): Promise<GetCommandOutput> {
-    return this._DbClient.send(new GetCommand({
-      TableName: this._tableName,
-      Key: { ...payload },
-    }));
+  public async update(payload: UpdateItemCommandInput): Promise<PutCommandOutput> {
+    try {
+      const commandInput: UpdateItemCommandInput = {
+        ...payload,
+        TableName: this.tableName,
+      };
+      // @ts-ignore
+      return await this.dbClient.send(new UpdateCommand(commandInput));
+    } catch (e) {
+      throw new AwsError(e as Error);
+    }
+  }
+
+  public async read(payload: GetCommandInput['Key'], AttributesToGet: string[] = []): Promise<GetCommandOutput> {
+    try {
+      // @ts-ignore
+      return await this.dbClient.send(new GetCommand({
+        TableName: this.tableName,
+        Key: { ...payload },
+        AttributesToGet,
+      }));
+    } catch (e) {
+      throw new AwsError(e as Error);
+    }
   }
 
   public async delete(payload: DeleteCommandInput['Key']): Promise<DeleteCommandOutput> {
-    return this._DbClient.send(new DeleteCommand({
-      TableName: this._tableName,
-      Key: { ...payload },
-    }));
+    try {
+      return await this.dbClient.send(new DeleteItemCommand({
+        TableName: this.tableName,
+        Key: { ...payload },
+      }));
+    } catch (e) {
+      throw new AwsError(e as Error);
+    }
   }
 
-  public async query(payload: Omit<QueryCommandInput, 'TableName'>): Promise<QueryCommandOutput> {
-    return this._DbClient.send(new QueryCommand({
-      TableName: this._tableName,
-      ...payload,
-    }));
+  public async query(payload: DbItemFindCommand): Promise<QueryCommandOutput> {
+    try {
+      const response = await this.dbClient.send(new QueryCommand({
+        TableName: this.tableName,
+        ...payload,
+      }));
+
+      return {
+        ...response,
+        Items: response.Items?.map((el) => unmarshall(el)),
+      };
+    } catch (e) {
+      throw new AwsError(e as Error);
+    }
+  }
+
+  public async scan(payload: DbItemScanCommand): Promise<ScanCommandOutput> {
+    try {
+      const response = await this.dbClient.send(new ScanCommand({
+        TableName: this.tableName,
+        ...payload,
+      }));
+
+      return {
+        ...response,
+        Items: response.Items?.map((el) => unmarshall(el)),
+      };
+    } catch (e) {
+      throw new AwsError(e as Error);
+    }
   }
 }

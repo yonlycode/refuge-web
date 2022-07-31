@@ -1,9 +1,9 @@
-import ApiReturnErrors from './ApiReturnErrors';
+import ApiReturnErrorsTypes from './ApiReturnErrorsTypes';
 
 export interface IApiErrors extends Error {
-    reference: string,
+    reference?: string,
     statusCode: number,
-    name: ApiReturnErrors
+    name: ApiReturnErrorsTypes
 }
 
 export type ApiErrorsProps = Omit<IApiErrors, 'name' | 'message' | 'statusCode'>;

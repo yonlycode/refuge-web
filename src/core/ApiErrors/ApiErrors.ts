@@ -1,5 +1,5 @@
 import { IApiErrors } from './types/ApiErrors';
-import ApiReturnErrors from './types/ApiReturnErrors';
+import ApiReturnErrorsTypes from './types/ApiReturnErrorsTypes';
 
 export default abstract class ApiErrors extends Error {
   private _statusCode: number;
@@ -12,12 +12,12 @@ export default abstract class ApiErrors extends Error {
     super(message);
     this.name = name;
     this._statusCode = statusCode;
-    this._reference = reference;
+    this._reference = reference ?? '';
   }
 
   get errorDetail(): IApiErrors {
     return {
-      name: this.name as ApiReturnErrors,
+      name: this.name as ApiReturnErrorsTypes,
       statusCode: this.statusCode,
       reference: this.reference,
       message: this.message,
@@ -28,15 +28,7 @@ export default abstract class ApiErrors extends Error {
     return this._reference;
   }
 
-  set reference(reference: string) {
-    this._reference = reference;
-  }
-
   get statusCode() {
     return this._statusCode;
-  }
-
-  set statusCode(statusCode: number) {
-    this._statusCode = statusCode;
   }
 }

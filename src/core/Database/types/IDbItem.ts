@@ -1,21 +1,30 @@
 import {
   DeleteCommandOutput,
   GetCommandOutput,
-  PutCommandOutput,
-  QueryCommandInput,
   QueryCommandOutput,
+  ScanCommandOutput,
+  UpdateCommandOutput,
 } from '@aws-sdk/lib-dynamodb';
 
 import InputErrorMessages from '@/constants/InputErrorMessages';
 
-import { FilterKeys, MetaKeys } from './meta';
+import {
+  FilterKeys,
+  MetaKeys,
+} from './meta';
 
-export type DbItemFindQuery = Omit<QueryCommandInput, 'TableName'>;
+import {
+  DbItemFindCommand,
+  DbItemScanCommand,
+} from './DbClientCommand';
+
+export type DbItemOf<T> = T & FilterKeys & MetaKeys;
 
 export interface IDbItem<T> {
+
     data: T | null;
     filterKeys: FilterKeys;
-    record: T & MetaKeys & FilterKeys | null;
+    record: DbItemOf<T> | null;
 
     /*
     * TODO - documentation
@@ -24,11 +33,11 @@ export interface IDbItem<T> {
     /*
     * TODO - documentation
     */
-    find: (query?: DbItemFindQuery) => Promise<QueryCommandOutput>
+    find: (query?: DbItemFindCommand) => Promise<QueryCommandOutput>
     /*
     * TODO - documentation
     */
-    get: (filterKey: string) => Promise<GetCommandOutput>;
+    get: (filterKey: string, AttributesToGet?: string[]) => Promise<GetCommandOutput>;
     /*
     * TODO - documentation
     */
@@ -36,15 +45,19 @@ export interface IDbItem<T> {
     /*
     * TODO - documentation
     */
-    mutate: (newData: T) => Promise<PutCommandOutput>
+    mutate: (filterKey: string, newData: Partial<T>) => Promise<UpdateCommandOutput>
     /*
     * TODO - documentation
     */
-    new: (newData: T) => void
+    new: (newData: T) => IDbItem<T>
     /*
     * TODO - documentation
     */
     save: () => Promise<string>
     // TODO - implement this
     // list: (filterKey: string) => Promise<GetCommandOutput>;
+    /*
+    * TODO - documentation
+    */
+    scan: (query?: DbItemScanCommand) => Promise<ScanCommandOutput>
 }
