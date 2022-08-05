@@ -2,15 +2,13 @@ import InputErrorMessages from '@/constants/InputErrorMessages';
 import { InputValidators } from '@/utils/InputUtils';
 
 import DbItem from '@/core/Database/DbItem';
-import { MetaKeys } from '@/core/Database/types/meta';
+import { RecordType } from '@/core/Database/types/meta';
 
 import { IEateryReservation } from './types/IEateryReservation';
 
 export default class EateryReservation extends DbItem<IEateryReservation> {
-  constructor(reservation?: IEateryReservation, meta: MetaKeys = {
-    createdAt: Date.now().toLocaleString('Fr'),
-  }) {
-    super('EATERY', reservation, meta);
+  constructor(reservation?: IEateryReservation) {
+    super(RecordType.EATERY, reservation);
   }
 
   public isValid() {

@@ -6,7 +6,9 @@ import BadPayloadError from '@/core/ApiErrors/BadPayloadError';
 
 import {
   FilterKeys,
+  FilterKeysNames,
   MetaKeys,
+  MetaKeysNames,
   RecordType,
 } from './types/meta';
 import {
@@ -30,10 +32,10 @@ export default abstract class DbItem<T> implements IDbItem<T> {
 
   protected _filterKey : string;
 
-  constructor(partitionKey: RecordType, data?: T, meta?: MetaKeys) {
+  constructor(partitionKey: RecordType, data?: T) {
     this._recordData = data ?? null;
-    this._meta = meta ?? {
-      created_at: Date.now().toString(),
+    this._meta = {
+      [MetaKeysNames.CREATED_AT]: Date.now().toString(),
     };
     this._partitionKey = partitionKey;
     this._filterKey = randomUUID();
@@ -51,8 +53,8 @@ export default abstract class DbItem<T> implements IDbItem<T> {
 
   get filterKeys() :FilterKeys {
     return {
-      partition_key: this._partitionKey,
-      filter_key: this._filterKey,
+      [FilterKeysNames.PARTITION_KEY]: this._partitionKey,
+      [FilterKeysNames.FILTER_KEY]: this._filterKey,
     };
   }
 
@@ -70,10 +72,10 @@ export default abstract class DbItem<T> implements IDbItem<T> {
 
   public async delete(uuid: string) {
     return this._dbClient.delete({
-      partition_key: {
+      [FilterKeysNames.PARTITION_KEY]: {
         S: this._partitionKey,
       },
-      filter_key: {
+      [FilterKeysNames.FILTER_KEY]: {
         S: uuid,
       },
     });
@@ -83,21 +85,22 @@ export default abstract class DbItem<T> implements IDbItem<T> {
     const config: DbItemFindCommand = {
       ...query ? {
         ...query,
-        KeyConditionValues: {
+        ExpressionAttributeValues: {
           ':pk': { S: this._partitionKey },
+          ...query.ExpressionAttributeValues,
         },
-        KeyConditionExpression: 'partition_key = :pk',
+        KeyConditionExpression: `${FilterKeysNames.PARTITION_KEY} = :pk`,
       } : {
         ExpressionAttributeValues: {
           ':pk': { S: this._partitionKey },
-          ':fk': { S: this._filterKey },
         },
+        KeyConditionExpression: `${FilterKeysNames.PARTITION_KEY} = :pk`,
       },
     };
 
     const response = await this._dbClient.query(config);
 
-    if (!response.Items) {
+    if (!response.Items || response.Items?.length === 0) {
       throw new ObjectNotFoundError({
         reference: JSON.stringify(query),
       });
@@ -108,8 +111,8 @@ export default abstract class DbItem<T> implements IDbItem<T> {
 
   public async get(filterKey: string, AttributesToGet?: string[]) {
     const response = await this._dbClient.read({
-      partition_key: this._partitionKey,
-      filter_key: filterKey,
+      [FilterKeysNames.PARTITION_KEY]: this._partitionKey,
+      [FilterKeysNames.FILTER_KEY]: filterKey,
     }, AttributesToGet);
 
     if (!response.Item) {
@@ -125,9 +128,9 @@ export default abstract class DbItem<T> implements IDbItem<T> {
     return this._dbClient.write({
       Item: {
         ...newData,
-        filter_key: filterKey,
-        partition_key: this._partitionKey,
-        updated_at: Date.now().toString(),
+        [FilterKeysNames.FILTER_KEY]: filterKey,
+        [FilterKeysNames.PARTITION_KEY]: this._partitionKey,
+        [MetaKeysNames.UPDATED_AT]: Date.now().toString(),
       },
     });
   }
@@ -135,7 +138,7 @@ export default abstract class DbItem<T> implements IDbItem<T> {
   public new(data: T): IDbItem<T> {
     this._recordData = data ?? null;
     this._meta = {
-      created_at: Date.now().toString(),
+      [MetaKeysNames.CREATED_AT]: Date.now().toString(),
     };
     this._filterKey = randomUUID();
 
@@ -170,11 +173,11 @@ export default abstract class DbItem<T> implements IDbItem<T> {
         KeyCondition: {
           ':pk': { S: this._partitionKey },
         },
-        KeyConditionExpression: 'partition_key = :pk',
+        KeyConditionExpression: `${FilterKeysNames.PARTITION_KEY} = :pk`,
       } : {
         ExpressionAttributeValues: {
           ':pk': { S: this._partitionKey },
-          ':fk': { S: this._filterKey },
+          KeyConditionExpression: `${FilterKeysNames.PARTITION_KEY} = :pk`,
         },
       }
       ,

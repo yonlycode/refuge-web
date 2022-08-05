@@ -1,16 +1,14 @@
 import InputErrorMessages from '@/constants/InputErrorMessages';
 import { InputValidators } from '@/utils/InputUtils';
 
-import { MetaKeys } from '@/core/Database/types/meta';
+import { RecordType } from '@/core/Database/types/meta';
 import DbItem from '@/core/Database/DbItem';
 
 import { IContactRequest } from './types/IContactRequest';
 
 export default class ContactRequest extends DbItem<IContactRequest> {
-  constructor(reservation?: IContactRequest, meta: MetaKeys = {
-    createdAt: Date.now().toLocaleString('Fr'),
-  }) {
-    super('CONTACT', reservation, meta);
+  constructor(reservation?: IContactRequest) {
+    super(RecordType.CONTACT, reservation);
   }
 
   public isValid() {

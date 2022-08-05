@@ -1,6 +1,5 @@
 import {
   FilterKeysNames,
-  MetaKeys,
   MetaKeysNames,
   RecordType,
 } from '@/core/Database/types/meta';
@@ -10,12 +9,11 @@ import { IDbItem } from '@/core/Database/types/IDbItem';
 import InputErrorMessages from '@/constants/InputErrorMessages';
 
 import { IGuideArticle, IGuideArticleKeys } from './types/IGuideArticle';
+import { GuideMetaKeys } from './types/GuideMeta';
 
 export default class GuideArticle extends DbItem<IGuideArticle> {
-  constructor(reservation?: IGuideArticle, meta: MetaKeys = {
-    created_at: Date.now().toLocaleString('Fr'),
-  }) {
-    super(RecordType.GUIDE, reservation, meta);
+  constructor(reservation?: IGuideArticle) {
+    super(RecordType.GUIDE, reservation);
   }
 
   private get getUrl() :string {
@@ -47,6 +45,7 @@ export default class GuideArticle extends DbItem<IGuideArticle> {
     return [
       IGuideArticleKeys.NAME,
       IGuideArticleKeys.DESCRIPTION,
+      IGuideArticleKeys.PREVIEW_IMAGE,
       IGuideArticleKeys.META,
       FilterKeysNames.FILTER_KEY,
       MetaKeysNames.CREATED_AT,
@@ -62,10 +61,11 @@ export default class GuideArticle extends DbItem<IGuideArticle> {
     if (this.data) {
       this.data = {
         ...this.data,
+        [IGuideArticleKeys.HOT_GUIDE]: this.data[IGuideArticleKeys.HOT_GUIDE] ?? false,
         [IGuideArticleKeys.NAME]: this.data[IGuideArticleKeys.NAME].toLowerCase(),
         [IGuideArticleKeys.META]: {
           ...this.data[IGuideArticleKeys.META],
-          url: this.getUrl,
+          [GuideMetaKeys.URL]: this.getUrl,
         },
       };
     }
@@ -73,10 +73,10 @@ export default class GuideArticle extends DbItem<IGuideArticle> {
   }
 
   public async searchGuideArticlesByName(searchString: string) {
-    return this.scan({
+    return this.find({
       ProjectionExpression: GuideArticle.overviewGuideAttributeToGet.join(', '),
-
-      FilterExpression: `contains (#search, :s) OR contains (${IGuideArticleKeys.DESCRIPTION}, :s)`,
+      FilterExpression:
+        `contains (#search, :s) OR contains (${IGuideArticleKeys.DESCRIPTION}, :s)`,
       ExpressionAttributeNames: {
         '#search': IGuideArticleKeys.NAME,
       },
@@ -85,7 +85,18 @@ export default class GuideArticle extends DbItem<IGuideArticle> {
           S: searchString.trim().toLowerCase(),
         },
       },
-      // AttributesToGet: GuideArticle.overviewGuideAttributeToGet,
+    });
+  }
+
+  public async getHotGuideArticles() {
+    return this.find({
+      ProjectionExpression: GuideArticle.overviewGuideAttributeToGet.join(', '),
+      FilterExpression: `${IGuideArticleKeys.HOT_GUIDE} = :hg`,
+      ExpressionAttributeValues: {
+        ':hg': {
+          BOOL: true,
+        },
+      },
     });
   }
 }

@@ -4,12 +4,14 @@ import Layout from './slices/Layout';
 import Reservation from './slices/Reservation';
 import Contact from './slices/Contact';
 import Gallery from './slices/Gallery';
+import Guides from './slices/Guides/index';
 
 export const store = configureStore({
   reducer: {
     contact: Contact,
     gallery: Gallery,
     layout: Layout,
+    guides: Guides,
     reservation: Reservation,
   },
 });

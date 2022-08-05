@@ -31,6 +31,7 @@ export default async function ContactRequestIndex(req: NextApiRequest, res: Next
         return res.status(200).json(response);
       } catch (e) {
         const error = (e as ApiErrors);
+        console.log(e);
         return res.status(error.statusCode).json((e as ApiErrors).errorDetail);
       }
     default:
