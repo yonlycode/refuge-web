@@ -29,121 +29,111 @@ export const InputFormatters = {
 export const InputValidators: Record<string, (value:any) => InputErrorMessages | null> = {
   firstName: (firstName?: string) => {
     if (!firstName || firstName.length === 0) {
-      return InputErrorMessages.firstNameEmpty;
+      return InputErrorMessages.FIRST_NAME_EMPTY;
     }
     if (firstName.length < 3) {
-      return InputErrorMessages.firstNameToShort;
+      return InputErrorMessages.FIRST_NAME_TO_SHORT;
     }
     if (firstName.length > 30) {
-      return InputErrorMessages.firstNameToLong;
+      return InputErrorMessages.FIRST_NAME_TO_LONG;
     }
     return null;
   },
   lastName: (lastName?: string) => {
     if (!lastName || lastName.length === 0) {
-      return InputErrorMessages.lastNameEmpty;
+      return InputErrorMessages.LAST_NAME_EMPTY;
     }
     if (lastName.length < 3) {
-      return InputErrorMessages.lastNameToShort;
+      return InputErrorMessages.LAST_NAME_TO_SHORT;
     }
     if (lastName.length > 30) {
-      return InputErrorMessages.lastNameToLong;
+      return InputErrorMessages.LAST_NAME_TO_LONG;
     }
     return null;
   },
   subject: (subject?: string) => {
     if (!subject || subject.length === 0) {
-      return InputErrorMessages.subjectEmpty;
+      return InputErrorMessages.SUBJECT_EMPTY;
     }
     if (subject.length < 10) {
-      return InputErrorMessages.subjectToShort;
+      return InputErrorMessages.SUBJECT_TO_SHORT;
     }
     if (subject.length > 50) {
-      return InputErrorMessages.subjectToLong;
+      return InputErrorMessages.SUBJECT_TO_LONG;
     }
     return null;
   },
   message: (message?: string) => {
     if (!message || message.length === 0) {
-      return InputErrorMessages.messageEmpty;
+      return InputErrorMessages.MESSAGE_EMPTY;
     }
     if (message.length < 15) {
-      return InputErrorMessages.messageToShort;
+      return InputErrorMessages.MESSAGE_TO_SHORT;
     }
     if (message.length > 700) {
-      return InputErrorMessages.messageToLong;
+      return InputErrorMessages.MESSAGE_TO_LONG;
     }
     return null;
   },
   phone: (phone?: string) => {
     if (!phone || phone.length === 0) {
-      return InputErrorMessages.phoneEmpty;
+      return InputErrorMessages.PHONE_EMPTY;
     }
 
     if (!phoneValidator.test(phone)) {
-      return InputErrorMessages.phoneInvalid;
+      return InputErrorMessages.PHONE_INVALID;
     }
 
     return null;
   },
   email: (email?: string) => {
     if (!email || email.length === 0) {
-      return InputErrorMessages.emailEmpty;
+      return InputErrorMessages.EMAIL_EMPTY;
     }
 
     if (!emailValidator.test(email)) {
-      return InputErrorMessages.emailInvalid;
+      return InputErrorMessages.EMAIL_INVALID;
     }
 
     return null;
   },
   customerCount: (count? :number) => {
     if (!count || count < 1) {
-      return InputErrorMessages.noCustomerCount;
+      return InputErrorMessages.NO_CUSTOMER_COUNT;
     }
 
     return null;
   },
   adultCount: (count? :number) => {
     if (!count || count < 1) {
-      return InputErrorMessages.noAdultCount;
+      return InputErrorMessages.NO_ADULT_COUNT;
     }
 
     return null;
   },
   childrenCount: (childrenCount?: number) => {
     if (!childrenCount || childrenCount > 8) {
-      return InputErrorMessages.tooMuchChildrenCount;
+      return InputErrorMessages.TOO_MUCH_CUSTOMER_COUNT;
     }
 
     return null;
   },
   startDate: (date?: string) => {
     if (!date || date === '') {
-      return InputErrorMessages.startDateEmpty;
+      return InputErrorMessages.START_DATE_EMPTY;
     }
     if (!Date.parse(date)) {
-      return InputErrorMessages.startDateInvalid;
+      return InputErrorMessages.START_DATE_INVALID;
     }
 
     return null;
   },
   endDate: (date?: string) => {
     if (!date || date === '') {
-      return InputErrorMessages.endDateEmpty;
+      return InputErrorMessages.END_DATE_EMPTY;
     }
     if (!Date.parse(date)) {
-      return InputErrorMessages.endDateInvalid;
-    }
-
-    return null;
-  },
-  date: (date?: string) => {
-    if (!date || date === '') {
-      return InputErrorMessages.dateEmpty;
-    }
-    if (!Date.parse(date)) {
-      return InputErrorMessages.dateInvalid;
+      return InputErrorMessages.END_DATE_INVALID;
     }
 
     return null;

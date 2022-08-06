@@ -1,5 +1,6 @@
 import { GalleryItem, GalleryTags } from '@/core/Gallery/Gallery';
 
+// TODO migrate to database
 const Gallery: Array<GalleryItem> = [
   // Eatery photos
   {

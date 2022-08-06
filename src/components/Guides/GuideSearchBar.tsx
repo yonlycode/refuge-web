@@ -11,6 +11,8 @@ import { fetchGuideList, mutatecurrentGuideQuery } from '@/store/slices/Guides';
 import AppAutoComplete from '@/components/Common/AppAutoComplete';
 import AppLoadingBackdrop from '@/components/Common/AppLoadingBackdrop';
 
+import ProjectConfig from '@/utils/ProjectConfig';
+
 export default function GuideSearchBar() {
   const {
     currentQuery,
@@ -45,7 +47,7 @@ export default function GuideSearchBar() {
     if (currentQuery !== '') {
       setSearchTimer(setTimeout(() => {
         handleGuideSearch();
-      }, 500));
+      }, ProjectConfig.INPUT_TIMEOUT_DURATION));
     }
   }, [currentQuery]);
 

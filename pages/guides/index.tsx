@@ -2,10 +2,11 @@ import Head from 'next/head';
 
 import { AppRoutesNames, AppRoutesRecord } from '@/constants/AppLinks';
 
-import GuideSearchBar from '@/components/GuideSearchBar';
+import GuideSearchBar from '@/components/Guides/GuideSearchBar';
 import AppBanner from '@/components/Common/AppBanner';
-import Faq from '@/constants/Faq';
 import HotGuidesCarousel from '@/components/Guides/HotGuidesCarousel';
+
+import Faq from '@/constants/Faq';
 
 export default function GuideLanding() {
   return (
@@ -51,9 +52,7 @@ export default function GuideLanding() {
                     aria-expanded="false"
                     aria-controls={id}
                   >
-                    {' '}
                     {title}
-                    {' '}
 
                   </button>
                 </h2>
