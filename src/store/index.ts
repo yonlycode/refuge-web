@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+
 import Layout from './slices/Layout';
 import Reservation from './slices/Reservation';
 import Contact from './slices/Contact';

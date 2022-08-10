@@ -3,7 +3,7 @@ import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { IGuideArticle } from '@/core/Guides/types/IGuideArticle';
 import { createToast } from '../Layout';
-import { GuideState } from './types/GuideState';
+import { GuideState, GuideStateKeys } from './types/GuideState';
 
 const fetchGuideDetail = createAsyncThunk < IGuideArticle, string >(
   'fetchGuideDetail',
@@ -26,18 +26,18 @@ export const fetchGuideDetailBuilder = (builder: ActionReducerMapBuilder<GuideSt
     fetchGuideDetail.pending,
     (state) => ({
       ...state,
-      guide: null,
-      isGuideFetching: true,
+      [GuideStateKeys.GUIDE]: null,
+      [GuideStateKeys.IS_GUIDE_FETCHING]: true,
     }),
   );
   builder.addCase(fetchGuideDetail.fulfilled, (state, { payload }) => ({
     ...state,
-    guide: payload,
-    isGuideFetching: false,
+    [GuideStateKeys.GUIDE]: payload,
+    [GuideStateKeys.IS_GUIDE_FETCHING]: false,
   }));
   builder.addCase(fetchGuideDetail.rejected, (state) => ({
     ...state,
-    isGuideFetching: false,
+    [GuideStateKeys.IS_GUIDE_FETCHING]: false,
   }));
 };
 

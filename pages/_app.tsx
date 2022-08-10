@@ -11,6 +11,7 @@ import { store } from '@/store';
 import AppFooter from '@/components/Common/AppFooter';
 import AppHeader from '@/components/Common/AppHeader';
 import AppToastFactory from '@/components/Common/AppToastFactory';
+import AppLoadingBackdrop from '@/components/Common/AppLoadingBackdrop';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,6 +20,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Provider store={store}>
+        <AppLoadingBackdrop />
         <AppHeader />
         <main>
           <Component {...pageProps} />

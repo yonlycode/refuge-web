@@ -6,7 +6,7 @@ import {
 } from 'react';
 
 import { useAppDispatch, useAppSelector } from '@/store';
-import { fetchGuideList, mutatecurrentGuideQuery } from '@/store/slices/Guides';
+import { fetchGuideList, mutateCurrentGuideQuery } from '@/store/slices/Guides';
 
 import AppAutoComplete from '@/components/Common/AppAutoComplete';
 import AppLoadingBackdrop from '@/components/Common/AppLoadingBackdrop';
@@ -24,7 +24,7 @@ export default function GuideSearchBar() {
 
   const handleGuideSearch = async () => {
     try {
-      await dispatch(fetchGuideList());
+      await dispatch(fetchGuideList(currentQuery));
     } catch (e) {
       console.log(e);
     }
@@ -35,7 +35,7 @@ export default function GuideSearchBar() {
   };
 
   const handleGuideQueryChange = ({ currentTarget }: ChangeEvent<HTMLInputElement>) => (
-    dispatch(mutatecurrentGuideQuery(currentTarget.value))
+    dispatch(mutateCurrentGuideQuery(currentTarget.value))
   );
 
   useEffect(() => {

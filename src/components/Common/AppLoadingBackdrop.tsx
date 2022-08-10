@@ -1,13 +1,20 @@
+import { useAppSelector } from '@/store';
 import { useEffect } from 'react';
 
 export default function AppLoadingBackdrop() {
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
+  const { isAppLoading } = useAppSelector((state) => state.layout);
 
-    return () => {
+  useEffect(() => {
+    if (isAppLoading) {
+      document.body.style.overflow = 'hidden';
+    } else {
       document.body.style.overflow = 'scroll';
-    };
-  }, []);
+    }
+  }, [isAppLoading]);
+
+  if (!isAppLoading) {
+    return (<div />);
+  }
 
   return (
     <div id="backdrop">

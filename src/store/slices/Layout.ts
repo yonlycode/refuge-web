@@ -8,10 +8,12 @@ export interface Toast {
 }
 
 interface LayoutState {
+    isAppLoading: boolean
     toasts: Toast[]
 }
 
 const initialState: LayoutState = {
+  isAppLoading: false,
   toasts: [],
 };
 
@@ -28,6 +30,12 @@ export const LayoutSlice = createSlice({
         ],
       };
     },
+    setApplicationLoadingBackdrop(state, { payload }: PayloadAction<boolean>) {
+      return {
+        ...state,
+        isAppLoading: payload,
+      };
+    },
     removeToast(state, { payload }: PayloadAction<Toast>) {
       return {
         ...state,
@@ -37,6 +45,6 @@ export const LayoutSlice = createSlice({
   },
 });
 
-export const { createToast, removeToast } = LayoutSlice.actions;
+export const { createToast, removeToast, setApplicationLoadingBackdrop } = LayoutSlice.actions;
 
 export default LayoutSlice.reducer;

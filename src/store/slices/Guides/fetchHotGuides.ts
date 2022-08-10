@@ -3,12 +3,12 @@ import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { GuideArticleOverview } from '@/core/Guides/types/IGuideArticle';
 import { createToast } from '../Layout';
-import { GuideState } from './types/GuideState';
+import { GuideState, GuideStateKeys } from './types/GuideState';
 
-const fetchHotGuides = createAsyncThunk < GuideArticleOverview[], undefined >(
+const fetchHotGuides = createAsyncThunk<GuideArticleOverview[], undefined>(
   'fetchHotGuides',
   async (_, { rejectWithValue, dispatch }) => {
-    const response = await axios.get<{Items: GuideArticleOverview[]}>('/api/get-hot-guides');
+    const response = await axios.get<{ Items: GuideArticleOverview[] }>('/api/get-hot-guides');
 
     if (response.status !== 200) {
       dispatch(createToast({
@@ -27,18 +27,18 @@ export const fetchHotGuidesBuilder = (builder: ActionReducerMapBuilder<GuideStat
     fetchHotGuides.pending,
     (state) => ({
       ...state,
-      hotGuides: [],
-      isHotGuidesFetching: true,
+      [GuideStateKeys.HOT_GUIDES]: [],
+      [GuideStateKeys.IS_HOT_GUIDES_FETCHING]: true,
     }),
   );
   builder.addCase(fetchHotGuides.fulfilled, (state, { payload }) => ({
     ...state,
-    ogtGuides: payload,
-    isHotGuidesFetching: false,
+    [GuideStateKeys.HOT_GUIDES]: payload,
+    [GuideStateKeys.IS_HOT_GUIDES_FETCHING]: false,
   }));
   builder.addCase(fetchHotGuides.rejected, (state) => ({
     ...state,
-    isHotGuidesFetching: false,
+    [GuideStateKeys.IS_HOT_GUIDES_FETCHING]: false,
   }));
 };
 

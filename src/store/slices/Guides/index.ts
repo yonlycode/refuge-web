@@ -3,7 +3,7 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit';
 
-import { GuideState } from './types/GuideState';
+import { GuideState, GuideStateKeys } from './types/GuideState';
 
 import fetchGuideList, { fetchGuideListBuilder } from './fetchGuideList';
 import fetchGuideDetail, { fetchGuideDetailBuilder } from './fetchGuideDetail';
@@ -23,10 +23,10 @@ export const GuideSlice = createSlice({
   name: 'guides',
   initialState,
   reducers: {
-    mutatecurrentGuideQuery(state: GuideState, { payload }: PayloadAction<string>) {
+    mutateCurrentGuideQuery(state: GuideState, { payload }: PayloadAction<string>) {
       return {
         ...state,
-        currentQuery: payload,
+        [GuideStateKeys.CURRENT_QUERY]: payload,
       };
     },
   },
@@ -37,12 +37,12 @@ export const GuideSlice = createSlice({
   },
 });
 
+export const { mutateCurrentGuideQuery } = GuideSlice.actions;
+
 export {
   fetchGuideList,
   fetchGuideDetail,
   fetchHotGuides,
 };
-
-export const { mutatecurrentGuideQuery } = GuideSlice.actions;
 
 export default GuideSlice.reducer;

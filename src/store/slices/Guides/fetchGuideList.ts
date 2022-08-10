@@ -3,12 +3,12 @@ import { ActionReducerMapBuilder, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { GuideArticleOverview } from '@/core/Guides/types/IGuideArticle';
 import { createToast } from '../Layout';
-import { GuideState } from './types/GuideState';
+import { GuideState, GuideStateKeys } from './types/GuideState';
 
-const fetchGuideList = createAsyncThunk < GuideArticleOverview[], undefined >(
+const fetchGuideList = createAsyncThunk < GuideArticleOverview[], string >(
   'fetchGuideList',
-  async (_, { rejectWithValue, getState, dispatch }) => {
-    const search: string = (getState() as any).guides.currentQuery;
+  async (search, { rejectWithValue, dispatch }) => {
+    // const search: string = (getState() as any).guides.currentQuery;
     const response = await axios.get<{Items: GuideArticleOverview[]}>('/api/find-guide-articles', {
       params: { search },
     });
@@ -30,18 +30,19 @@ export const fetchGuideListBuilder = (builder: ActionReducerMapBuilder<GuideStat
     fetchGuideList.pending,
     (state) => ({
       ...state,
-      guideList: [],
-      isGuideListFetching: true,
+      [GuideStateKeys.GUIDE_LIST]: [],
+      [GuideStateKeys.IS_GUIDE_LIST_FETCHING]: true,
     }),
   );
   builder.addCase(fetchGuideList.fulfilled, (state, { payload }) => ({
     ...state,
-    guideList: payload,
-    isGuideListFetching: false,
+    [GuideStateKeys.GUIDE_LIST]: payload,
+    [GuideStateKeys.IS_GUIDE_LIST_FETCHING]: false,
+
   }));
   builder.addCase(fetchGuideList.rejected, (state) => ({
     ...state,
-    isGuideListFetching: false,
+    [GuideStateKeys.IS_GUIDE_LIST_FETCHING]: false,
   }));
 };
 

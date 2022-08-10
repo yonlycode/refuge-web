@@ -4,7 +4,7 @@ import axios, { AxiosError } from 'axios';
 import { GalleryItem, GalleryTags } from '@/core/Gallery/Gallery';
 import { PaginatedData } from '@/core/Pagination/PaginatedData';
 
-import { createToast } from './Layout';
+import { createToast, setApplicationLoadingBackdrop } from './Layout';
 
 export type GalleryStateOptions = {
   page: number;
@@ -19,13 +19,11 @@ export type GalleryStateLightbox = {
 
 export type GalleryState = PaginatedData<GalleryItem> & {
   options: GalleryStateOptions;
-  isGalleryLoading: boolean;
   lightbox: GalleryStateLightbox;
 }
 
 const initialState: GalleryState = {
   data: [],
-  isGalleryLoading: false,
   options: {
     page: 0,
     perPage: 6,
@@ -42,12 +40,6 @@ export const gallerySlice = createSlice({
   name: 'gallery',
   initialState,
   reducers: {
-    mutateGalleryLoadingState(state, { payload }: PayloadAction<boolean>): GalleryState {
-      return {
-        ...state,
-        isGalleryLoading: payload,
-      };
-    },
     mutateGalleryOptions(
       state,
       { payload }: PayloadAction<Partial<GalleryStateOptions>>,
@@ -100,7 +92,6 @@ export const gallerySlice = createSlice({
 
 export const {
   mutateGallery,
-  mutateGalleryLoadingState,
   mutateGalleryOptions,
   mutateLightboxState,
   mutateLightboxCurrentIndex,
@@ -115,19 +106,20 @@ export const FetchGallery = createAsyncThunk(
       dispatch(mutateGalleryOptions({
         page: (getState() as any).gallery.options.page + 1,
       }));
-      dispatch(mutateGalleryLoadingState(true));
+      dispatch(setApplicationLoadingBackdrop(true));
+
       const response = await axios.get('/api/gallery', {
         params: { ...(getState() as any).gallery.options },
       });
 
       dispatch(mutateGallery(response.data));
-      dispatch(mutateGalleryLoadingState(false));
     } catch (e) {
       dispatch(createToast({
         message: (e as AxiosError).response?.data as string,
         type: 'error',
       }));
-      dispatch(mutateGalleryLoadingState(false));
+    } finally {
+      dispatch(setApplicationLoadingBackdrop(false));
     }
   },
 );
