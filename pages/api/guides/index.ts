@@ -21,8 +21,7 @@ export default async function ContactRequestIndex(req: NextApiRequest, res: Next
         return res.status(200).json(response.Items);
       } catch (e) {
         const error = (e as ApiErrors);
-        console.log(e);
-        return res.status(error.statusCode).json((e as ApiErrors).errorDetail);
+        return res.status(error.statusCode).json(error.errorDetail);
       }
     case 'POST':
       try {
@@ -31,8 +30,7 @@ export default async function ContactRequestIndex(req: NextApiRequest, res: Next
         return res.status(200).json(response);
       } catch (e) {
         const error = (e as ApiErrors);
-        console.log(e);
-        return res.status(error.statusCode).json((e as ApiErrors).errorDetail);
+        return res.status(error.statusCode).json(error.errorDetail);
       }
     default:
       res.status(405).send('Method Not Allowed');

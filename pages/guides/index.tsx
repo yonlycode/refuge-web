@@ -7,8 +7,16 @@ import AppBanner from '@/components/Common/AppBanner';
 import HotGuidesCarousel from '@/components/Guides/HotGuidesCarousel';
 
 import Faq from '@/constants/Faq';
+import { GuideArticleOverview } from '@/core/Guides/types/IGuideArticle';
+import GuideArticle from '@/core/Guides/Guide';
 
-export default function GuideLanding() {
+type GuideLandingProps = {
+  hotGuides: GuideArticleOverview[];
+}
+
+export default function GuideLanding({
+  hotGuides,
+}: GuideLandingProps) {
   return (
     <>
       <Head>
@@ -17,16 +25,24 @@ export default function GuideLanding() {
           Découvrez nos différents guide pour faciliter votre arrivée
           et votre séjour à Marie-Galante!
         </title>
-        <meta name="description" content="Dans un cadre magnifique, entre cocotiers, flamboyants et arbres fruitiers entre miroitement de la mer et plumets argentés de cannes à sucre, Georges et Fortuna vous accueillent au REFUGE cuisine locale dont vous ferez l'éloge et hébergement tout confort qui vous feront passez les plus douces nuit dans l'un des plus beau cadre au monde : Saint-Louis de Marie-Galante en Guadeloupe" />
+        <meta
+          name="description"
+          content="Refuge HULMAN -
+          Découvrez nos différents guide pour faciliter votre arrivée
+          et votre séjour à Marie-Galante!"
+        />
         <meta
           name="title"
           content="Refuge HULMAN -
           Découvrez nos différents guide pour faciliter votre arrivée et votre séjour à Marie-Galante!"
         />
       </Head>
+
       <AppBanner
         size="L"
-        title="Un titre de test pour l'instant"
+        title="Découvrez nos guides"
+        subTitle="Ici, vous trouverez toutes les informations pouvant
+         vous être utile pour bien préparer vos vacances dans à Marie-Galante. "
         breadcrumbs={[
           AppRoutesRecord[AppRoutesNames.HOME],
         ]}
@@ -34,18 +50,19 @@ export default function GuideLanding() {
 
       <GuideSearchBar />
 
-      <HotGuidesCarousel />
+      <HotGuidesCarousel
+        hotGuides={hotGuides}
+      />
 
       <section className="container mt-50">
-        <h2 className="text-center fs-1 fw-5 mb-5"> Foire au question: </h2>
+        <h2 className="text-center fs-1 fw-3 mb-5"> Questions Fréquentes: </h2>
         <div className="col-lg-10 mx-auto">
           <div className="accordion accordion-flush" id="faq-accordion">
-
             {Faq.map(({ title, content, id }) => (
               <div className="accordion-item" key={id}>
-                <h2 className="accordion-header" id={`flush-${id}`}>
+                <h3 className="accordion-header" id={`flush-${id}`}>
                   <button
-                    className="accordion-button collapsed"
+                    className="accordion-button collapsed fs-4"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target={`#${id}`}
@@ -53,23 +70,31 @@ export default function GuideLanding() {
                     aria-controls={id}
                   >
                     {title}
-
                   </button>
-                </h2>
+                </h3>
                 <div
                   id={id}
                   className="accordion-collapse collapse"
                   aria-labelledby={`flush-${id}`}
                   data-bs-parent="#faq-accordion"
                 >
-                  <div className="accordion-body" dangerouslySetInnerHTML={{ __html: content }} />
+                  <div className="accordion-body fs-5" dangerouslySetInnerHTML={{ __html: content }} />
                 </div>
               </div>
             ))}
-
           </div>
         </div>
       </section>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const hotGuides = await (await new GuideArticle().getHotGuideArticles()).Items;
+
+  return {
+    props: {
+      hotGuides,
+    },
+  };
 }

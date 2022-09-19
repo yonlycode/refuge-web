@@ -4,34 +4,49 @@ import {
   useEffect,
   useState,
 } from 'react';
+import { useRouter } from 'next/router';
 
 import { useAppDispatch, useAppSelector } from '@/store';
 import { fetchGuideList, mutateCurrentGuideQuery } from '@/store/slices/Guides';
+import { createToast } from '@/store/slices/Layout';
 
 import AppAutoComplete from '@/components/Common/AppAutoComplete';
 import AppLoadingBackdrop from '@/components/Common/AppLoadingBackdrop';
 
+import { IGuideArticleKeys } from '@/core/Guides/types/IGuideArticle';
+import { FilterKeysNames, MetaKeysNames } from '@/core/Database/types/meta';
+
 import ProjectConfig from '@/utils/ProjectConfig';
 
+import { AppRoutesNames, AppRoutesRecord } from '@/constants/AppLinks';
+
 export default function GuideSearchBar() {
+  const { push } = useRouter();
   const {
     currentQuery,
     isGuideListFetching,
     guideList,
   } = useAppSelector((state) => state.guides);
   const [searchTimer, setSearchTimer] = useState<ReturnType<typeof setTimeout> | null>(null);
+
   const dispatch = useAppDispatch();
 
   const handleGuideSearch = async () => {
     try {
       await dispatch(fetchGuideList(currentQuery));
     } catch (e) {
-      console.log(e);
+      dispatch(createToast({
+        type: 'error',
+        message: (e as Error).message,
+      }));
     }
   };
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (currentQuery !== '') {
+      push(`${AppRoutesRecord[AppRoutesNames.GUIDE_SEARCH].url}?search=${currentQuery}`);
+    }
   };
 
   const handleGuideQueryChange = ({ currentTarget }: ChangeEvent<HTMLInputElement>) => (
@@ -65,10 +80,10 @@ export default function GuideSearchBar() {
                       placeholder="Trouvez un guide"
                       value={currentQuery}
                       items={guideList.map((el) => ({
-                        url: el.meta.url,
-                        name: el.guide_name,
-                        description: el.description,
-                        info: el.created_at!,
+                        url: `/guides/${el[FilterKeysNames.FILTER_KEY]}`,
+                        name: el[IGuideArticleKeys.NAME],
+                        description: el[IGuideArticleKeys.DESCRIPTION],
+                        info: el[MetaKeysNames.CREATED_AT] as string,
                       }))}
                       onChange={handleGuideQueryChange}
                     />

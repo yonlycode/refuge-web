@@ -19,7 +19,6 @@ export default class EateryReservation extends DbItem<IEateryReservation> {
     let errors: Partial<Record<keyof IEateryReservation, InputErrorMessages>> = {};
 
     Object.keys(this.data).forEach((el) => {
-      console.log(el);
       const attrName = el as keyof IEateryReservation;
       const attrValue = this.data![attrName];
       const error = InputValidators[attrName] && InputValidators[attrName](attrValue);

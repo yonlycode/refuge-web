@@ -9,15 +9,10 @@ import { IDbItem } from '@/core/Database/types/IDbItem';
 import InputErrorMessages from '@/constants/InputErrorMessages';
 
 import { IGuideArticle, IGuideArticleKeys } from './types/IGuideArticle';
-import { GuideMetaKeys } from './types/GuideMeta';
 
 export default class GuideArticle extends DbItem<IGuideArticle> {
   constructor(reservation?: IGuideArticle) {
     super(RecordType.GUIDE, reservation);
-  }
-
-  private get getUrl() :string {
-    return `/guides/${this._filterKey}`;
   }
 
   public isValid(): null | Partial<Record<keyof IGuideArticle, InputErrorMessages>> {
@@ -66,10 +61,7 @@ export default class GuideArticle extends DbItem<IGuideArticle> {
         ...this.data,
         [IGuideArticleKeys.HOT_GUIDE]: this.data[IGuideArticleKeys.HOT_GUIDE] ?? false,
         [IGuideArticleKeys.NAME]: this.data[IGuideArticleKeys.NAME].toLowerCase(),
-        [IGuideArticleKeys.META]: {
-          ...this.data[IGuideArticleKeys.META],
-          [GuideMetaKeys.URL]: this.getUrl,
-        },
+        [IGuideArticleKeys.META]: this.data[IGuideArticleKeys.META],
       };
     }
     return this;
@@ -79,7 +71,7 @@ export default class GuideArticle extends DbItem<IGuideArticle> {
     return this.find({
       ProjectionExpression: GuideArticle.overviewGuideAttributeToGet.join(', '),
       FilterExpression:
-        `contains (#search, :s) OR contains (${IGuideArticleKeys.DESCRIPTION}, :s)`,
+        'contains (#search, :s)',
       ExpressionAttributeNames: {
         '#search': IGuideArticleKeys.NAME,
       },

@@ -3,7 +3,6 @@ export enum GuideMetaKeys {
     DESCRIPTION = 'description',
     KEYWORDS = 'keywords',
     READ_TIMES = 'readTime',
-    URL = 'url',
 }
 
 export interface GuideMeta {
@@ -11,5 +10,4 @@ export interface GuideMeta {
     [GuideMetaKeys.DESCRIPTION]?: string;
     [GuideMetaKeys.KEYWORDS]?: string;
     [GuideMetaKeys.READ_TIMES]?: number;
-    [GuideMetaKeys.URL]: string;
 }

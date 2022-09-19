@@ -1,5 +1,6 @@
 import { DbItemOf } from '@/core/Database/types/IDbItem';
-import { MetaKeysNames } from '@/core/Database/types/meta';
+import { FilterKeysNames, MetaKeysNames } from '@/core/Database/types/meta';
+import { GuideContent } from './GuideContent';
 
 import { GuideMeta } from './GuideMeta';
 
@@ -10,7 +11,6 @@ export enum IGuideArticleKeys {
     DESCRIPTION = 'description',
     PREVIEW_IMAGE = 'previewImage',
     CONTENT = 'content',
-    WEIGHT = 'weight',
     HOT_GUIDE = 'hotGuide'
 }
 
@@ -21,8 +21,7 @@ export type IGuideArticle = {
     [IGuideArticleKeys.TITLE]: string;
     [IGuideArticleKeys.DESCRIPTION]: string;
     [IGuideArticleKeys.PREVIEW_IMAGE]: string;
-    [IGuideArticleKeys.CONTENT]: string;
-    [IGuideArticleKeys.WEIGHT]: number;
+    [IGuideArticleKeys.CONTENT]: Array<GuideContent>;
 };
 
 export type GuideArticleOverview = Pick<
@@ -32,4 +31,5 @@ export type GuideArticleOverview = Pick<
     | IGuideArticleKeys.DESCRIPTION
     | IGuideArticleKeys.PREVIEW_IMAGE
     | MetaKeysNames.CREATED_AT
+    | FilterKeysNames.FILTER_KEY
 >;

@@ -14,10 +14,8 @@ export default async function ContactApi(req: NextApiRequest, res: NextApiRespon
 
         return res.status(200).json(response);
       } catch (e) {
-        console.log(e);
-
-        // const error = (e as ApiErrors);
-        return res.status(500).json((e as ApiErrors).message);
+        const error = (e as ApiErrors);
+        return res.status(error.statusCode).json(error.errorDetail);
       }
 
     case 'PUT':
@@ -27,7 +25,7 @@ export default async function ContactApi(req: NextApiRequest, res: NextApiRespon
         return res.status(200).json(response);
       } catch (e) {
         const error = (e as ApiErrors);
-        return res.status(error.statusCode).json((e as ApiErrors).errorDetail);
+        return res.status(error.statusCode).json(error.errorDetail);
       }
 
     case 'DELETE':
@@ -37,9 +35,7 @@ export default async function ContactApi(req: NextApiRequest, res: NextApiRespon
         return res.status(200).json(response);
       } catch (e) {
         const error = (e as ApiErrors);
-        console.log(e);
-
-        return res.status(error.statusCode).json((e as ApiErrors).errorDetail);
+        return res.status(error.statusCode).json(error.errorDetail);
       }
 
     default:
