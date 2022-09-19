@@ -1,0 +1,15 @@
+#hot-guide-carousel {
+
+    .carousel-item {
+        background-color: var(--bs-gray-500);
+    }
+    .carousel-banner {
+        max-height: 600px !important;
+        min-height: 400px;
+    }
+
+    .carousel-caption {
+        background-color: rgba(0, 0, 0, 0.7) !important;
+        padding-bottom: 20px;
+    }
+}

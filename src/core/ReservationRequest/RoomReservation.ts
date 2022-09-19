@@ -1,16 +1,14 @@
 import InputErrorMessages from '@/constants/InputErrorMessages';
 import { InputValidators } from '@/utils/InputUtils';
 
-import { MetaKeys } from '@/core/Database/types/meta';
+import { RecordType } from '@/core/Database/types/meta';
 import DbItem from '@/core/Database/DbItem';
 
 import { IRoomReservation } from './types/IRoomReservation';
 
 export default class RoomReservation extends DbItem<IRoomReservation> {
-  constructor(reservation?: IRoomReservation, meta: MetaKeys = {
-    createdAt: Date.now().toLocaleString('Fr'),
-  }) {
-    super('ROOM', reservation, meta);
+  constructor(reservation?: IRoomReservation) {
+    super(RecordType.ROOM, reservation);
   }
 
   public isValid(): null | Partial<Record<keyof IRoomReservation, InputErrorMessages>> {

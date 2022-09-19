@@ -4,38 +4,58 @@ import InputErrorMessages from '@/constants/InputErrorMessages';
 import ObjectNotFoundError from '@/core/ApiErrors/ObjectNotFoundError';
 import BadPayloadError from '@/core/ApiErrors/BadPayloadError';
 
+import {
+  FilterKeys,
+  FilterKeysNames,
+  MetaKeys,
+  MetaKeysNames,
+  RecordType,
+} from './types/meta';
+import {
+  IDbItem,
+} from './types/IDbItem';
+
 import DbClient from './DbClient';
-import { FilterKeys, MetaKeys, RecordType } from './types/meta';
-import { DbItemFindQuery, IDbItem } from './types/IDbItem';
+import {
+  DbItemFindCommand,
+  DbItemScanCommand,
+} from './types/DbClientCommand';
 
 export default abstract class DbItem<T> implements IDbItem<T> {
-  private _dbClient = new DbClient();
+  protected _dbClient = new DbClient();
 
-  private _recordData: T | null;
+  protected _recordData: T | null;
 
-  private _meta: MetaKeys | null;
+  protected _meta: MetaKeys | null;
 
-  private _partitionKey: RecordType;
+  protected _partitionKey: RecordType;
 
-  private _uuid: string = randomUUID();
+  protected _filterKey : string;
 
-  constructor(partitionKey: RecordType, data?: T, meta?: MetaKeys) {
+  constructor(partitionKey: RecordType, data?: T) {
     this._recordData = data ?? null;
-    this._meta = meta ?? null;
+    this._meta = {
+      [MetaKeysNames.CREATED_AT]: Date.now().toString(),
+    };
     this._partitionKey = partitionKey;
+    this._filterKey = randomUUID();
   }
 
   abstract isValid(): Partial<Record<keyof T, InputErrorMessages>> | null;
 
-  get filterKeys() :FilterKeys {
-    return {
-      partition_key: this._partitionKey,
-      filter_key: this._uuid,
-    };
-  }
-
   get data() {
     return this._recordData;
+  }
+
+  set data(data: T | null) {
+    this._recordData = data;
+  }
+
+  get filterKeys() :FilterKeys {
+    return {
+      [FilterKeysNames.PARTITION_KEY]: this._partitionKey,
+      [FilterKeysNames.FILTER_KEY]: this._filterKey,
+    };
   }
 
   get record() {
@@ -50,8 +70,83 @@ export default abstract class DbItem<T> implements IDbItem<T> {
     };
   }
 
+  public async delete(uuid: string) {
+    return this._dbClient.delete({
+      [FilterKeysNames.PARTITION_KEY]: {
+        S: this._partitionKey,
+      },
+      [FilterKeysNames.FILTER_KEY]: {
+        S: uuid,
+      },
+    });
+  }
+
+  public async find(query?: DbItemFindCommand) {
+    const config: DbItemFindCommand = {
+      ...query ? {
+        ...query,
+        ExpressionAttributeValues: {
+          ':pk': { S: this._partitionKey },
+          ...query.ExpressionAttributeValues,
+        },
+        KeyConditionExpression: `${FilterKeysNames.PARTITION_KEY} = :pk`,
+      } : {
+        ExpressionAttributeValues: {
+          ':pk': { S: this._partitionKey },
+        },
+        KeyConditionExpression: `${FilterKeysNames.PARTITION_KEY} = :pk`,
+      },
+    };
+
+    const response = await this._dbClient.query(config);
+
+    if (!response.Items || response.Items?.length === 0) {
+      throw new ObjectNotFoundError({
+        reference: JSON.stringify(query),
+      });
+    }
+
+    return response;
+  }
+
+  public async get(filterKey: string, AttributesToGet?: string[]) {
+    const response = await this._dbClient.read({
+      [FilterKeysNames.PARTITION_KEY]: this._partitionKey,
+      [FilterKeysNames.FILTER_KEY]: filterKey,
+    }, AttributesToGet);
+
+    if (!response.Item) {
+      throw new ObjectNotFoundError({
+        reference: filterKey,
+      });
+    }
+
+    return response;
+  }
+
+  public async mutate(filterKey: string, newData: Partial<T>) {
+    return this._dbClient.write({
+      Item: {
+        ...newData,
+        [FilterKeysNames.FILTER_KEY]: filterKey,
+        [FilterKeysNames.PARTITION_KEY]: this._partitionKey,
+        [MetaKeysNames.UPDATED_AT]: Date.now().toString(),
+      },
+    });
+  }
+
+  public new(data: T): IDbItem<T> {
+    this._recordData = data ?? null;
+    this._meta = {
+      [MetaKeysNames.CREATED_AT]: Date.now().toString(),
+    };
+    this._filterKey = randomUUID();
+
+    return this;
+  }
+
   public async save() {
-    if (!this.data || !this.record) {
+    if (!this.record) {
       throw new BadPayloadError({
         reference: 'no payload',
       });
@@ -63,64 +158,32 @@ export default abstract class DbItem<T> implements IDbItem<T> {
         reference: JSON.stringify(validationErrors),
       });
     }
-    await this._dbClient.write(this.record);
 
-    return this._uuid;
-  }
-
-  public async mutate(newData: T) {
-    this._recordData = {
-      ...this.data,
-      ...newData,
-    };
-    this._meta = {
-      ...this._meta,
-      updatedAt: Date.now().toLocaleString('Fr'),
-    };
-
-    if (!this.record || this.isValid() !== null) {
-      throw new Error('No payload');
-    }
-
-    return this._dbClient.write(this.record);
-  }
-
-  public async get(filterKey: string) {
-    if (!this.filterKeys.filter_key && !this.filterKeys.partition_key) {
-      throw new Error('No payload');
-    }
-
-    const response = await this._dbClient.read({
-      ...this.filterKeys,
-      filter_key: filterKey,
+    await this._dbClient.write({
+      Item: { ...this.record },
     });
 
-    if (!response.Item) {
-      throw new ObjectNotFoundError({
-        reference: filterKey,
-      });
-    }
-
-    return response;
+    return this._filterKey;
   }
 
-  public async find(query?: DbItemFindQuery) {
-    const config: DbItemFindQuery = {
-      ...query,
-      ExpressionAttributeValues: {
-        ...query?.ExpressionAttributeNames,
-        ':s': { S: this._partitionKey },
-      },
-      KeyConditionExpression:
-        `partition_key = :s ${
-          query?.KeyConditionExpression
-            ? `AND ${query.KeyConditionExpression}`
-            : ''
-        }`,
-      ConsistentRead: true,
+  public async scan(query?: DbItemScanCommand) {
+    const config: DbItemScanCommand = {
+      ...query ? {
+        ...query,
+        KeyCondition: {
+          ':pk': { S: this._partitionKey },
+        },
+        KeyConditionExpression: `${FilterKeysNames.PARTITION_KEY} = :pk`,
+      } : {
+        ExpressionAttributeValues: {
+          ':pk': { S: this._partitionKey },
+          KeyConditionExpression: `${FilterKeysNames.PARTITION_KEY} = :pk`,
+        },
+      }
+      ,
     };
 
-    const response = await this._dbClient.query(config);
+    const response = await this._dbClient.scan(config);
 
     if (!response.Items) {
       throw new ObjectNotFoundError({
@@ -129,20 +192,5 @@ export default abstract class DbItem<T> implements IDbItem<T> {
     }
 
     return response;
-  }
-
-  public async delete(filterKey: string) {
-    return this._dbClient.delete({
-      partition_key: this._partitionKey,
-      filter_key: filterKey,
-    });
-  }
-
-  public new(data: T): void {
-    this._recordData = data ?? null;
-    this._meta = {
-      createdAt: Date.now().toLocaleString('Fr'),
-    };
-    this._uuid = randomUUID();
   }
 }

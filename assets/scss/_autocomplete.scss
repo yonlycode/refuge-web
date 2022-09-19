@@ -1,0 +1,24 @@
+.app-auto-complete {
+    border-radius: 5px;
+    input {
+        flex-grow: 1;
+        height: 60px;
+        border: none;
+        border-radius: 3rem;
+        outline: none;
+        transition: all 50ms ease-in-out;
+        font-size: 1.4rem;
+        padding-left: 8%;
+        color: $primary;
+    }
+
+    .list-group {
+        position: absolute;
+        animation: slide-in ease-in-out 2.5s;
+        border-radius: 5px;
+        margin-top: 65px;
+        width: 100%;
+        overflow: auto;
+        box-shadow: 0 3px 5px 0 $primary;
+    }
+}

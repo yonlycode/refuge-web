@@ -3,17 +3,24 @@ import { GalleryItem, GalleryTags } from '@/core/Gallery/Gallery';
 
 import { useAppDispatch, useAppSelector } from '@/store';
 import {
-  FetchGallery, mutateGalleryOptions, mutateLightboxCurrentIndex, mutateLightboxState, resetGallery,
+  FetchGallery,
+  mutateGalleryOptions,
+  mutateLightboxCurrentIndex,
+  mutateLightboxState,
+  resetGallery,
 } from '@/store/slices/Gallery';
-import AppLoadingBackdrop from './Common/AppLoadingBackdrop';
 
 export default function AppGallery() {
   const {
     options,
     data,
     pagination,
-    isGalleryLoading,
   } = useAppSelector((state) => state.gallery);
+
+  const {
+    isAppLoading,
+  } = useAppSelector((state) => state.layout);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -49,8 +56,6 @@ export default function AppGallery() {
 
   return (
     <section className="gallery_area section_gap" id="gallery">
-
-      {isGalleryLoading && <AppLoadingBackdrop />}
 
       <div className="container">
         <div className="filters gallery-filter">
@@ -114,9 +119,9 @@ export default function AppGallery() {
             type="button"
             className="btn btn-primary btn-lg"
             onClick={handleShowMore}
-            disabled={(pagination && pagination.hasNextPage === false) || isGalleryLoading}
+            disabled={(pagination && pagination.hasNextPage === false) || isAppLoading}
           >
-            { isGalleryLoading ? 'Chargement...' : 'Voir plus' }
+            { isAppLoading ? 'Chargement...' : 'Voir plus' }
           </button>
         </div>
       </div>

@@ -3,26 +3,20 @@ import axios, { AxiosError } from 'axios';
 
 import { IContactRequest } from '@/core/ContactRequest/types/IContactRequest';
 
-import { createToast } from './Layout';
+import { createToast, setApplicationLoadingBackdrop } from './Layout';
 
-export type ContactState = {
-    request: IContactRequest,
-    isRequestSending: boolean;
-}
+export type ContactState = IContactRequest;
 export interface MutateContactPayload {
     name: keyof IContactRequest,
     value: any
 }
 
 const initialState: ContactState = {
-  request: {
-    name: '',
-    email: '',
-    subject: '',
-    phone: '',
-    message: '',
-  },
-  isRequestSending: false,
+  name: '',
+  email: '',
+  subject: '',
+  phone: '',
+  message: '',
 };
 
 export const contactSlice = createSlice({
@@ -35,19 +29,7 @@ export const contactSlice = createSlice({
     mutateContactRequest(state, { payload }: PayloadAction<MutateContactPayload>): ContactState {
       return {
         ...state,
-        request: {
-          ...state.request,
-          [payload.name]: payload.value,
-        },
-      };
-    },
-    mutateContactRequestSendingState(
-      state,
-      { payload }: PayloadAction<boolean>,
-    ): ContactState {
-      return {
-        ...state,
-        isRequestSending: payload,
+        [payload.name]: payload.value,
       };
     },
   },
@@ -59,7 +41,6 @@ export const contactSlice = createSlice({
 
 export const {
   mutateContactRequest,
-  mutateContactRequestSendingState,
   resetContactRequest,
 } = contactSlice.actions;
 
@@ -68,15 +49,13 @@ export const sendContactRequest = createAsyncThunk(
   // eslint-disable-next-line consistent-return
   async (_, { dispatch, getState }) => {
     try {
-      dispatch(mutateContactRequestSendingState(true));
-      const { request } = (getState() as any).contact;
+      dispatch(setApplicationLoadingBackdrop(true));
+      const request = (getState() as any).contact;
       const response = await axios.post('/api/contact', request);
       dispatch(createToast({
         message: 'Demande envoyer avec succès',
         type: 'success',
       }));
-
-      dispatch(mutateContactRequestSendingState(false));
       dispatch(resetContactRequest());
 
       return response.data;
@@ -85,7 +64,8 @@ export const sendContactRequest = createAsyncThunk(
         message: (e as AxiosError).response?.data as string,
         type: 'error',
       }));
-      dispatch(mutateContactRequestSendingState(false));
+    } finally {
+      dispatch(setApplicationLoadingBackdrop(false));
     }
   },
 );
